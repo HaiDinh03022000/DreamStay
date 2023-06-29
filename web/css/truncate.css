@@ -1,0 +1,35 @@
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust this value to your desired length */
+}
+
+.truncate-2 {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.truncate-3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+label.box a {   
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+    border-radius: 5px; 
+}
+
+label.box a:hover {
+    background-color: #dfa974;
+    color: #fff;
+}

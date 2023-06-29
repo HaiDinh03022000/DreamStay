@@ -1,0 +1,51 @@
+.text-right {
+    text-align: right;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #dfa974;
+    color: #fff;
+}
+
+.custom-table .smaller{
+    width: 60px;
+}
+
+.custom-table td {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.custom-table tbody tr td img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+tr{
+    transition: all .3s;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #e8e8e8;
+}
+
+.custom-table tbody tr:hover td {
+    background-color: #ceced1;
+}
+

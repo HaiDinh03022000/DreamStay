@@ -1,0 +1,78 @@
+.type .active {
+    font-weight: bold;
+    background-color: #dfa974;
+    color: #fff;
+}
+
+.type a{
+    color: #000;
+    display: inline-block;
+    width: 100px; /* Chiều dài mong muốn */
+    height: 30px; /* Chiều cao mong muốn */
+    text-align: center;
+    line-height: 30px; /* Đảm bảo văn bản nằm giữa thẻ */
+    text-decoration: none;
+    border: 2px solid #ccc; /* Biên viền tùy chọn */
+    border-color: #dfa974;
+    margin: -3px; /* Khoảng cách giữa các thẻ */
+}
+
+.type a:hover{
+    font-weight: bold;
+    background-color: #dfa974;
+    color: #fff;
+}
+
+.carousel-container {
+    position: relative;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-img {
+    display: none;
+    width: 100%;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+.carousel-img.active {
+    display: block;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-20%);
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 18px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.carousel-button-left {
+    left: 0;
+    border-radius: 0 25px 25px 0;
+
+}
+
+.carousel-button-right {
+    right: 0;
+    border-radius: 25px 0 0 25px;
+}
+
+.carousel-button:hover{
+    background-color: rgba(0, 0, 0, 0.8);
+}

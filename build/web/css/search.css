@@ -1,0 +1,40 @@
+.group-search{
+    display: flex;
+    align-items: center;
+}
+
+.group-search .item {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 0 12px;
+    text-align: center;    
+}
+
+.group-search .item .title {
+    margin-bottom: 12px;
+    
+}
+
+.group-search .form-control option {
+    font-size: 28px;
+    line-height: 28px;
+    
+}
+.group-search select {
+}
+
+
+.group-search .button {
+    margin-top: 37px;
+}
+
+
+
+
+#frm-search-job{
+    margin-top: 4%;
+    margin-left: 20%;
+    margin-right: 20%;
+
+}
