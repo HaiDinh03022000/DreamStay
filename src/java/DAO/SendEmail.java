@@ -42,10 +42,8 @@ public class SendEmail {
                 protected PasswordAuthentication getPasswordAuthentication(){
                     return new PasswordAuthentication(fromEmail,pass);
                 }       
-            });
-            
-            Message mess = new MimeMessage(session);
-            
+            });          
+            Message mess = new MimeMessage(session);         
             mess.setFrom(new InternetAddress(fromEmail));
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             

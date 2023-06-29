@@ -164,8 +164,7 @@ select * from Account where accid = 2
 insert into Alert (textarea, dateup, staid,accid, mid)
 values (?,?,?, ?);
 
-select * 
-from Account 
+select * from Account where accid != 1
 
 DeLETE FROM Review WHERE accid = 4
 

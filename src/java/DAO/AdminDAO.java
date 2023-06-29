@@ -29,8 +29,7 @@ public class AdminDAO {
 
     public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<>();
-        String query = "select * \n"
-                + "from Account  ";
+        String query = "select * from Account where accid != 1";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -43,7 +42,8 @@ public class AdminDAO {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8)));
+                        rs.getString(8),
+                        rs.getInt(9)));
 
             }
         } catch (Exception e) {
@@ -51,10 +51,22 @@ public class AdminDAO {
         return list;
     }
     
+    public void updateAccStatus(int accid, int status) {
+        String query = "update Account set accstatus = ? where accid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, accid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
     public List<Account> getAccountByType(String type) {
         List<Account> list = new ArrayList<>();
         String query = "select * \n"
-                + "from Account where acctype = ?";
+                + "from Account where acctype = ? and accid !=1";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -68,7 +80,8 @@ public class AdminDAO {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8)));
+                        rs.getString(8),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -383,8 +396,7 @@ public class AdminDAO {
 //        List<Account> li = ad.getAllAccount();
 //        System.out.println(li);
 //        ad.deleteuserACC("3");
-        Infouser tt = ad.getTop1RScore();
-        System.out.println(tt);
+        ad.updateAccStatus(2, 1);
     }
 
 }

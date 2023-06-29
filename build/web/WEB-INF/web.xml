@@ -31,6 +31,7 @@
         <url-pattern>/getincomeadmin</url-pattern>
         <url-pattern>/listadmin</url-pattern>
         <url-pattern>/deleteacc</url-pattern>
+        <url-pattern>/updateacc</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginCotroller</servlet-name>
@@ -122,7 +123,7 @@
     </servlet>
     <servlet>
         <servlet-name>SubmitReviewController</servlet-name>
-        <servlet-class>Controller.Review.SubmitReviewController</servlet-class>
+        <servlet-class>Controller.Motel.SubmitReviewController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MotelController</servlet-name>
@@ -183,6 +184,10 @@
     <servlet>
         <servlet-name>DeleteBillController</servlet-name>
         <servlet-class>Controller.InfoUser.DeleteBillController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAccController</servlet-name>
+        <servlet-class>Controller.Admin.UpdateAccController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
@@ -335,6 +340,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBillController</servlet-name>
         <url-pattern>/deletebill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAccController</servlet-name>
+        <url-pattern>/updateacc</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -49,7 +49,7 @@ public class PaymentController extends HttpServlet {
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
-            Double total = Double.parseDouble(request.getParameter("total"));
+            String tt = request.getParameter("total");
             String pin = request.getParameter("pincode");
             String roomid = request.getParameter("roomid");
             String text = request.getParameter("text");
@@ -70,17 +70,17 @@ public class PaymentController extends HttpServlet {
             request.setAttribute("roomid", roomid);
             request.setAttribute("color", "red");
             PayCard ca = card.getPayCardbyID(acc.getPayid());
-            if (pin.equals("")) {
+            if(tt.equals("")){
+                request.setAttribute("messs", "Please choose how much months you want to book!");
+            }else if (pin.equals("")) {
                 request.setAttribute("mess", "Please Enter Your Card Pincode!");
-                request.getRequestDispatcher("booking").forward(request, response);
             } else if (!pin.equals(ca.getPincode())) {
                 request.setAttribute("mess", "Wrong Card Pincode!");
-                request.getRequestDispatcher("booking").forward(request, response);
             } else {
+                double total = Double.parseDouble(tt);
                 double now = Double.parseDouble(ca.getCmoney());
                 if (now < total) {
                     request.setAttribute("mess", "Not Enough money!");
-                    request.getRequestDispatcher("booking").forward(request, response);
                 } else {
                     Rooms room = motel.getRoomByid(roomid);
                     Motel mt = motel.getMotelByID(room.getMid());
@@ -90,7 +90,6 @@ public class PaymentController extends HttpServlet {
                     text = text + "%" + months;
                     if (condition != "" && bid != "") {
                         int con = Integer.parseInt(condition);
-
                         Bill bi = motel.getRoomidByBill(bid);
 
                         LocalDateTime currentDate = LocalDateTime.now();
@@ -117,16 +116,15 @@ public class PaymentController extends HttpServlet {
                         card.UpdateSubMoney(total, acc.getPayid());
                         card.UpdateaddCMoney(total, "1");
                         noti.insertAlert(text, acc.getAccId(), room.getRoomid(), 1, total, mt.getAccid());
-
                     }
                     request.setAttribute("mess", "<i class=\"bi bi-check-circle-fill\"></i> Your order has been record!");
                     request.setAttribute("color", "green");
                     request.setAttribute("pincode", pin);
                     request.setAttribute("lock", "readonly");
-                    request.setAttribute("hide", "hide");
-                    request.getRequestDispatcher("booking").forward(request, response);
+                    request.setAttribute("hide", "hide");                    
                 }
             }
+           request.getRequestDispatcher("booking").forward(request, response); 
         }
     }
 

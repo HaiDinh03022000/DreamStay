@@ -5,6 +5,7 @@
 --%>
 
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -77,7 +78,8 @@
                                             <c:forEach begin="1" end="${detail.rscore}">
                                                 <i class="icon_star"></i>
                                             </c:forEach>
-                                            (${detail.rscore})
+                                            <fmt:formatNumber var="rvs" value="${detail.rscore}" pattern="0.0" />
+                                            (${rvs})
                                         </div>
                                         <c:if test="${sessionScope.acc != null && sessionScope.acc.accId != detail.accid}">
                                             <a href="booking?roomid=${room.roomid}">Booking Now</a>
@@ -117,10 +119,9 @@
                             <c:forEach items="${review}" var="r">
                                 <div class="review-item">
                                     <div class="ri-pic">
-                                        <img src="img/Avatar/${r.avatar}" alt="ảnh lỗi">
+                                        <img src="img/Avatar/${r.avatar}" alt="error">
                                     </div>
                                     <div class="ri-text">
-                                        <!--                                        <span>27 Aug 2019</span>-->
                                         <div class="rating">
                                             <c:forEach begin="1" end="${r.rscore}">
                                                 <i class="icon_star"></i>
@@ -159,6 +160,7 @@
                                             </div>
                                             <textarea placeholder="Your Review" name="comment"></textarea>
                                             <input name="mid" type="text" style="display: none;" value ="${detail.mid}" readonly="" >
+                                            <input name="roomid" type="text" style="display: none;" value ="${rid}" readonly="" >
                                             <button type="submit">Submit Now</button>
                                         </div>
                                     </div>
@@ -204,9 +206,6 @@
         <!-- Room Details Section End -->
 
         <jsp:include page="footer.jsp"/>
-
-
-
         <!-- Js Plugins -->
         <script src="js/moneyNumber.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script>

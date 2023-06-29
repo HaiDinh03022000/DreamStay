@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 /**
  *
@@ -38,7 +39,7 @@ public class LoginDAO {
     public Account login(String user, String pass) {
         String query = "select * from Account\n"
                 + "  where username = ?\n"
-                + "                and password = ?";
+                + "  and password = ?";
         try {
             conn = new Connections().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -53,7 +54,8 @@ public class LoginDAO {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8));
+                        rs.getString(8),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
         }
@@ -77,14 +79,14 @@ public class LoginDAO {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8));
-                
+
             }
         } catch (Exception e) {
         }
         return null;
     }
 
-   public Account Repass(String user, String email) {
+    public Account Repass(String user, String email) {
         String query = "select a.accid ,a.username, a.password, a.acctype , a.datesign , a.otpcode, a.usid, a.pcid\n"
                 + "from Account a, InforUser i\n"
                 + "where a.usid = i.usid and a.username = ? and i.email = ?";
@@ -217,7 +219,7 @@ public class LoginDAO {
         }
         return null;
     }
-    
+
     public Account GetAccByid(int accid) {
         String query = "select * from Account\n"
                 + "  where accid = ?";
@@ -234,21 +236,31 @@ public class LoginDAO {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8));
+                        rs.getString(8),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
         }
         return null;
     }
 
-    public static void main(String[] args) {
-        LoginDAO a = new LoginDAO();
-//        Account acc = a.login("phucht12", "12345678");
-//        System.out.println(acc);
-        Account acc = a.GetAccByid(3);
-        System.out.println(acc);
+    public String Encode(String otp) {
+        String encodedString = Base64.getEncoder().encodeToString(otp.getBytes());
+        return encodedString;
     }
     
-    
+    public String Decode(String otpbase){
+        byte[] decodedBytes = Base64.getDecoder().decode(otpbase);
+        String decodedString = new String(decodedBytes);
+        return decodedString;
+    }
+
+    public static void main(String[] args) {
+        LoginDAO a = new LoginDAO();
+        String otpbase = a.Encode("734343");
+        String otp = a.Decode(otpbase);
+        System.out.println("Encode: "+otpbase);
+        System.out.println("Decode: "+otp);
+    }
 
 }

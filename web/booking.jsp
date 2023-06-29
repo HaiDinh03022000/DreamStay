@@ -99,7 +99,8 @@
                         <p class="dis mb-3">Complete your purchase by providing your payment details</p>
                     </div> 
                     <c:if test="${hide == null}">
-                        <div class="my-3 cardname d-flex">
+                        <p class="dis fw-bold mb-2" style="color: ${color}">${messs}</p>
+                        <div class="my-3 cardname d-flex">                 
                             <p class="dis fw-bold mb-2">How Long: </p>
                             <select class="dis fw-bold mb-2" name="month" onchange="calculateTotal(this.value)">
                                 <option class="dis fw-bold mb-2" selected disabled>Choose Month</option>
