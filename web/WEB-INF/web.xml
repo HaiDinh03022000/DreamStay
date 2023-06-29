@@ -189,6 +189,10 @@
         <servlet-name>UpdateAccController</servlet-name>
         <servlet-class>Controller.Admin.UpdateAccController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ContactUsController</servlet-name>
+        <servlet-class>Controller.Admin.ContactUsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
         <url-pattern>/LoginCotroller</url-pattern>
@@ -344,6 +348,10 @@
     <servlet-mapping>
         <servlet-name>UpdateAccController</servlet-name>
         <url-pattern>/updateacc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactUsController</servlet-name>
+        <url-pattern>/contactus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
