@@ -62,19 +62,15 @@ public class SignUpController extends HttpServlet {
         if (acc != null) {
             request.setAttribute("check", "User already exits!");
             request.setAttribute("back", "right-panel-active");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else if (!pass.equals(cpass)) {
             request.setAttribute("check", "Password do not match!");
             request.setAttribute("back", "right-panel-active");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else if (info != null) {
             request.setAttribute("check", "Email already exits!");
             request.setAttribute("back", "right-panel-active");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else if (y < 18) {
             request.setAttribute("check", "You are not old enough!(18+)");
             request.setAttribute("back", "right-panel-active");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             String check = (String) session.getAttribute("otp");
@@ -82,13 +78,11 @@ public class SignUpController extends HttpServlet {
                 SendEmail send = new SendEmail();
                 String otp = send.getRanom();
                 send.sendEmail(email, otp , "OTP code: ", "OTP Code to User SignUp Account");
-                session.setAttribute("otp", otp);
+                session.setAttribute("otp", dao.Encode(otp));
                 request.setAttribute("back", "right-panel-active");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if (!otpcheck.equals(check)) {
+            } else if (!otpcheck.equals(dao.Decode(check))) {
                 request.setAttribute("check", "OTP code don't match!");
                 request.setAttribute("back", "right-panel-active");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 dao.insertUserInfo(fname, age, email);
                 String id = dao.getInfoId(email);
@@ -96,9 +90,9 @@ public class SignUpController extends HttpServlet {
                 request.setAttribute("color", "green");
                 request.setAttribute("mess", "Create Account Complete!");
                 session.removeAttribute("otp");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**

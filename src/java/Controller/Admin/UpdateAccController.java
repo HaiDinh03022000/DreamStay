@@ -5,63 +5,49 @@
 package Controller.Admin;
 
 import DAO.AdminDAO;
-import DAO.InfoUserDAO;
+import DAO.LoginDAO;
 import Model.Account;
-import Model.Infouser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 /**
  *
- * @author ADMIN
+ * @author hatha
  */
-public class DeleteAccController extends HttpServlet {
+public class UpdateAccController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AdminDAO admin = new AdminDAO();
-        InfoUserDAO info = new InfoUserDAO();
+        LoginDAO login = new LoginDAO();
         int accid = Integer.parseInt(request.getParameter("accid"));
-        int acctype = Integer.parseInt(request.getParameter("acctype"));
-            Infouser i = info.getinfor(accid);
-            if (acctype == 0) {
-                admin.deleteuserACC(accid, i.getUsid());
-            } else {
-                admin.deleteOwnerACC(accid, i.getUsid());
-            }
-            response.sendRedirect("listadmin?type=1");
+        Account acc = login.GetAccByid(accid);
+        if(acc.getAccstatus() == 0){
+            admin.updateAccStatus(accid, 1);
+        }else{
+            admin.updateAccStatus(accid, 0);
+        }
+        response.sendRedirect("listadmin?type=1");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

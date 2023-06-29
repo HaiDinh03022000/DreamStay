@@ -64,6 +64,10 @@ public class LoginCotroller extends HttpServlet {
             Account a = dao.login(user, pass);
             if (a == null) {
                 request.setAttribute("mess", "Wrong user or pass");
+                request.setAttribute("color", "red");  
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else if (a.getAccstatus() == 0) {
+                request.setAttribute("mess", "Your account has been banned!");
                 request.setAttribute("color", "red");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
@@ -75,8 +79,8 @@ public class LoginCotroller extends HttpServlet {
                 session.setAttribute("acc", a);
                 session.setMaxInactiveInterval(36000);
                 response.sendRedirect("index");
-            }
-        }
+            }           
+        }       
     }
 
     @Override

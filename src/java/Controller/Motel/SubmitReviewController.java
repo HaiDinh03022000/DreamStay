@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.Review;
+package Controller.Motel;
 
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
@@ -42,12 +42,12 @@ public class SubmitReviewController extends HttpServlet {
         } else {
             MotelDAO motel = new MotelDAO();
             String mid = request.getParameter("mid");
+            String roomid = request.getParameter("roomid");
             String comment = request.getParameter("comment");
             String rate = request.getParameter("rate");
             motel.insertReview(rate, comment, acc.getAccId(), mid);     
-            response.sendRedirect("roomdetail?mid="+mid);
+            response.sendRedirect("roomdetail?mid="+mid+"&roomid="+roomid);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

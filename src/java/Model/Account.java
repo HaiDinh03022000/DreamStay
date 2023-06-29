@@ -17,6 +17,7 @@ public class Account {
     private String otp;
     private String infoid;
     private String payid;
+    private int accstatus;
 
     public Account(int accId, String user, String pass, int accType, String createDate, String otp,String infoid) {
         this.accId = accId;
@@ -26,6 +27,18 @@ public class Account {
         this.createDate = createDate;
         this.otp = otp;
         this.infoid = infoid;
+    }
+
+    public Account(int accId, String user, String pass, int accType, String createDate, String otp, String infoid, String payid, int accstatus) {
+        this.accId = accId;
+        this.user = user;
+        this.pass = pass;
+        this.accType = accType;
+        this.createDate = createDate;
+        this.otp = otp;
+        this.infoid = infoid;
+        this.payid = payid;
+        this.accstatus = accstatus;
     }
 
     public Account(int accId, String user, String pass, int accType, String createDate, String otp, String infoid, String payid) {
@@ -119,6 +132,15 @@ public class Account {
         this.payid = payid;
     }  
 
+    public int getAccstatus() {
+        return accstatus;
+    }
+
+    public void setAccstatus(int accstatus) {
+        this.accstatus = accstatus;
+    }
+    
+    
     @Override
     public String toString() {
         return "Account{" + "accId=" + accId + ", user=" + user + ", pass=" + pass + ", accType=" + accType + ", createDate=" + createDate + ", otp=" + otp + ", infoid=" + infoid + ", payid=" + payid + '}';

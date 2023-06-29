@@ -35,7 +35,7 @@ public class checkAdmin implements Filter {
 
         Account acc = (Account) session.getAttribute("acc");
         session.setAttribute("acc", acc);
-        if (acc != null && requestURI.contains("ad") && acc.getUser().equals("admin")) {
+        if (acc != null && acc.getUser().equals("admin")) {
             chain.doFilter(request, response);
         } else {
             res.sendRedirect("index");

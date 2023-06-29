@@ -39,7 +39,8 @@ otpcode varchar(6),
 usid int,
 foreign key (usid) references InforUser(usid),
 pcid int,
-foreign key (pcid) references Paycard(pcid)
+foreign key (pcid) references Paycard(pcid),
+accstatus bit
 )
 
 create table Motel(
@@ -131,14 +132,14 @@ values
 	(N'Hoàng Công Hải Định',N'Quảng Bình','0901345672','2001','avadinh.webp','dinhhchde106607@fpt.edu.vn'),
 	(N'Kiều Văn Quốc Đạt',N'Đà Nẵng','0905180307','2002','avaqdat.webp','datkvqde160284@fpt.edu.vn');
 	
-insert into Account(username ,password,acctype ,datesign ,otpcode,usid )
+insert into Account(username ,password,acctype ,datesign ,otpcode,usid,accstatus )
 values 
-	('admin', '12345678', 0, '20/5/2023','́́*',1),
-	('hdhien12', '12345678', 1, '20/5/2023','́́*',2),
-	('htphuc202', '12345678', 0, '20/5/2023','́́*',3),
-	('htdat12', '12345678', 0, '20/5/2023','́́*',4),
-	('hchding123', '12345678', 1, '20/5/2023','́́*',5),
-	('kvqdat12', '12345678', 1, '20/5/2023','́́*',6);
+	('admin', '12345678', 0, '20/5/2023','́́*',1,1),
+	('hdhien12', '12345678', 1, '20/5/2023','́́*',2,1),
+	('htphuc202', '12345678', 0, '20/5/2023','́́*',3,1),
+	('htdat12', '12345678', 0, '20/5/2023','́́*',4,1),
+	('hchding123', '12345678', 1, '20/5/2023','́́*',5,1),
+	('kvqdat12', '12345678', 1, '20/5/2023','́́*',6,1);
 
 insert into Paycard(fullname,numcard,cmoney,releasedate,pincode)
 values 
