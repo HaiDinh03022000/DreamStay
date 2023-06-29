@@ -144,7 +144,7 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            Waiting Pending
+                            Notification History
                         </div>
                         <div class="card-body">
                             <table class="table table-striped" id="table1">
