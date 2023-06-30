@@ -265,7 +265,7 @@ public class MotelDAO {
         String query = "select m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, avg(r.rscore) as 'Total Score' \n"
                 + "from Motel m ,Review r\n"
                 + "where m.mid = r.mid and maddress like '%' + ? + '%'\n"
-                + "group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid,";
+                + "group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);

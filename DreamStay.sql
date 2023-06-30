@@ -413,3 +413,9 @@ values
 	('Out of Date'),
 	('ad-pending'),
 	('ad-complete');
+
+
+	select m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, avg(r.rscore) as 'Total Score' 
+             from Motel m ,Review r
+               where m.mid = r.mid and m.maddress like '%' + 'n' + '%')
+               group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid

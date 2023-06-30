@@ -10,7 +10,7 @@ public class Connections {
     Connection con = null;
     PreparedStatement p1 = null;
 
-    private final String serverName = "DESKTOP-BAJDTAQ\\SQLEXPRESS";
+    private final String serverName = "DESKTOP-UVSOJ04\\MSSQLSERVERMK";
     private final String dbName = "Accommodation service";
     private final String portNumber = "1433";
     private final String instance = "";

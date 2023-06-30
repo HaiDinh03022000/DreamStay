@@ -40,7 +40,7 @@ public class checkOwner implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String requestURI = req.getRequestURI();
+        
         HttpSession session = req.getSession();
 
         Account acc = (Account) session.getAttribute("acc");
