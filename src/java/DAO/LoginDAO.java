@@ -179,7 +179,7 @@ public class LoginDAO {
     public void insertUserInfo(String fullname, String age, String email) {
         String query = "insert into InforUser\n"
                 + "values \n"
-                + "	(?,'*','*',?,'none.jpg', ?);";
+                + "	(?,'*','*',?,'none.jpg', ?, 1);";
         try {
             conn = new Connections().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);

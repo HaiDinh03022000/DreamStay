@@ -4,6 +4,7 @@
  */
 package Controller.Notification;
 
+import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import DAO.PayCarDAO;
 import Model.Account;
@@ -34,6 +35,7 @@ public class DeleteNotiController extends HttpServlet {
         Account acc = (Account) session.getAttribute("acc");
         NotificationDAO noti = new NotificationDAO();
         PayCarDAO card = new PayCarDAO();
+        MotelDAO motel = new MotelDAO();
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
@@ -50,10 +52,6 @@ public class DeleteNotiController extends HttpServlet {
                     
                     request.getRequestDispatcher("Loadinfo?type=4").forward(request, response);
 //                response.sendRedirect("Loadinfo");
-                }
-                if (type.equals("2")) {
-                    noti.deleteNoti(id);
-                    request.getRequestDispatcher("Loadinfo?type=4").forward(request, response);
                 }
                 if (type.equals("3")) {
                     noti.deleteNoti(id);

@@ -158,6 +158,12 @@
                                 <div style="padding-bottom: 1%"></div>
                             </div>
                             <div class="tab-pane fade ${allow4}" id="account-notifications">
+                                <c:if test="${show == null}">
+                                    <c:set var="his" value="none"/>
+                                </c:if>
+                                <c:if test="${show != null}">
+                                    <c:set var="his" value="block"/>
+                                </c:if>
                                 <input type="hidden" name="check" value="4">
                                 <div class="card-body pb-2">
                                     <h6 class="mb-4">Activity</h6> 
@@ -199,7 +205,7 @@
                                         <h6 class="">Bill: </h6>
                                         <button id="toggleButton4" onclick="toggleCard('cardContainer4', 'toggleButton4')" class="btn btn-default">Hide</button>
                                     </div>
-                                    <div id="cardContainer4" class="text-right mt-3" style="display: none">
+                                    <div id="cardContainer4" class="text-right mt-3" style="display: ${his}">
                                         <table class="custom-table" border="1">
                                             <thead>
                                                 <tr>
@@ -246,7 +252,7 @@
                                         <h6 class="">Pending: </h6>
                                         <button id="toggleButton1" onclick="toggleCard('cardContainer1', 'toggleButton1')" class="btn btn-default">Hide</button>
                                     </div>
-                                    <div id="cardContainer1" class="text-right mt-3" style="display: none">
+                                    <div id="cardContainer1" class="text-right mt-3" style="display: ${his}">
                                         <table class="custom-table" border="1">
                                             <thead>
                                                 <tr>
@@ -272,7 +278,7 @@
                                                                 <span style="background-color: orange; border-radius: 5px;padding: 5px; color: white">Locked</span>
                                                             </c:if>
                                                         </td>                                                
-                                                        <td><span class="number">${i.pmoney}</span> VNÐ</td>
+                                                        <td><fmt:formatNumber value="${i.pmoney / 1000000}" var="money" type="number" pattern="0.0 'M'" />${money} VNÐ</td>
                                                         <td><span id="duration-${i.nftid}">${i.dateup}</span></td>
                                                         <td class="smaller">
                                                             <c:if test="${i.astatus == 1}">
@@ -293,7 +299,7 @@
                                         <h6 class="">Notifications: </h6>
                                         <button id="toggleButton2" onclick="toggleCard('cardContainer2', 'toggleButton2')" class="btn btn-default">Hide</button>
                                     </div>
-                                    <div id="cardContainer2" class="text-right mt-3" style="display: none">
+                                    <div id="cardContainer2" class="text-right mt-3" style="display: ${his}">
                                         <table class="custom-table" border="1">
                                             <thead>
                                                 <tr>

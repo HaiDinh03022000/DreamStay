@@ -19,7 +19,13 @@
         <script src="./js/init-alpine.js"></script>
     </head>
     <body>
-
+        <section>
+            <c:set var="page1" value="${param.page1}"/>          
+            <c:set var="psize" value="5"/>
+            <c:if test="${page1 == null}">   
+                <c:set var="page1" value="1"/>     
+            </c:if>         
+        </section>
         <section>
             <c:set var="page" value="${param.page}"/>
             <c:set var="psize" value="5"/>
@@ -148,7 +154,7 @@
                                 <th class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
-                    <c:forEach items="${review}" var="i" begin="${(page-1)*psize}" end="${page*psize-1}">
+                    <c:forEach items="${review}" var="i" begin="${(page1-1)*psize}" end="${page1*psize-1}">
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
@@ -178,7 +184,7 @@
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
                                         <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                           aria-label="Edit" href="dele?rvid=${i.rvid}&type=2"><i class="bi bi-trash"></i></a>                                   
+                                           aria-label="Edit" href="delereview?rvid=${i.rvid}"><i class="bi bi-trash"></i></a>                                   
                                     </div>      
                                 </td>
                             </tr>
@@ -198,26 +204,25 @@
                     <nav aria-label="Table navigation">
                         <ul class="inline-flex items-center">
                             <li>
-                                <c:if test="${page > 2}">
-                                    <a href="owner?page=<fmt:formatNumber value="1"/>"><<</a>
+                                <c:if test="${page1 > 2}">
+                                    <a href="owner&page1=<fmt:formatNumber value="1"/>"><<</a>
                                 </c:if>
-                                <c:if test="${page != 1}">
-                                    <a href="owner?page=<fmt:formatNumber value="${(page != 1)?(page -1):1}" type="number" />"><</i></a>           
+                                <c:if test="${page1 != 1}">
+                                    <a href="owner&page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
                                 </c:if>
-                                <c:if test="${noti.size() != 0}">
-                                    <a class="active" href="owner?page=<fmt:formatNumber value="${page}" type="number" />">${page}</a>    
+                                <c:if test="${noticomplete.size() != 0}">
+                                    <a class="active" href="lowner&page1=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
                                 </c:if>
-                                <c:set var="nextPage" value="${page + 1}" />
-                                <c:if test="${nextPage > Math.ceil(noti.size() / psize)}">
-                                    <c:set var="nextPage" value="${page}" />
+                                <c:set var="nextPage" value="${page1 + 1}" />
+                                <c:if test="${nextPage1 > Math.ceil(noticomplete.size() / psize)}">
+                                    <c:set var="nextPage" value="${page1}" />
                                 </c:if>
-                                <c:if test="${page < (noti.size() / psize)}">
-                                    <a href="owner?page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
+                                <c:if test="${page1 < (noticomplete.size() / psize)}">
+                                    <a href="owner&page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                 </c:if>
-                                <c:if test="${page < (Math.floor( noti.size() / psize))}">
-                                    <a href="owner?page=<fmt:formatNumber value="${(noti.size() % psize == 0) ? (noti.size() / psize) : (Math.floor( noti.size() / psize) + 1)}" 
-                                                      type="number" />"> >></a> 
-                                </c:if>   
+                                <c:if test="${page1 < (Math.floor(noticomplete.size() / psize))}">
+                                    <a href="owner&page1=<fmt:formatNumber value="${(noticomplete.size() % psize == 0) ? (noticomplete.size() / psize) : (Math.floor(noticomplete.size() / psize) + 1)}" 
+                                                      type="number" />"> >></a> </c:if>   
                             </li>
                         </ul>
                     </nav>

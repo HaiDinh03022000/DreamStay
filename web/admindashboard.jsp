@@ -102,9 +102,7 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
-
                         <div class="col-12 col-xl-12">
                             <div class="card">
                                 <div class="card-header d-flex">
@@ -155,8 +153,11 @@
                         </div>
                         <div class="col-12 col-xl-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4>Latest Comments</h4>
+                                <div class="card-header d-flex">
+                                    <h4>Latest Contact :</h4>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="listadmin?type=2">View More</a></li>
+                                    </ol>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -165,36 +166,33 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Comment</th>
+                                                    <th>Time</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="col-3">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar avatar-md">
-                                                                <img src="assets/images/faces/5.jpg">
+                                                <c:forEach items="${noti}" var="r">
+                                                    <tr>
+                                                        <td class="col-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar avatar-md">
+                                                                    <img src="img/Avatar/${r.avatar}">
+                                                                </div>
+                                                                <p class="font-bold ms-3 mb-0">${r.username}</p>
                                                             </div>
-                                                            <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="col-auto">
-                                                        <p class=" mb-0">Congratulations on your graduation!</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-3">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar avatar-md">
-                                                                <img src="assets/images/faces/2.jpg">
-                                                            </div>
-                                                            <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="col-auto">
-                                                        <p class=" mb-0">Wow amazing design! Can you make another tutorial for
-                                                            this design?</p>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td class="col-auto">
+                                                            <p class=" mb-0">${r.textarea}</p>
+                                                        </td>
+                                                        <td class="col-auto">
+                                                            <p class=" mb-0">
+                                                                <span id="duratio-${r.nftid}">${r.dateup}</span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <script>
+                                                    calculateDuration("${r.dateup}", "duratio-${r.nftid}");
+                                                </script>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>

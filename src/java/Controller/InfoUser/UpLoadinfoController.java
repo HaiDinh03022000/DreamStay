@@ -49,6 +49,10 @@ public class UpLoadinfoController extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             String type = request.getParameter("type");
+            String show = request.getParameter("show");
+            if(show != null){
+                request.setAttribute("show", show);
+            }
             if (type != null) {
                 if (type.equals("2")) {
                     request.setAttribute("allow2", "active show");
