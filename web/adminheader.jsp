@@ -56,7 +56,7 @@
                             <li
                                 class="sidebar-item ">
                                 <a href="listadmin?type=1" class='sidebar-link'>
-                                    <i class="bi bi-grid-1x2-fill"></i>
+                                    <i class="bi bi-person-fill"></i>
                                     <span>Manage Account</span>
                                 </a>
                             </li>      
@@ -70,7 +70,7 @@
                             <li
                                 class="sidebar-item ">
                                 <a href="listadmin?type=3" class='sidebar-link'>
-                                    <i class="bi bi-grid-1x2-fill"></i>
+                                    <i class="bi bi-building-fill"></i>
                                     <span>Manage Motel</span>
                                 </a>
                             </li>
