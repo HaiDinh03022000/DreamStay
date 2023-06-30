@@ -412,4 +412,5 @@ values
 	('Locked'),
 	('Out of Date'),
 	('ad-pending'),
-	('ad-complete');
+	('ad-complete'),
+	('contact');

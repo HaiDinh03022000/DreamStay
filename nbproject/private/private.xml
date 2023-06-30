@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Admin/ContactUsController.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableNotification.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/room-details.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/contact.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/InfoUser/ChangeEmailController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/DAO/MotelDAO.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableMotel.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/css/truncate.css</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Admin/ListAdminController.java</file>
         </group>
     </open-files>
 </project-private>

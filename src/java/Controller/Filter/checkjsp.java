@@ -32,7 +32,8 @@ public class checkjsp implements Filter {
     private boolean isAllowedJsp(String requestURI) {
 
         return requestURI.contains("login") || requestURI.contains("about-us")
-                || requestURI.contains("contact") || requestURI.contains("createMotel");
+                || requestURI.contains("contact") || requestURI.contains("createMotel")
+                || requestURI.contains("forgetpass");
     }
 
     private FilterConfig filterConfig = null;

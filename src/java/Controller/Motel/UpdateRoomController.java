@@ -118,7 +118,7 @@ public class UpdateRoomController extends HttpServlet {
                 motel.updateRoom1(price, quantity, roomid);
             }
             Rooms r = motel.getRoomByid(roomstring);
-            noti.insertAlertForAdmin("Has Update Room have roomid is:"+roomid+" in motel:"+r.getMid(), acc.getAccId(), 7, 1);
+            noti.insertAlertForAdmin("Has Update Room have roomid is:"+roomid+": in motel:"+r.getMid(), acc.getAccId(), 7, 1);
             response.sendRedirect("managemotel");
         }
     }

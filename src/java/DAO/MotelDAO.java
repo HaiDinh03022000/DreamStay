@@ -741,6 +741,17 @@ public class MotelDAO {
         } catch (Exception e) {
         }
     }
+    
+    public void deleReviewByID(String rvid) {
+        String query = "DELETE FROM Review WHERE rvid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, rvid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public void insertRoom3(String img1, String img2, String img3, int price, int quantity, int mid, int cateid) {
         String query = "insert into Room\n"
@@ -838,7 +849,7 @@ public class MotelDAO {
 
     public List<Bill> ListOwnerBill(int accid) {
         List<Bill> list = new ArrayList<>();
-        String query = "select * from Bill where accid = ?";
+        String query = "select * from Bill where accid = ? order by bid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -949,7 +960,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Rooms> b = dao.getAllRoom(1);
+        List<Motel> b = dao.getAllMotels();
         System.out.println(b);
     }
 }

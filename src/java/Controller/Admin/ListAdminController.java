@@ -5,8 +5,10 @@
 package Controller.Admin;
 
 import DAO.AdminDAO;
+import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
+import Model.Motel;
 import Model.Notification;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -33,7 +35,7 @@ public class ListAdminController extends HttpServlet {
             throws ServletException, IOException {
         NotificationDAO noti = new NotificationDAO();
         AdminDAO admin = new AdminDAO();
-        HttpSession session = request.getSession();
+        MotelDAO motel = new MotelDAO();
         int type = Integer.parseInt(request.getParameter("type"));
         if (type == 1) {
             String acctype = request.getParameter("acctype");
@@ -68,7 +70,11 @@ public class ListAdminController extends HttpServlet {
                 request.setAttribute("noticomplete", complete);
             }
             request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);
-        }
+        } else if(type == 3){
+            List<Motel> mt = motel.getAllMotels();
+            request.setAttribute("motel", mt);        
+            request.getRequestDispatcher("ad-TableMotel.jsp").forward(request, response);
+        }    
     }
 
     @Override

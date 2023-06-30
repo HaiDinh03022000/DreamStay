@@ -35,12 +35,10 @@ public class ChangePassController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
+        LoginDAO login = new LoginDAO();
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
-            InfoUserDAO info = new InfoUserDAO();
-            NotificationDAO noti = new NotificationDAO();
-
             String cpass = request.getParameter("cpass");
             String npass = request.getParameter("npass");
             String rnpass = request.getParameter("rnpass");
@@ -67,6 +65,8 @@ public class ChangePassController extends HttpServlet {
                 request.removeAttribute("cpass");
                 request.removeAttribute("npass");
                 request.removeAttribute("rnpass");
+                Account a = login.GetAccByid(acc.getAccId());
+                session.setAttribute("acc", a);
             }
             request.getRequestDispatcher("Loadinfo?type=2").forward(request, response);
         }
