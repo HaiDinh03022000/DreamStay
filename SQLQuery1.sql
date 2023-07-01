@@ -180,4 +180,9 @@ select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend
 from Motel m, Alert a, Account ac , InforUser i, Room r
 where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and idget = 3 and (staid = 4 or staid = 6 )
 order by a.alertid desc
+
+select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen
+from Motel m, Alert a, Account ac , InforUser i, Room r
+where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and idget = 2 and (staid = 4 or staid = 6) 
+order by a.alertid desc
 	

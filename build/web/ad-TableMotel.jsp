@@ -68,8 +68,8 @@
                             <tbody>
                                 <c:forEach items="${motel}" var="r" begin="${(page-1)*psize}" end="${page*psize-1}">
                                     <tr>
-                                        <td><span >${r.name}</span></td>
-                                        <td><fmt:formatNumber value="${r.price / 1000000}" var="money" type="number" pattern="0.0 'M'" />${money}</td>
+                                        <td><c:set var="shortString" value="${fn:substring(r.name, 0, 30)}" />${shortString}...</td>
+                                        <td><fmt:formatNumber value="${r.price / 1000000}" var="money" type="number" pattern="0.0 'M'" />${money} VNÐ</td>
                                         <td><span >${r.address}</span></td>
                                         <td>                                               
                                             <a href="roomdetail?mid=${r.mid}&check=1"><i class="bi bi-eye-fill"></i></a> -   

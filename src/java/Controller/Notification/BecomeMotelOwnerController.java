@@ -54,7 +54,9 @@ public class BecomeMotelOwnerController extends HttpServlet {
                  request.setAttribute("pmess", "Succes you has becom Motel Owner !");
                  info.updateAccType(acc.getAccId());
                  card.UpdateSubMoney(100000, acc.getPayid());
-                 card.UpdateaddCMoney(100000, "1");   
+                 card.UpdateaddCMoney(100000, "1");
+                 Account a = login.GetAccByid(acc.getAccId());
+                 session.setAttribute("acc", a);
             }
             request.getRequestDispatcher("Loadinfo?type=4").forward(request, response);
         }
