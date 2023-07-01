@@ -7,6 +7,7 @@ package Controller.Motel;
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
+import Model.Motel;
 import Model.Notification;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -36,16 +37,20 @@ public class SubmitReviewController extends HttpServlet {
             throws ServletException, IOException {
        HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
-        
+        MotelDAO motel = new MotelDAO();
+        NotificationDAO noti = new NotificationDAO();
         if (acc == null) {
             response.sendRedirect("login.jsp");
-        } else {
-            MotelDAO motel = new MotelDAO();
+        } else {         
             String mid = request.getParameter("mid");
             String roomid = request.getParameter("roomid");
             String comment = request.getParameter("comment");
             String rate = request.getParameter("rate");
-            motel.insertReview(rate, comment, acc.getAccId(), mid);     
+            int rid = Integer.parseInt(roomid);
+            int mmid = Integer.parseInt(mid);
+            Motel mt = motel.getMotelByID(mmid);
+            motel.insertReview(rate, comment, acc.getAccId(), mid);         
+            noti.insertAlert("has review your motel!", acc.getAccId(), rid, 4, 0, mt.getAccid());
             response.sendRedirect("roomdetail?mid="+mid+"&roomid="+roomid);
         }
     }

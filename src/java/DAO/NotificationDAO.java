@@ -395,8 +395,8 @@ public class NotificationDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         String formattedDate = currentDate.format(formatter);
 
-        String query = "insert into Alert (textarea, dateup , staid, idsend, idget)\n"
-                + "  values (?,?,?,?,?);";
+        String query = "insert into Alert (textarea, dateup , staid, idsend, idget, seen)\n"
+                + "  values (?,?,?,?,?,0);";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -459,7 +459,7 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> list = noti.getDoneProcess(3);
+        List<Notification> list = noti.getDoneProcess(2);
         System.out.println(list);
     }
 }

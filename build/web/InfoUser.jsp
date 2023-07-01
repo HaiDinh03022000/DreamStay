@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Number Phone:</label>
-                                            <input type="text" name="phone" class="form-control" value="${listinfo.phoneNum}">
+                                            <input type="text" name="phone" class="form-control" maxlength="11" value="${listinfo.phoneNum}">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Year of Birth:</label>
@@ -189,7 +189,7 @@
                                                         <input type="text" name="email" class="form-control" value="">
                                                         <label class="form-label"><strong>Current Pass:</strong></label>
                                                         <input id="numberInput" type="password" name="pass" class="form-control" value="">
-                                                        <c:if test="${sessionScope.acc.accType == 1}">
+                                                        <c:if test="${sessionScope.acc.accType != 1}">
                                                             <div class="text-right mt-3">
                                                                 <button type="submit" class="btn btn-primary">Submit</button>&nbsp;            
                                                             </div>
@@ -294,46 +294,48 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="card-body pb-2">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="">Notifications: </h6>
-                                        <button id="toggleButton2" onclick="toggleCard('cardContainer2', 'toggleButton2')" class="btn btn-default">Hide</button>
-                                    </div>
-                                    <div id="cardContainer2" class="text-right mt-3" style="display: ${his}">
-                                        <table class="custom-table" border="1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sender</th>
-                                                    <th>Status</th>
-                                                    <th>Comment</th>
-                                                    <th>Time</th>
-                                                    <th class="smaller">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${donepro}" var="i">
+                                <c:if test="${sessionScope.acc.accType != 1}">
+                                    <div class="card-body pb-2">
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="">Notifications: </h6>
+                                            <button id="toggleButton2" onclick="toggleCard('cardContainer2', 'toggleButton2')" class="btn btn-default">Hide</button>
+                                        </div>
+                                        <div id="cardContainer2" class="text-right mt-3" style="display: ${his}">
+                                            <table class="custom-table" border="1">
+                                                <thead>
                                                     <tr>
-                                                        <td><img src="img/Avatar/${i.avatar}">${i.username}</td>                                                                                                   
-                                                        <td>
-                                                            <c:if test="${i.astatus == 4}">
-                                                                <span style="background-color: #009900; border-radius: 5px;padding: 5px; color: white">Complete</span>
-                                                            </c:if>
-                                                            <c:if test="${i.astatus == 6}">
-                                                                <span style="background-color: red; border-radius: 5px;padding: 5px; color: white">Out of Date</span>
-                                                            </c:if>
-                                                        </td>
-                                                        <td>${i.textarea}</td> 
-                                                        <td><span id="duratio-${i.nftid}">${i.dateup}</span></td>
-                                                        <td class="smaller"><a href="dele?id=${i.nftid}&type=2"><i class="bi bi-trash-fill"></i></a></td>
+                                                        <th>Sender</th>
+                                                        <th>Status</th>
+                                                        <th>Comment</th>
+                                                        <th>Time</th>
+                                                        <th class="smaller">Action</th>
                                                     </tr>
-                                                <script>
-                                                    calculateDuration("${i.dateup}", "duratio-${i.nftid}");
-                                                </script>
-                                            </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${donepro}" var="i">
+                                                        <tr>
+                                                            <td><img src="img/Avatar/${i.avatar}">${i.username}</td>                                                                                                   
+                                                            <td>
+                                                                <c:if test="${i.astatus == 4}">
+                                                                    <span style="background-color: #009900; border-radius: 5px;padding: 5px; color: white">Complete</span>
+                                                                </c:if>
+                                                                <c:if test="${i.astatus == 6}">
+                                                                    <span style="background-color: red; border-radius: 5px;padding: 5px; color: white">Out of Date</span>
+                                                                </c:if>
+                                                            </td>
+                                                            <td>${i.textarea}</td> 
+                                                            <td><span id="duratio-${i.nftid}">${i.dateup}</span></td>
+                                                            <td class="smaller"><a href="dele?id=${i.nftid}&type=2"><i class="bi bi-trash-fill"></i></a></td>
+                                                        </tr>
+                                                    <script>
+                                                        calculateDuration("${i.dateup}", "duratio-${i.nftid}");
+                                                    </script>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                </c:if>
                                 <div class="text-right mt-3">
                                     <a href="Loadinfo"><button type="button" class="btn btn-default">Back</button></a>
                                 </div>

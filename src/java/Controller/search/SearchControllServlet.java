@@ -36,7 +36,7 @@ public class SearchControllServlet extends HttpServlet {
        List<Motel> listM = dao.searchByName(txtSearch);
        request.setAttribute("listM", listM);
        request.setAttribute("textS", txtSearch);
-       request.getRequestDispatcher("rooms.jsp").forward(request, response);
+       request.getRequestDispatcher("rooms").forward(request, response);
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
