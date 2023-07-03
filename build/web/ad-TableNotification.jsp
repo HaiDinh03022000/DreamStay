@@ -23,17 +23,17 @@
 
     <body>
         <section>
-            <c:set var="page1" value="${param.page1}"/>
-            <c:set var="psize1" value="5"/>
-            <c:if test="${page == null}">
+            <c:set var="page1" value="${param.page1}"/>          
+            <c:set var="psize" value="5"/>
+            <c:if test="${page1 == null}">   
                 <c:set var="page1" value="1"/>     
             </c:if>         
         </section>
         <section>
-            <c:set var="page" value="${param.page}"/>
+            <c:set var="page" value="${param.page}"/>          
             <c:set var="psize" value="5"/>
             <c:if test="${page == null}">
-                <c:set var="page" value="1"/>     
+                <c:set var="page" value="1"/>       
             </c:if>         
         </section>
         <jsp:include page="adminheader.jsp"/>
@@ -61,8 +61,8 @@
                             <thead>
                                 <tr>
                                     <th>UserName</th>
-                                    <th>
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comment</button>
+                                    <th>Comment
+                                        <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-caret-down-fill"></i></button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
                                             <a class="dropdown-item" href="listadmin?type=2&ctype=1">Update</a>
                                             <a class="dropdown-item" href="listadmin?type=2&ctype=2">Create</a> 
@@ -91,16 +91,15 @@
                                         </td>
 
                                         <td>     
+                                            <a href="notiadmin?alid=${r.nftid}"><i class="bi bi-check2-square text-success"></i></a> 
                                             <c:set var="splitArray" value="${fn:split(r.textarea, ':')}" />
                                             <c:if test="${fn:trim(splitArray[3]) == '' }">
-                                                <a href="roomdetail?mid=${fn:trim(splitArray[1])}&check=1"><i class="bi bi-eye-fill"></i></a>
-                                                <a href="deletemotel?id=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill"></i></a>
+                                                <a href="roomdetail?mid=${fn:trim(splitArray[1])}&check=1"><i class="bi bi-eye-fill"></i></a>  
+                                                <a href="deletemotel?id=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill text-secondary"></i></a>
                                                 </c:if>
-
                                             <c:if test="${fn:trim(splitArray[3]) != '' }">      
-                                                <a href="roomdetail?mid=${fn:trim(splitArray[3])}&roomid=${fn:trim(splitArray[1])}"><i class="bi bi-eye-fill"></i></a>
-                                                <a href="deleteroom?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill"></i></a>
-
+                                                <a href="roomdetail?mid=${fn:trim(splitArray[3])}&roomid=${fn:trim(splitArray[1])}"><i class="bi bi-eye-fill"></i></a> 
+                                                <a href="deleteroom?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill text-secondary"></i></a>
                                             </c:if>
                                         </td>
                                     </tr>
@@ -144,7 +143,7 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            Waiting Pending
+                            Notification History
                         </div>
                         <div class="card-body">
                             <table class="table table-striped" id="table1">
@@ -158,7 +157,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${noticomplete}" var="r" begin="${(page1-1)*psize1}" end="${page*psize1-1}">
+                                <c:forEach items="${noticomplete}" var="r" begin="${(page1-1)*psize}" end="${page1*psize-1}">
                                     <tr>
                                         <td><img  style="border-radius: 50px; width: 50px; height: 50px" src="img/Avatar/${r.avatar}" alt="">
                                             ${r.username}
@@ -174,7 +173,7 @@
                                         </td>
 
                                         <td>     
-                                            <a href="dele?id=${r.nftid}&type=3"><i class="bi bi-trash-fill"></i></a>
+                                            <a href="dele?id=${r.nftid}&type=3"><i class="bi bi-trash-fill text-secondary"></i></a>
                                         </td>
                                     </tr>
                                 <script>
@@ -189,23 +188,23 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <c:if test="${page1 > 2}">
-                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="1"/>"><<</a>
+                                        <a href="listadmin?type=2&page1=<fmt:formatNumber value="1"/>"><<</a>
                                     </c:if>
                                     <c:if test="${page1 != 1}">
-                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
+                                        <a href="listadmin?type=2&page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
                                     </c:if>
                                     <c:if test="${noticomplete.size() != 0}">
-                                        <a class="active" href="listadmin?type=2&page=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
+                                        <a class="active" href="listadmin?type=2&page1=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
                                     </c:if>
                                     <c:set var="nextPage" value="${page1 + 1}" />
-                                    <c:if test="${nextPage > Math.ceil(noticomplete.size() / psize1)}">
-                                        <c:set var="nextPage" value="${page}" />
+                                    <c:if test="${nextPage1 > Math.ceil(noticomplete.size() / psize)}">
+                                        <c:set var="nextPage" value="${page1}" />
                                     </c:if>
-                                    <c:if test="${page1 < (noticomplete.size() / psize1)}">
-                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
+                                    <c:if test="${page1 < (noticomplete.size() / psize)}">
+                                        <a href="listadmin?type=2&page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                     </c:if>
-                                    <c:if test="${page1 < (Math.floor(noticomplete.size() / psize1))}">
-                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="${(noticomplete.size() % psize1 == 0) ? (noticomplete.size() / psize1) : (Math.floor(noticomplete.size() / psize1) + 1)}" 
+                                    <c:if test="${page1 < (Math.floor(noticomplete.size() / psize))}">
+                                        <a href="listadmin?type=2&page1=<fmt:formatNumber value="${(noticomplete.size() % psize == 0) ? (noticomplete.size() / psize) : (Math.floor(noticomplete.size() / psize) + 1)}" 
                                                           type="number" />"> >></a> </c:if>   
                                 </li>
                             </ol>

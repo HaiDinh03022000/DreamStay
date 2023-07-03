@@ -252,7 +252,7 @@ public class NotificationDAO {
         List<Notification> list = new ArrayList<>();
         String query = "select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen\n"
                 + "from Motel m, Alert a, Account ac , InforUser i, Room r\n"
-                + "where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and idget = ? and (staid = 4 or staid = 6)";
+                + "where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and idget = ? and (staid = 4 or staid = 6) order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -283,7 +283,7 @@ public class NotificationDAO {
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.staid = 7;";
+                + "WHERE a.idget = 1 and a.staid = 7 order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -313,7 +313,7 @@ public class NotificationDAO {
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.staid = 8;";
+                + "WHERE a.idget = 1 and a.staid = 8 order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -343,7 +343,7 @@ public class NotificationDAO {
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.textarea like '%' + ? + '%';";
+                + "WHERE a.idget = 1 and a.textarea like '%' + ? + '%' order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -395,8 +395,8 @@ public class NotificationDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         String formattedDate = currentDate.format(formatter);
 
-        String query = "insert into Alert (textarea, dateup , staid, idsend, idget)\n"
-                + "  values (?,?,?,?,?);";
+        String query = "insert into Alert (textarea, dateup , staid, idsend, idget, seen)\n"
+                + "  values (?,?,?,?,?,0);";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -459,7 +459,7 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> list = noti.getTop4Notifications(3);
+        List<Notification> list = noti.getDoneProcess(2);
         System.out.println(list);
     }
 }

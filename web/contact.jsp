@@ -11,11 +11,11 @@
         <meta name="keywords" content="Sona, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Sona | Template</title>
+        <title>Template</title>
 
-        <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+        <link href="css/starcss.css" rel="stylesheet" type="text/css"/>
 
     </head>
 
@@ -50,10 +50,26 @@
                     </div>
                     <c:if test="${sessionScope.acc != null}">
                         <div class="col-lg-7 offset-lg-1">
-                            <form action="#" class="contact-form">
-                                <div class="row">    
+                            <form action="contactus" class="contact-form" method="post">
+                                <p style="color: green">${mess}</p>
+                                <div class="row"> 
                                     <div class="col-lg-12">
-                                        <textarea placeholder="Your Message"></textarea>
+                                        <h5>You Rating:</h5>
+                                        <div class="rating">
+                                            <input value="5" type="radio" name="rate" id="rate-5">
+                                            <label for="rate-5" class="bi bi-star-fill"></label>
+                                            <input value="4" type="radio" name="rate" id="rate-4">
+                                            <label for="rate-4" class="bi bi-star-fill"></label>
+                                            <input value="3" type="radio" name="rate" id="rate-3">
+                                            <label for="rate-3" class="bi bi-star-fill"></label>
+                                            <input value="2" type="radio" name="rate" id="rate-2">
+                                            <label for="rate-2" class="bi bi-star-fill"></label>
+                                            <input value="1" type="radio" name="rate" id="rate-1">
+                                            <label  for="rate-1" class="bi bi-star-fill"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Your Message" name="message"></textarea>
                                         <button type="submit">Submit Now</button>
                                     </div>
                                 </div>
@@ -65,7 +81,7 @@
                             <form action="#" class="contact-form">
                                 <div class="row">    
                                     <div class="col-lg-12">
-                                        
+
                                         <button type="submit"><a style="color: white" href="login.jsp">Login To contact us</a></button>
                                     </div>
                                 </div>

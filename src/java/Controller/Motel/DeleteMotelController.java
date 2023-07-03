@@ -4,6 +4,7 @@ import DAO.AdminDAO;
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
+import Model.Motel;
 import Model.Rooms;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -36,6 +37,7 @@ public class DeleteMotelController extends HttpServlet {
         } else {
             int mid = Integer.parseInt(request.getParameter("id"));
             String check = request.getParameter("check");
+            Motel mt = motel.getMotelByID(mid);
             List<Rooms> r = motel.getAllidRoom(mid);
             for (Rooms ro : r) {
                 admin.deleAlertByRoomid(ro.getRoomid());
@@ -44,9 +46,10 @@ public class DeleteMotelController extends HttpServlet {
             admin.deleReviewByMid(mid);
             admin.deleRoomByMid(mid);
             admin.deleMotelByMid(mid);
-            if (check != null) {
+            if (check != null) {              
                 String nftid = request.getParameter("aleartid");
                 noti.updateStatus(nftid, 8);
+                noti.insertAlertForAdmin("has delete your motel have", 1, 4, mt.getAccid());
                 response.sendRedirect("listadmin?type=2");
             } else {
                 noti.insertAlertForAdmin("Has Deleted a Motel have id is:" + mid, acc.getAccId(), 8, 1);

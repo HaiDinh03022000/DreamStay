@@ -49,6 +49,10 @@ public class UpLoadinfoController extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             String type = request.getParameter("type");
+            String show = request.getParameter("show");
+            if(show != null){
+                request.setAttribute("show", show);
+            }
             if (type != null) {
                 if (type.equals("2")) {
                     request.setAttribute("allow2", "active show");
@@ -59,6 +63,9 @@ public class UpLoadinfoController extends HttpServlet {
                 } else if (type.equals("4")) {
                     request.setAttribute("allow4", "active show");
                     request.setAttribute("aw4", "active");
+                } else if(type.equals("5")){
+                    request.setAttribute("allow5", "active show");
+                    request.setAttribute("aw5", "active");
                 }
             } else {
                 request.setAttribute("allow1", "active show");

@@ -140,7 +140,7 @@ public class MotelDAO {
         }
         return list;
     }
-    
+
     public List<Rooms> getAllRoom(int mid) {
         List<Rooms> list = new ArrayList<>();
         String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ? and r.quantity > 0";
@@ -262,10 +262,12 @@ public class MotelDAO {
 //    }
     public List<Motel> searchByName(String txtsearch) {
         List<Motel> list = new ArrayList<>();
-        String query = "select m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, avg(r.rscore) as 'Total Score' \n"
-                + "from Motel m ,Review r\n"
-                + "where m.mid = r.mid and maddress like '%' + ? + '%'\n"
-                + "group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid,";
+        String query = "SELECT m.mid, m.mname, m.motelimg, AVG(rm.price) AS avgprice, m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc\n"
+                + "FROM Motel m\n"
+                + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
+                + "LEFT JOIN Review r ON m.mid = r.mid\n"
+                + "WHERE m.maddress LIKE '%' + ? + '%'\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -275,13 +277,9 @@ public class MotelDAO {
                 list.add(new Motel(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getDouble(9)));
-
+                        rs.getDouble(6)));
             }
         } catch (Exception e) {
         }
@@ -742,6 +740,17 @@ public class MotelDAO {
         }
     }
 
+    public void deleReviewByID(String rvid) {
+        String query = "DELETE FROM Review WHERE rvid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, rvid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public void insertRoom3(String img1, String img2, String img3, int price, int quantity, int mid, int cateid) {
         String query = "insert into Room\n"
                 + "values(?,?,?,?,?,?,?,1)";
@@ -836,9 +845,33 @@ public class MotelDAO {
         return list;
     }
 
+    public List<Bill> getBillByMid(int mid) {
+        List<Bill> list = new ArrayList<>();
+        String query = "select b.* from Motel m, Bill b, Room r\n"
+                + "where m.mid = r.mid and b.roommid = r.roommid and m.mid = ?";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, mid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Bill(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getInt(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public List<Bill> ListOwnerBill(int accid) {
         List<Bill> list = new ArrayList<>();
-        String query = "select * from Bill where accid = ?";
+        String query = "select * from Bill where accid = ? order by bid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -858,7 +891,7 @@ public class MotelDAO {
         }
         return list;
     }
-    
+
     public Bill getRoomidByBill(String bid) {
         String query = "select * from Bill where bid = ?";
         try {
@@ -867,7 +900,7 @@ public class MotelDAO {
             ps.setString(1, bid);
             rs = ps.executeQuery();
             if (rs.next()) {
-               return new Bill(rs.getInt(1),
+                return new Bill(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getDouble(4),
@@ -891,7 +924,7 @@ public class MotelDAO {
         } catch (Exception e) {
         }
     }
-    
+
     public void updateTrueBill(String billid) {
         String query = "update Bill set condition = 1 where bid = ?";
         try {
@@ -902,8 +935,9 @@ public class MotelDAO {
         } catch (Exception e) {
         }
     }
-    public void updateDatedueBill(String billid,String datedue) {
-            String query = "update Bill set datedue = ? where bid = ?";
+
+    public void updateDatedueBill(String billid, String datedue) {
+        String query = "update Bill set datedue = ? where bid = ?";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -931,11 +965,12 @@ public class MotelDAO {
         }
         return 0;
     }
+
     public int getNewRoomId(int mid) {
         String query = "select top(1) roommid from Room where mid = ? order by roommid desc";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
-            ps = con.prepareStatement(query);          
+            ps = con.prepareStatement(query);
             ps.setInt(1, mid);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -949,7 +984,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Rooms> b = dao.getAllRoom(1);
+        List<Bill> b = dao.getBillByMid(2);
         System.out.println(b);
     }
 }

@@ -154,7 +154,7 @@
                                         <li><a href="./contact.jsp">Contact</a></li>
                                             <c:if test="${sessionScope.acc != null}"> 
                                                 <c:if test="${sessionScope.acc.accType == 1}"> <c:set var="type" scope="session" value="owner"/> </c:if>
-                                                <c:if test="${sessionScope.acc.accType == 0}"> <c:set var="type" scope="session" value="Loadinfo?type=4"/> </c:if>
+                                                <c:if test="${sessionScope.acc.accType == 0}"> <c:set var="type" scope="session" value="Loadinfo?type=5&show=1"/> </c:if>
                                             <li id="notificationBell"><a href="<c:out value="${type}"/>"><i class="bi bi-bell-fill"></i>
                                                     <c:forEach items="${sessionScope.listnt}" var="i">
                                                         <c:if test="${!flag && i.seen == 0}">

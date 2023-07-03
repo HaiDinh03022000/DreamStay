@@ -11,7 +11,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Windmill Dashboard - Forms</title>
+        <title>C-M_motel</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -45,34 +45,34 @@
             <c:if test="${m != null}">
                 <c:set var="action" scope="session" value="updatemotel"/> 
             </c:if>
-             <c:if test="${m.mid == null}">
-                        <c:set var="req" value="required"/> 
-                    </c:if>
+            <c:if test="${m.mid == null}">
+                <c:set var="req" value="required"/> 
+            </c:if>
 
             <form action="${action}" method="post" enctype="multipart/form-data" oninput="checkInputValue('Input','submitButton')">
                 <div class="flex items-center">
 
                     <label class="block flex-grow w-56 text-sm">   
-                            <c:if test="${m != null}">
-                                <select id="guest" onchange="location = this.value;" class="block flex-grow w-10 px-10 mt-6 mr-2s text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option disabled class="text-green-500" selected="">--Update Room--</option>        
-                                    <c:forEach items="${type}" var="guest">  
-                                        <option value="updateroom?roomid=${guest.roomid}">${guest.cateid}</option>              
-                                    </c:forEach>
-                                    <option value="createroom?mid=${m.mid}" class="text-blue-500" >+Add Room</option> 
-                                    <option disabled>──────────</option>
-                                    <option  disabled class="text-red-600">--Delete Room--</option>        
-                                    <c:forEach items="${type}" var="guest">  
-                                        <option value="deleteroom?roomid=${guest.roomid}&mid=${m.mid}">${guest.cateid}</option>              
-                                    </c:forEach>                        
-                                </select>
-                            </c:if>
-                            
+                        <c:if test="${m != null}">
+                            <select id="guest" onchange="location = this.value;" class="block flex-grow w-10 px-10 mt-6 mr-2s text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option disabled class="text-green-500" selected="">--Update Room--</option>        
+                                <c:forEach items="${type}" var="guest">  
+                                    <option value="updateroom?roomid=${guest.roomid}">${guest.cateid}</option>              
+                                </c:forEach>
+                                <option value="createroom?mid=${m.mid}" class="text-blue-500" >+Add Room</option> 
+                                <option disabled>──────────</option>
+                                <option  disabled class="text-red-600">--Delete Room--</option>        
+                                <c:forEach items="${type}" var="guest">  
+                                    <option value="deleteroom?roomid=${guest.roomid}&mid=${m.mid}">${guest.cateid}</option>              
+                                </c:forEach>                        
+                            </select>
+                        </c:if>
+
                         <span class="text-gray-700 dark:text-gray-400">Upload image</span>
                         <input ${req} name="img" type="file" class="block w-80 flex-grow w-10 px-10 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" accept="image/png, image/gif, image/jpeg" > 
                     </label>
                     <label class="block flex-grow w-56 text-sm">  
-                        </label>
+                    </label>
 
 
                     <input type="hidden" name="img1" value="${m.image1}" />
@@ -91,10 +91,10 @@
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Description</span>
                     <textarea id="Input" required maxlength="500" name="description"
-                                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                rows="3"
-                                placeholder="Enter Your Motel Description"
-                                >${m.description}</textarea>
+                              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                              rows="3"
+                              placeholder="Enter Your Motel Description"
+                              >${m.description}</textarea>
                     <input type="hidden" value="${m.mid}" name="mid">
 
                 </label>
@@ -125,7 +125,7 @@
                             </div>-->
             </form>
         </div>
-                    <script src="js/validateinput.js" type="text/javascript"></script>
+        <script src="js/validateinput.js" type="text/javascript"></script>
     </body>
 </html>
 

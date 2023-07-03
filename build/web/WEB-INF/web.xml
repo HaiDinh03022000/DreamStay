@@ -21,6 +21,8 @@
         <url-pattern>/createroom</url-pattern>
         <url-pattern>/updateroom</url-pattern>
         <url-pattern>/upmotel</url-pattern>
+        <url-pattern>/delereview</url-pattern>
+        <url-pattern>/getownernoti</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>checkjsp</filter-name>
@@ -32,6 +34,7 @@
         <url-pattern>/listadmin</url-pattern>
         <url-pattern>/deleteacc</url-pattern>
         <url-pattern>/updateacc</url-pattern>
+        <url-pattern>/notiadmin</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginCotroller</servlet-name>
@@ -99,7 +102,7 @@
     </servlet>
     <servlet>
         <servlet-name>OwnerManageController</servlet-name>
-        <servlet-class>Controller.Notification.OwnerManageController</servlet-class>
+        <servlet-class>Controller.Motel.OwnerBillController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AcceptNotiController</servlet-name>
@@ -188,6 +191,22 @@
     <servlet>
         <servlet-name>UpdateAccController</servlet-name>
         <servlet-class>Controller.Admin.UpdateAccController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactUsController</servlet-name>
+        <servlet-class>Controller.Admin.ContactUsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteReviewController</servlet-name>
+        <servlet-class>Controller.Motel.DeleteReviewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NotiAdminController</servlet-name>
+        <servlet-class>Controller.Admin.NotiAdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetOwnerNotiController</servlet-name>
+        <servlet-class>Controller.Motel.GetOwnerNotiController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
@@ -344,6 +363,22 @@
     <servlet-mapping>
         <servlet-name>UpdateAccController</servlet-name>
         <url-pattern>/updateacc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactUsController</servlet-name>
+        <url-pattern>/contactus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteReviewController</servlet-name>
+        <url-pattern>/delereview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotiAdminController</servlet-name>
+        <url-pattern>/notiadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOwnerNotiController</servlet-name>
+        <url-pattern>/getownernoti</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

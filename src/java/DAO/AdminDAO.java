@@ -29,7 +29,7 @@ public class AdminDAO {
 
     public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<>();
-        String query = "select * from Account where accid != 1";
+        String query = "select * from Account where accid != 1 order by accid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -65,8 +65,7 @@ public class AdminDAO {
     
     public List<Account> getAccountByType(String type) {
         List<Account> list = new ArrayList<>();
-        String query = "select * \n"
-                + "from Account where acctype = ? and accid !=1";
+        String query = "select * from Account where acctype = ? and accid !=1 order by accid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
