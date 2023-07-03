@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/on-Bill.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ownersidebar.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableMotel.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/on-Notification.jsp</file>
             <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/OwnerBillController.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Model/Bill.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/MangeMotelController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ownersidebar.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/GetOwnerNotiController.java</file>
         </group>
     </open-files>
 </project-private>

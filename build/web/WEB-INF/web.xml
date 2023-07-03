@@ -22,6 +22,7 @@
         <url-pattern>/updateroom</url-pattern>
         <url-pattern>/upmotel</url-pattern>
         <url-pattern>/delereview</url-pattern>
+        <url-pattern>/getownernoti</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>checkjsp</filter-name>
@@ -203,6 +204,10 @@
         <servlet-name>NotiAdminController</servlet-name>
         <servlet-class>Controller.Admin.NotiAdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetOwnerNotiController</servlet-name>
+        <servlet-class>Controller.Motel.GetOwnerNotiController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
         <url-pattern>/LoginCotroller</url-pattern>
@@ -370,6 +375,10 @@
     <servlet-mapping>
         <servlet-name>NotiAdminController</servlet-name>
         <url-pattern>/notiadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOwnerNotiController</servlet-name>
+        <url-pattern>/getownernoti</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
