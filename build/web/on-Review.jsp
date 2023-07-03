@@ -34,12 +34,9 @@
             </c:if>         
         </section>
         <jsp:include page="ownersidebar.jsp"/>
-
-
-
         <!-- With actions -->
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-            Pending Notification
+            Review Notification
         </h4>
 
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -49,111 +46,13 @@
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                             >
-                            <th class="px-4 py-3">User</th>
+                            <th class="px-4 py-3">Sender</th>
                             <th class="px-4 py-3">Comment</th>
-                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3">Score</th>
                             <th class="px-4 py-3">Date</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
-                    <c:forEach items="${noti}" var="i" begin="${(page-1)*psize}" end="${page*psize-1}">
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center text-sm">
-                                        <!-- Avatar with inset shadow -->
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"src="img/Avatar/${i.avatar}"alt=""loading="lazy"/>
-                                            <div class="absolute inset-0 rounded-full shadow-inner"aria-hidden="true"></div>
-                                        </div>
-                                        <div><p class="font-semibold">${i.username}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <c:set var="sub" value="${fn:substringBefore(i.textarea, '%')}" />${sub}
-                                </td>
-
-                                <c:if test="${i.astatus == 1 || i.astatus == 5}">
-                                    <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                            pending
-                                        </span>
-                                    </td>
-                                </c:if>                          
-                                <td class="px-4 py-3 text-sm">
-                                    <span id="duration-${i.nftid}">${i.dateup}</span>
-                                </td>
-                                <td class="px-4 py-3">
-                                    <c:if test="${i.astatus == 1 || i.astatus == 5}">
-                                        <div class="flex items-center space-x-4 text-sm">
-                                            <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                               aria-label="Edit" href="accept?id=${i.nftid}"><i style="color: green" class="bi bi-check-square"></i></a>
-                                            <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                               aria-label="Edit" href="deny?id=${i.nftid}"><i style="color: red" class="bi bi-x-square"></i></a>                                    
-                                        </div>
-                                    </c:if>  
-                                </td>
-                            </tr>
-                        <script>
-                            calculateDuration("${i.dateup}", "duration-${i.nftid}");
-                        </script>
-                        </tbody>
-                    </c:forEach>
-                </table>
-            </div>
-            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                <span class="flex items-center col-span-3">
-                </span>
-                <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                    <nav aria-label="Table navigation">
-                        <ul class="inline-flex items-center">
-                            <li>
-                                <c:if test="${page > 2}">
-                                    <a href="owner?page=<fmt:formatNumber value="1"/>"><<</a>
-                                </c:if>
-                                <c:if test="${page != 1}">
-                                    <a href="owner?page=<fmt:formatNumber value="${(page != 1)?(page -1):1}" type="number" />"><</i></a>           
-                                </c:if>
-                                <c:if test="${noti.size() != 0}">
-                                    <a class="active" href="owner?page=<fmt:formatNumber value="${page}" type="number" />">${page}</a>    
-                                </c:if>
-                                <c:set var="nextPage" value="${page + 1}" />
-                                <c:if test="${nextPage > Math.ceil(noti.size() / psize)}">
-                                    <c:set var="nextPage" value="${page}" />
-                                </c:if>
-                                <c:if test="${page < (noti.size() / psize)}">
-                                    <a href="owner?page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
-                                </c:if>
-                                <c:if test="${page < (Math.floor( noti.size() / psize))}">
-                                    <a href="owner?page=<fmt:formatNumber value="${(noti.size() % psize == 0) ? (noti.size() / psize) : (Math.floor( noti.size() / psize) + 1)}" 
-                                                      type="number" />"> >></a> </c:if>   
-                                </li>
-                            </ul>
-                        </nav>
-                    </span>
-                </div>
-            </div>
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                Review Notification
-            </h4>
-
-            <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                <div class="w-full overflow-x-auto">
-                    <table class="w-full whitespace-no-wrap">
-                        <thead>
-                            <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                                >
-                                <th class="px-4 py-3">Sender</th>
-                                <th class="px-4 py-3">Comment</th>
-                                <th class="px-4 py-3">Score</th>
-                                <th class="px-4 py-3">Date</th>
-                                <th class="px-4 py-3">Actions</th>
-                            </tr>
-                        </thead>
                     <c:forEach items="${review}" var="i" begin="${(page1-1)*psize}" end="${page1*psize-1}">
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <tr class="text-gray-700 dark:text-gray-400">

@@ -101,7 +101,7 @@
     </servlet>
     <servlet>
         <servlet-name>OwnerManageController</servlet-name>
-        <servlet-class>Controller.Notification.OwnerManageController</servlet-class>
+        <servlet-class>Controller.Motel.OwnerBillController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AcceptNotiController</servlet-name>

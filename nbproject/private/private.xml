@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/DeleteMotelController.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/DAO/MotelDAO.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/search/SearchMultiFieldControllServlet.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/adminheader.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/InfoUser.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/search/SearchControllServlet.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/on-Bill.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ownersidebar.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableMotel.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/OwnerBillController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Model/Bill.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/MangeMotelController.java</file>
         </group>
     </open-files>
 </project-private>

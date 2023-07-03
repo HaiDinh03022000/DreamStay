@@ -157,7 +157,7 @@
                                    }" class="btn btn-primary mt-2">Connect Credit Card</a>
                             </c:if>
                             <c:if test="${mess != null && color == 'green'}">
-                                <a href="Loadinfo?type=4"style="active {
+                                <a href="Loadinfo?type=5&show=1"style="active {
                                        background-color: yellow;
                                    }" class="btn btn-primary mt-2">View Your Order</a>
                             </c:if>

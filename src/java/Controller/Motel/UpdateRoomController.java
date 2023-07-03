@@ -48,7 +48,7 @@ public class UpdateRoomController extends HttpServlet {
             Rooms room = motel.getRoomByid(roomid);
 
             request.setAttribute("room", room);
-            request.getRequestDispatcher("manageroom.jsp").forward(request, response);
+            request.getRequestDispatcher("manage-room.jsp").forward(request, response);
         }
     }
 

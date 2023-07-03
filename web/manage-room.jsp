@@ -79,7 +79,7 @@
 
                 <c:if test="${room == null}">
                     <div id="popup" class="popup">
-                        <p>Do you want to create more Room continue?</p>
+                        <p>Do you want to create more Room?</p>
                         <button name="accpect" value="accpect" type="submit">Continue</button>
                         <button name="deny" value="deny">Deny</button>
                     </div>

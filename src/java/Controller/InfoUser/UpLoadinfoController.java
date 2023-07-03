@@ -63,6 +63,9 @@ public class UpLoadinfoController extends HttpServlet {
                 } else if (type.equals("4")) {
                     request.setAttribute("allow4", "active show");
                     request.setAttribute("aw4", "active");
+                } else if(type.equals("5")){
+                    request.setAttribute("allow5", "active show");
+                    request.setAttribute("aw5", "active");
                 }
             } else {
                 request.setAttribute("allow1", "active show");

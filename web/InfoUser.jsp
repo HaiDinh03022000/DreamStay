@@ -39,6 +39,7 @@
                             <a class="list-group-item list-group-item-action ${aw2}" data-toggle="list" href="#account-change-password">Change password</a>
                             <a class="list-group-item list-group-item-action ${aw3}" data-toggle="list" href="#account-connections">Connections</a>
                             <a class="list-group-item list-group-item-action ${aw4}" data-toggle="list" href="#account-notifications">Notifications</a>
+                            <a class="list-group-item list-group-item-action ${aw5}" data-toggle="list" href="#account-orders">History Order</a>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -199,7 +200,20 @@
                                             </div>
                                         </div>
                                     </c:if>
+                                </div>                                                                                               
+                                <div class="text-right mt-3">
+                                    <a href="Loadinfo"><button type="button" class="btn btn-default">Back</button></a>
                                 </div>
+                                <div style="padding-bottom: 1%"></div>
+                            </div>
+                            <div class="tab-pane fade ${allow5}" id="account-orders">
+                                <c:if test="${show == null}">
+                                    <c:set var="his" value="none"/>
+                                </c:if>
+                                <c:if test="${show != null}">
+                                    <c:set var="his" value="block"/>
+                                </c:if>
+                                <input type="hidden" name="check" value="4">
                                 <div class="card-body pb-2">
                                     <div class="d-flex align-items-center">
                                         <h6 class="">Bill: </h6>
@@ -239,7 +253,6 @@
                                                         </td>
                                                     </tr>
                                                 <script>
-
                                                     calculateFuture("${i.datedue}", "uration-${i.billid}");
                                                 </script>
                                             </c:forEach>

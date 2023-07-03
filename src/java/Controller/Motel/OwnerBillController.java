@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.Notification;
+package Controller.Motel;
 
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
+import Model.Bill;
+import Model.Motel;
 import Model.Notification;
 import Model.Review;
 import jakarta.servlet.ServletException;
@@ -15,14 +17,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
  *
  * @author win
  */
-public class OwnerManageController extends HttpServlet {
+public class OwnerBillController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,11 +40,19 @@ public class OwnerManageController extends HttpServlet {
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
+            String id = request.getParameter("mid");
+            if(id != null){
+                int mid = Integer.parseInt(id);
+                List<Bill> bll = motel.getBillByMid(mid);
+                List<Review> rv = motel.listReview(mid);
+                request.setAttribute("bill", bll);
+                request.setAttribute("review", rv);
+            }
             List<Notification> notifications = noti.getNotificationForOwner(acc.getAccId());
-            List<Review> listreview = motel.listReviewOwner(acc.getAccId());
-            request.setAttribute("noti", notifications);
-            request.setAttribute("review", listreview);
-            request.getRequestDispatcher("ownerTable.jsp").forward(request, response);
+            List<Motel> m = motel.getAllOwnerMotel(acc.getAccId());
+            request.setAttribute("noti", notifications);           
+            request.setAttribute("ownerlist", m);
+            request.getRequestDispatcher("on-Bill.jsp").forward(request, response);
 
         }
     }

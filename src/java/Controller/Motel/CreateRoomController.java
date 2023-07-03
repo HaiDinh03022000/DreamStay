@@ -50,7 +50,7 @@ public class CreateRoomController extends HttpServlet {
             List<Category> cate = motel.listCate();
             request.setAttribute("cate", cate);
         }
-        request.getRequestDispatcher("manageroom.jsp").forward(request, response);
+        request.getRequestDispatcher("manage-room.jsp").forward(request, response);
     }
 
     @Override

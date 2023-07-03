@@ -145,8 +145,8 @@ public class LoginDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = currentDate.format(formatter);
 
-        String query = " insert into Account(username, password, acctype, datesign, otpcode, usid)\n"
-                + "values(?,?,0,?,'*',?);";
+        String query = " insert into Account(username, password, acctype, datesign, otpcode, usid, accstatus)\n"
+                + "values(?,?,0,?,'*',?,1);";
         try {
             conn = new Connections().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -179,7 +179,7 @@ public class LoginDAO {
     public void insertUserInfo(String fullname, String age, String email) {
         String query = "insert into InforUser\n"
                 + "values \n"
-                + "	(?,'*','*',?,'none.jpg', ?, 1);";
+                + "	(?,'*','*',?,'none.jpg', ?);";
         try {
             conn = new Connections().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);

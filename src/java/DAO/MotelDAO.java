@@ -845,6 +845,30 @@ public class MotelDAO {
         return list;
     }
 
+    public List<Bill> getBillByMid(int mid) {
+        List<Bill> list = new ArrayList<>();
+        String query = "select b.* from Motel m, Bill b, Room r\n"
+                + "where m.mid = r.mid and b.roommid = r.roommid and m.mid = ?";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, mid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Bill(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getInt(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public List<Bill> ListOwnerBill(int accid) {
         List<Bill> list = new ArrayList<>();
         String query = "select * from Bill where accid = ? order by bid desc";
@@ -960,7 +984,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Motel> b = dao.getAllMotels();
+        List<Bill> b = dao.getBillByMid(2);
         System.out.println(b);
     }
 }
