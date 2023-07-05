@@ -36,7 +36,6 @@ public class DeleteMotelController extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             int mid = Integer.parseInt(request.getParameter("id"));
-            String check = request.getParameter("check");
             Motel mt = motel.getMotelByID(mid);
             List<Rooms> r = motel.getAllidRoom(mid);
             for (Rooms ro : r) {
@@ -46,15 +45,8 @@ public class DeleteMotelController extends HttpServlet {
             admin.deleReviewByMid(mid);
             admin.deleRoomByMid(mid);
             admin.deleMotelByMid(mid);
-            if (check != null) {              
-                String nftid = request.getParameter("aleartid");
-                noti.updateStatus(nftid, 8);
-                noti.insertAlertForAdmin("has delete your motel have", 1, 4, mt.getAccid());
-                response.sendRedirect("listadmin?type=2");
-            } else {
-                noti.insertAlertForAdmin("Has Deleted a Motel have id is:" + mid, acc.getAccId(), 8, 1);
-                response.sendRedirect("managemotel");
-            }
+            noti.insertAlertForAdmin("Has Deleted a Motel have id is:" + mid, acc.getAccId(), 8, 1);
+            response.sendRedirect("managemotel");
         }
     }
 

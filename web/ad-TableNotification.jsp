@@ -95,11 +95,11 @@
                                             <c:set var="splitArray" value="${fn:split(r.textarea, ':')}" />
                                             <c:if test="${fn:trim(splitArray[3]) == '' }">
                                                 <a href="roomdetail?mid=${fn:trim(splitArray[1])}&check=1"><i class="bi bi-eye-fill"></i></a>  
-                                                <a href="deletemotel?id=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill text-secondary"></i></a>
+                                                <a href="admanagemotel?mid=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&link=2"><i class="text-danger bi bi-building-fill-slash"></i></a>
                                                 </c:if>
                                             <c:if test="${fn:trim(splitArray[3]) != '' }">      
                                                 <a href="roomdetail?mid=${fn:trim(splitArray[3])}&roomid=${fn:trim(splitArray[1])}"><i class="bi bi-eye-fill"></i></a> 
-                                                <a href="deleteroom?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&check=1"><i class="bi bi-trash-fill text-secondary"></i></a>
+                                                <a href="admanagemotel?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&link=2"><i class="text-danger bi bi-building-fill-slash"></i></a>
                                             </c:if>
                                         </td>
                                     </tr>

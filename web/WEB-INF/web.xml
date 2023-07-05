@@ -35,6 +35,7 @@
         <url-pattern>/deleteacc</url-pattern>
         <url-pattern>/updateacc</url-pattern>
         <url-pattern>/notiadmin</url-pattern>
+        <url-pattern>/admanagemotel</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginCotroller</servlet-name>
@@ -208,6 +209,10 @@
         <servlet-name>GetOwnerNotiController</servlet-name>
         <servlet-class>Controller.Motel.GetOwnerNotiController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminManageMotelController</servlet-name>
+        <servlet-class>Controller.Admin.AdminManageMotelController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
         <url-pattern>/LoginCotroller</url-pattern>
@@ -379,6 +384,10 @@
     <servlet-mapping>
         <servlet-name>GetOwnerNotiController</servlet-name>
         <url-pattern>/getownernoti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageMotelController</servlet-name>
+        <url-pattern>/admanagemotel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

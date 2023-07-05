@@ -32,11 +32,11 @@
         <jsp:include page="adminheader.jsp"/>
         <style>
             .truncate-4 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 50px;
-}
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 50px;
+            }
         </style>
         <div class="page-heading">
             <div class="page-title">
@@ -72,11 +72,16 @@
                                         <td><fmt:formatNumber value="${r.price / 1000000}" var="money" type="number" pattern="0.0 'M'" />${money} VNÐ</td>
                                         <td><span >${r.address}</span></td>
                                         <td>                                               
-                                            <a href="roomdetail?mid=${r.mid}&check=1"><i class="bi bi-eye-fill"></i></a> -   
-                                            <a href="#"><i class="bi bi-trash-fill text-secondary"></i></a>                       
+                                            <a href="roomdetail?mid=${r.mid}&check=1"><i class="bi bi-eye-fill"></i></a> - 
+                                                <c:if test="${r.condition == 1}">
+                                                <a href="admanagemotel?mid=${r.mid}&link=3"><i class="text-danger bi bi-building-fill-slash"></i></a>   
+                                                </c:if>
+                                                <c:if test="${r.condition == 0}">
+                                                <a href="admanagemotel?mid=${r.mid}&link=3"><i class="text-success bi bi-building-fill-slash"></i></a>   
+                                                </c:if>
                                         </td>
                                     </tr>
-                            </c:forEach> 
+                                </c:forEach> 
                             </tbody>
                         </table>
                     </div>

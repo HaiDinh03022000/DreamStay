@@ -191,5 +191,26 @@ where m.mid = r.mid and b.roommid = r.roommid and m.mid = ?
 
 select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen
 from Motel m, Alert a, Account ac , InforUser i, Room r
-where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid 
+where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid
 and m.accid = 2 and a.idget = 2 and (a.staid = 3 or a.staid = 2 or a.staid =4)
+
+SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen
+FROM Alert a
+JOIN Account ac ON ac.accid = a.idsend
+JOIN InforUser i ON i.usid = ac.usid
+WHERE a.idget = 1 and a.staid = 8 and a.roommid is null order by a.alertid desc
+
+SELECT m.mid, m.mname, m.motelimg, avg(rm.price) as avgprice ,m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
+FROM Motel m
+LEFT JOIN Room rm ON m.mid = rm.mid
+LEFT JOIN Review r ON m.mid = r.mid
+WHERE m.condition != 0
+GROUP BY m.mid, m.mname, m.motelimg, m.maddress;
+
+SELECT m.mid, m.mname, avg(rm.price) as avgprice ,m.maddress, m.condition
+FROM Motel m
+LEFT JOIN Room rm ON m.mid = rm.mid
+LEFT JOIN Review r ON m.mid = r.mid
+GROUP BY m.mid, m.mname, m.maddress,m.condition;
+
+select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = 2 and r.quantity > 0 and r.codition =1

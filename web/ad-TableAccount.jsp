@@ -83,10 +83,10 @@
                                         <td>${r.createDate}</td>
                                         <td>
                                             <c:if test="${r.accstatus == 1}">
-                                                <a style="color: red" href="updateacc?accid=${r.accId}"><i class="bi bi-x-circle"></i></a> - 
+                                                <a style="color: red" href="updateacc?accid=${r.accId}"><i class="bi bi-hammer"></i></a> - 
                                                 </c:if>
                                                 <c:if test="${r.accstatus == 0}">
-                                                <a style="color: #33cc00" href="updateacc?accid=${r.accId}"><i class="bi bi-check-circle"></i></i></a> - 
+                                                <a style="color: #33cc00" href="updateacc?accid=${r.accId}"><i class="bi bi-hammer"></i></a> - 
                                                 </c:if>
                                             <a style="color: gray" href="deleteacc?accid=${r.accId}&acctype=${r.accType}"><i class="bi bi-trash-fill"></i></a>
                                         </td>

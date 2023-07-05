@@ -13,7 +13,7 @@ drop table InforUser
 create table InforUser(
 usid int identity(1,1) not null primary key,
 fullname nvarchar(255),
-uaddress nvarchar(255) ,
+uaddress nvarchar(255),
 phonenumber nvarchar(30),
 birthday varchar(4) ,
 avatar nvarchar(max),
@@ -53,6 +53,7 @@ dateupload nvarchar(50),
 coordinates nvarchar(max),
 accid int,
 foreign key (accid) references Account(accid),
+condition bit
 )
 
 create table Category(
@@ -158,7 +159,7 @@ values
 	('Small'),
 	('Big');
 	   	
-insert into Motel(mname ,motelimg,mdescription,maddress ,dateupload ,coordinates ,accid)
+insert into Motel(mname ,motelimg,mdescription,maddress ,dateupload ,coordinates ,accid, condition)
 values
 (
 N'Phòng trọ cao cấp giá rẻ mới xây - Shophouse dầu khí - Đường Võ Chí Công, Hòa Quý, Đà Nẵng',
@@ -171,7 +172,7 @@ Cọc 01 triệu. Nộp tiền theo tháng. Điện nước theo công tơ riên
 Phù hợp: Gia đình nhỏ, nhân viên văn phòng, sinh viên có nhu cầu ở lâu dài.',
 N'214 Đường Võ Chí Công, Hòa Quý, Đà Nẵng',
 '16/05/2023',
-'https://goo.gl/maps/z5YsfwxD5yVoUQ1g8',1
+'https://goo.gl/maps/z5YsfwxD5yVoUQ1g8',6,1
 ),
 
 (
@@ -180,7 +181,7 @@ N'Phòng trọ 30m tại Nguyễn văn thoại,an Hải đông,Sơn trà',
 N'Cho thuê phòng trọ tại kiệt 145 Nguyễn văn thoại,dt 30m ,gần biển,chợ gần cầu Trần thị lý,giá cho thuê 2triệu 8/tháng LH 0936 441 755',
 N'145 Nguyễn Văn Thoại, Phường An Hải Đông, Sơn Trà',
 '20/05/2023',
-'https://goo.gl/maps/gkjSXKiVZYAeKpgL9',2
+'https://goo.gl/maps/gkjSXKiVZYAeKpgL9',2,1
 ),
 
 (
@@ -189,7 +190,7 @@ N'Cho thuê phòng trọ ở trung tâm thành phố',
 N'Cho thuê phòng cho trọ ở q Hải Châu, thoáng mát sạch đẹp, yên tĩnh giá chỉ từ 1,6 tr/th/ng 2,1tr/th/2ng có Tolet, bếp nấu, có gác lưng. Thang máy, nơi để xe tầng trệt và lối đi riêng, ra vào 24/24. 2 lớp cửa thẻ từ và vân tay nên an ninh cực kỳ tốt. Mặt tiền đường Duy tân, lối ra vào sân bay ĐN. gần các trường đại hoc duy tân, kiến trúc, ngoại ngữ....',
 N'132 Đường Duy Tân, Phường Hòa Thuận Tây, Hải Châu',
 '20/05/2023',
-'https://goo.gl/maps/nmeUFjSbRXpYH1bp8',6
+'https://goo.gl/maps/nmeUFjSbRXpYH1bp8',6,1
 ),
 
 (
@@ -210,7 +211,7 @@ tất cả các phòng đều có cửa số thoáng mát nhiều ánh sáng
 Có thể trực tiếp đến xem phòng bất cứ lúc nào . Hãy liên hệ nếu bạn cần nhé',
 N'K35/3 Đường Nam Thành, Phường Hòa Hải, Ngũ Hành Sơn',
 '10/05/2023',
-'https://goo.gl/maps/NscNAPQXKeyH1VcL9',5
+'https://goo.gl/maps/NscNAPQXKeyH1VcL9',5,1
 ),
 
 (
@@ -225,7 +226,7 @@ N'- Phòng chất lượng cao ở lầu 2 ( Nhà ở mái đúc 2 tấm mới, 
 - DT: trong phòng là 16m2, tổng diện tích sử dụng 70m2/ tầng 2, có sân thượng trước nhà thoáng mát, phơi đồ thoải mái, có bếp nấu ăn, rửa chén . . ',
 N'k266 H14/19 Đường Hoàng Diệu, Phường Nam Dương, Hải Châu',
 '08/05/2023',
-'https://goo.gl/maps/d92iUs9sZdn6p37n8',2
+'https://goo.gl/maps/d92iUs9sZdn6p37n8',2,1
 ),
 
 (
@@ -234,7 +235,7 @@ N'Cho thuê phòng trọ tại số 78 Nguyễn Xuân Hữu, Hoà Thọ Đông, 
 N'Phòng trọ 20m2, có gác lửng, có khu vực bếp, có bình nóng lạnh, gạch ốp tới trần nên sạch sẽ và thoáng mát. Cả dãy trọ chỉ có 4 phòng, có sân phơi đồ và chỗ để xe riêng. Gần chợ Cẩm Lệ, Hoà Cầm và trường tiểu học Trần Nhân Tông, khu dân cư đông đúc, giờ giấc tự do. Ưu tiên cho gia đình nhỏ ở dài lâu. Liên hệ A An 0905.229.886. Giá 1800k/ tháng',
 N'Đường Nguyễn Xuân Hữu, Phường Hòa Thọ Đông, Cẩm Lệ',
 '15/05/2023',
-'https://goo.gl/maps/a7Qqh2NA1nDii7U86',6
+'https://goo.gl/maps/a7Qqh2NA1nDii7U86',6,1
 ),
 
 (
@@ -243,7 +244,7 @@ N'Cho thuê căn hộ sát chợ Non Nước',
 N'Cho thuê căn hộ sát bên cạnh chợ Non Nước – Ngũ Hành Sơn (06 Nam Thành) – Nằm ở vị trí 2 mặt tiền, diện tích 32m2, có gác lửng rộng rãi, thiết bị vệ sinh sinh cao cấp, giá cho thuê. 2tr/căn hộ Liên hệ Đt, zalo: 0905 868 758 (A.Thịnh)',
 N'06 Nam Thành,Hòa Hải, Ngũ Hành Sơn',
 '01/03/2021',
-'https://goo.gl/maps/5KdMh7sJzQajnj9Y8',2
+'https://goo.gl/maps/5KdMh7sJzQajnj9Y8',2,1
 ),
 
 (
@@ -272,7 +273,7 @@ Giá: từ 2tr đến 2tr7/tháng, cọc 2 triệu
 Liên hệ: 0326482674 ( Thương )',
 N'380 Tôn Đức Thắng,P. Hòa Minh, Liên Chiểu',
 '19/04/2021',
-'https://goo.gl/maps/2JX25jwd74kUwDQw7',2
+'https://goo.gl/maps/2JX25jwd74kUwDQw7',2,1
 ),
 
 (
@@ -291,7 +292,7 @@ Liên hệ: 034 851 0149 (chú Dũng)
 036 897 0278 (cô Hoa)',
 N'346 Ngũ Hành Sơn, Ngũ Hành Sơn',
 '19/04/2025',
-'https://goo.gl/maps/T1KZLoVrD2azmFHf8',6
+'https://goo.gl/maps/T1KZLoVrD2azmFHf8',6,1
 ),
 
 
@@ -301,7 +302,7 @@ N'Cho thuê phòng trọ thoáng mát, sạch sẽ',
 N'Cho thuê phòng chung chủ, phòng lớn có ban công có lối đi riêng. Cách trường ĐH Đông Á, Kiến Trúc, Chợ Đầu mối Hòa Cường, có thể đi bộ khoảng 290m, Gần bệnh viện Vinmec, gần trường Đại học ngoại ngữ. Có điều hoà, nóng lạnh, có chỗ nấu ăn, Yêu cầu: sinh viên nữ ưu tiên những bạn sinh viên năm 1, chưa có xe.',
 N'582 Đường số 2/9, Phường Hòa Cường Nam, Hải Châu',
 '28/03/2023',
-'https://goo.gl/maps/nKvSAkm9zdqC2758A',5
+'https://goo.gl/maps/nKvSAkm9zdqC2758A',5,1
 ),
 
 
@@ -315,7 +316,7 @@ Cho thuê phòng trọ hoặc mặt bằng kinh doanh.
 Liên hệ: 0825.64.55.78 Chú Sơn.',
 N'Phường Hòa Minh, Liên Chiểu',
 '28/03/2023',
-'https://goo.gl/maps/ZceA1wM2SYw3vtJcA',5
+'https://goo.gl/maps/ZceA1wM2SYw3vtJcA',5,1
 ),
 
 
@@ -335,7 +336,7 @@ Giá cho thuê 3tr/tháng.
 LH: Zin-0962308846',
 N'Đường Nguyễn Duy Trinh, Phường Hòa Hải, Ngũ Hành Sơn',
 '05/02/2025',
-'https://goo.gl/maps/GHm3cJxV8uaxZbuj9',6
+'https://goo.gl/maps/GHm3cJxV8uaxZbuj9',6,1
 ),
 
 
@@ -349,7 +350,7 @@ giá 1tr2 chưa tính điện nước
 địa chỉ 1033 âu cơ chạy lên 100m có tiệm thuốc tây KIM TÂN',
 N'Phường Hòa Khánh Bắc, Liên Chiểu',
 '31/01/2023',
-'https://goo.gl/maps/8jhbFUCBaDtfxq9W7',2
+'https://goo.gl/maps/8jhbFUCBaDtfxq9W7',2,1
 ),
 
 (
@@ -358,7 +359,7 @@ N'Cho thuê phòng trọ phù hợp cho gia đình nhỏ',
 N'Co 03 Phòng rộng từ 30 đến 35m2 có phòng ngủ riêng, phòng ăn và wc',
 N'382/6k Đường Núi Thành, Phường Hòa Cường Bắc, Hải Châu',
 '28/01/2023',
-'https://goo.gl/maps/94f5PgpDadLfoKPr8',5
+'https://goo.gl/maps/94f5PgpDadLfoKPr8',5,1
 );
 
 insert into Room(mimage1, mimage2, mimage3, price, quantity, mid, cateid,codition)
