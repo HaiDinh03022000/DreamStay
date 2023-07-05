@@ -45,7 +45,7 @@ public class RoomsDetailServlet extends HttpServlet {
             response.sendRedirect("404notfound.jsp");
         } else {
             List<Review> r = motel.listReview(id);
-            List<Rooms> ls = motel.getAllRoom(id);
+            List<Rooms> ls = motel.getAllRoomType(id);
 
             request.setAttribute("review", r);
             request.setAttribute("detail", m);

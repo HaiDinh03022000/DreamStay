@@ -213,4 +213,5 @@ LEFT JOIN Room rm ON m.mid = rm.mid
 LEFT JOIN Review r ON m.mid = r.mid
 GROUP BY m.mid, m.mname, m.maddress,m.condition;
 
-select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = 2 and r.quantity > 0 and r.codition =1
+select r.roommid, r.mimage1, r.mimage2, r.mimage3, r.price, r.quantity, r.mid, c.catenme, r.codition
+from Motel m, Room r, Category c where m.mid = r.mid and c.cateid = r.cateid and m.mid = ?

@@ -94,7 +94,7 @@ public class MotelDAO {
         } catch (Exception e) {
         }
     }
-    
+
     public void UpStatusRoom(int rid, int status) {
         String query = "update Room set codition = ? where roommid = ?";
         try {
@@ -189,7 +189,7 @@ public class MotelDAO {
         return list;
     }
 
-    public List<Rooms> getAllRoom(int mid) {
+    public List<Rooms> getAllRoomType(int mid) {
         List<Rooms> list = new ArrayList<>();
         String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ? and r.quantity > 0 and r.codition =1";
         try {
@@ -199,6 +199,31 @@ public class MotelDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Rooms(rs.getInt(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Rooms> getAllRoom(int mid) {
+        List<Rooms> list = new ArrayList<>();
+        String query = "select r.roommid, r.mimage1, r.mimage2, r.mimage3, r.price, r.quantity, r.mid, c.catenme, r.codition\n"
+                + "from Motel m, Room r, Category c where m.mid = r.mid and c.cateid = r.cateid and m.mid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, mid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Rooms(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -1032,7 +1057,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        Rooms b = dao.getRoomByid("4");
+        List<Rooms> b = dao.getAllRoom(2);
         System.out.println(b);
     }
 }
