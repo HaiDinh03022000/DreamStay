@@ -80,12 +80,15 @@ public class UpdateMotelController extends HttpServlet {
 
         //========================================================
         int mid = Integer.parseInt(request.getParameter("mid"));
+        Motel mt = motel.getMotelByID(mid);
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String coordinates = request.getParameter("coordinates");
         String description = request.getParameter("description");
         motel.updateMotel1(name, fileName, description, address, coordinates, mid);
-        noti.insertAlertForAdmin("Has Updated Motel have mid is:" + mid, acc.getAccId(), 7, 1);
+        if(mt.getCondition() == 1){
+            noti.insertAlertForAdmin("Has Updated Motel have mid is:" + mid, acc.getAccId(), 7, 1);
+        }     
         response.sendRedirect("managemotel");
     }
 

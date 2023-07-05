@@ -78,7 +78,7 @@
 
                                     <div class="flex items-center space-x-4 text-sm">
                                         <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                           aria-label="Edit" href="updatemotel?mid=${i.mid}"><i style="color: green" class="bi bi-check-square"></i></a>
+                                           aria-label="Edit" href="updatemotel?mid=${i.mid}"><i class="bi bi-building-gear"></i></a>
                                         <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
                                            aria-label="Edit" href="deletemotel?id=${i.mid}"><i style="color: red" class="bi bi-x-square"></i></a>                                    
                                     </div>

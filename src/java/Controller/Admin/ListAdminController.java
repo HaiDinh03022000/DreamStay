@@ -33,9 +33,11 @@ public class ListAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         NotificationDAO noti = new NotificationDAO();
         AdminDAO admin = new AdminDAO();
         MotelDAO motel = new MotelDAO();
+        Account acc = (Account) session.getAttribute("acc");
         int type = Integer.parseInt(request.getParameter("type"));
         if (type == 1) {
             String acctype = request.getParameter("acctype");
@@ -64,14 +66,14 @@ public class ListAdminController extends HttpServlet {
                 }
             } else {
                 List<Notification> pending = noti.getAdminNotiPending();
-                List<Notification> complete = noti.getAdminNotiDone();
+                List<Notification> complete = noti.getAdminNoti(acc.getAccId(),8);
 
                 request.setAttribute("notipending", pending);
                 request.setAttribute("noticomplete", complete);
             }
             request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);
         } else if(type == 3){
-            List<Motel> mt = motel.getAllMotels();
+            List<Motel> mt = motel.getListMotel();
             request.setAttribute("motel", mt);        
             request.getRequestDispatcher("ad-TableMotel.jsp").forward(request, response);
         }    

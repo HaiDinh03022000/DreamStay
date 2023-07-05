@@ -20,13 +20,6 @@
     </head>
     <body>
         <section>
-            <c:set var="page1" value="${param.page1}"/>          
-            <c:set var="psize" value="5"/>
-            <c:if test="${page1 == null}">   
-                <c:set var="page1" value="1"/>     
-            </c:if>         
-        </section>
-        <section>
             <c:set var="page" value="${param.page}"/>
             <c:set var="psize" value="5"/>
             <c:if test="${page == null}">
@@ -36,7 +29,7 @@
         <jsp:include page="ownersidebar.jsp"/>
         <!-- With actions -->
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-            Review Notification
+            Admin Notification
         </h4>
 
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -51,42 +44,41 @@
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
-                    <c:forEach items="${review}" var="i" begin="${(page1-1)*psize}" end="${page1*psize-1}">
+                    <c:forEach items="${lnoti}" var="i" begin="${(page-1)*psize}" end="${page*psize-1}">
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
                                         <!-- Avatar with inset shadow -->
                                         <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"src="img/Avatar/${i.avatar}"alt=""loading="lazy"/>
-                                            <div class="absolute inset-0 rounded-full shadow-inner"aria-hidden="true"></div>
+                                            <img class="object-cover w-full h-full rounded-full" src="img/Avatar/${i.avatar}" alt="" loading="lazy"/>
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                         </div>
                                         <div><p class="font-semibold">${i.username}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    ${i.comment}
-                                </td>
+                                    ${i.textarea}
+                                </td>                    
                                 <td class="px-4 py-3 text-xs">
                                     <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                        <c:forEach begin="1" end="${i.rscore}">
-                                            <i class="bi bi-star-fill"></i>
-                                        </c:forEach>
+                                        Complete
                                     </span>
-                                </td>                     
+                                </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <span id="duratio-${i.rvid}">${i.dateup}</span>
+                                    <span id="duration-${i.nftid}">${i.dateup}</span>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
                                         <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                           aria-label="Edit" href="delereview?rvid=${i.rvid}"><i class="bi bi-trash"></i></a>                                   
-                                    </div>      
+                                           aria-label="Edit" href="#"><i class="bi bi-trash-fill"></i></a>
+                                    </div>
+
                                 </td>
                             </tr>
                         <script>
-                            calculateDuration("${i.dateup}", "duratio-${i.rvid}");
+                            calculateDuration("${i.dateup}", "duration-${i.nftid}");
                         </script>
                         </tbody>
                     </c:forEach>
@@ -101,24 +93,24 @@
                     <nav aria-label="Table navigation">
                         <ul class="inline-flex items-center">
                             <li>
-                                <c:if test="${page1 > 2}">
-                                    <a href="owner&page1=<fmt:formatNumber value="1"/>"><<</a>
+                                <c:if test="${page > 2}">
+                                    <a href="getownernoti&page=<fmt:formatNumber value="1"/>"><<</a>
                                 </c:if>
-                                <c:if test="${page1 != 1}">
-                                    <a href="owner&page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
+                                <c:if test="${page != 1}">
+                                    <a href="getownernoti&page=<fmt:formatNumber value="${(page != 1)?(page -1):1}" type="number" />"><</a>           
                                 </c:if>
-                                <c:if test="${noticomplete.size() != 0}">
-                                    <a class="active" href="lowner&page1=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
+                                <c:if test="${lnoti.size() != 0}">
+                                    <a class="active" href="getownernoti&page=<fmt:formatNumber value="${page}" type="number" />">${page}</a>    
                                 </c:if>
-                                <c:set var="nextPage" value="${page1 + 1}" />
-                                <c:if test="${nextPage1 > Math.ceil(noticomplete.size() / psize)}">
-                                    <c:set var="nextPage" value="${page1}" />
+                                <c:set var="nextPage" value="${page + 1}" />
+                                <c:if test="${nextpage > Math.ceil(lnoti.size() / psize)}">
+                                    <c:set var="nextPage" value="${page}" />
                                 </c:if>
-                                <c:if test="${page1 < (noticomplete.size() / psize)}">
-                                    <a href="owner&page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
+                                <c:if test="${page < (lnoti.size() / psize)}">
+                                    <a href="getownernoti&page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                 </c:if>
-                                <c:if test="${page1 < (Math.floor(noticomplete.size() / psize))}">
-                                    <a href="owner&page1=<fmt:formatNumber value="${(noticomplete.size() % psize == 0) ? (noticomplete.size() / psize) : (Math.floor(noticomplete.size() / psize) + 1)}" 
+                                <c:if test="${page < (Math.floor(lnoti.size() / psize))}">
+                                    <a href="getownernoti&page=<fmt:formatNumber value="${(lnoti.size() % psize == 0) ? (lnoti.size() / psize) : (Math.floor(lnoti.size() / psize) + 1)}" 
                                                       type="number" />"> >></a> </c:if>   
                             </li>
                         </ul>

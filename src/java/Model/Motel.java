@@ -11,6 +11,7 @@ public class Motel {
     private String dateupload ,coordinates;
     private int accid;
     private double rscore;
+    private int condition;
 
     public Motel(int mid, String name, String image1, double price, String address, double rscore) {
         this.mid = mid;
@@ -21,6 +22,13 @@ public class Motel {
         this.rscore = rscore;
     }
 
+    public Motel(int mid, String name, double price, String address, int condition) {
+        this.mid = mid;
+        this.name = name;
+        this.price = price;
+        this.address = address;
+        this.condition = condition;
+    }
 
     public Motel(int mid, String name, String image1, String description, String address, String dateupload, String coordinates, int accid) {
         this.mid = mid;
@@ -44,8 +52,20 @@ public class Motel {
         this.accid = accid;
         this.rscore = rscore;
     }
-    
-    
+
+    public Motel(int mid, String name, String image1, String description, String address, String dateupload, String coordinates, int accid, double rscore, int condition) {
+        this.mid = mid;
+        this.name = name;
+        this.image1 = image1;
+        this.price = price;
+        this.description = description;
+        this.address = address;
+        this.dateupload = dateupload;
+        this.coordinates = coordinates;
+        this.accid = accid;
+        this.rscore = rscore;
+        this.condition = condition;
+    }
 
     public int getMid() {
         return mid;
@@ -125,6 +145,14 @@ public class Motel {
 
     public void setRscore(double rscore) {
         this.rscore = rscore;
+    }
+
+    public int getCondition() {
+        return condition;
+    }
+
+    public void setCondition(int condition) {
+        this.condition = condition;
     }
 
     @Override

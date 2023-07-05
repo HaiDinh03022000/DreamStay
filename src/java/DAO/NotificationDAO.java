@@ -307,16 +307,18 @@ public class NotificationDAO {
         return list;
     }
     
-    public List<Notification> getAdminNotiDone() {
+    public List<Notification> getAdminNoti(int accid, int type) {
         List<Notification> list = new ArrayList<>();
         String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.staid = 8 order by a.alertid desc";
+                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            ps.setInt(2, type);
             re = ps.executeQuery();
             while (re.next()) {
                 list.add(new Notification(re.getString(1),
@@ -459,7 +461,7 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> list = noti.getDoneProcess(2);
+        List<Notification> list = noti.getAdminNoti(1,8);
         System.out.println(list);
     }
 }

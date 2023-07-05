@@ -41,6 +41,7 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
+                + "WHERE m.condition != 0\n"
                 + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress;";
         try {
             con = new Connections().getConnection();
@@ -57,6 +58,53 @@ public class MotelDAO {
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public List<Motel> getListMotel() {
+        List<Motel> list = new ArrayList<>();
+        String query = "SELECT m.mid, m.mname, avg(rm.price) as avgprice ,m.maddress, m.condition\n"
+                + "FROM Motel m\n"
+                + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
+                + "LEFT JOIN Review r ON m.mid = r.mid\n"
+                + "GROUP BY m.mid, m.mname, m.maddress,m.condition;";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Motel(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getString(4),
+                        rs.getInt(5)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public void UpStatusMotel(int mid, int status) {
+        String query = "update Motel set condition = ? where mid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, mid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
+    public void UpStatusRoom(int rid, int status) {
+        String query = "update Room set codition = ? where roommid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, rid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public List<Motel> getAllOwnerMotel(int accid) {
@@ -143,7 +191,7 @@ public class MotelDAO {
 
     public List<Rooms> getAllRoom(int mid) {
         List<Rooms> list = new ArrayList<>();
-        String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ? and r.quantity > 0";
+        String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ? and r.quantity > 0 and r.codition =1";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -174,7 +222,6 @@ public class MotelDAO {
                         rs.getInt(7),
                         rs.getString(8),
                         rs.getInt(9));
-
             }
         } catch (Exception e) {
         }
@@ -183,11 +230,11 @@ public class MotelDAO {
 
     public Motel getMotelByID(int mid) {
 
-        String query = "SELECT m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, COALESCE(AVG(r.rscore), 0) AS avgsc\n"
+        String query = "SELECT m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, COALESCE(AVG(r.rscore), 0) AS avgsc, m.condition\n"
                 + "FROM Motel m\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
                 + "WHERE m.mid = ?\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg,m.mdescription, m.maddress,m.dateupload,m.coordinates,m.accid";
+                + "GROUP BY m.mid, m.mname, m.motelimg,m.mdescription, m.maddress,m.dateupload,m.coordinates,m.accid,m.condition";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -203,7 +250,8 @@ public class MotelDAO {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getInt(8),
-                        rs.getDouble(9));
+                        rs.getDouble(9),
+                        rs.getInt(10));
             }
         } catch (Exception e) {
         }
@@ -214,7 +262,7 @@ public class MotelDAO {
         List<Motel> list = new ArrayList<>();
         String query = "select top(4) m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, avg(r.rscore) as 'Total Score' \n"
                 + "from Motel m, Review r\n"
-                + "where m.mid = r.mid \n"
+                + "where m.mid = r.mid and m.condition != 0\n"
                 + "group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid\n"
                 + "ORDER BY 'Total Score' DESC;";
         try {
@@ -703,8 +751,8 @@ public class MotelDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         String formattedDate = currentDate.format(formatter);
 
-        String query = "insert into Motel (mname, motelimg, mdescription,maddress,dateupload,coordinates,accid)\n"
-                + "  values (?,?,?,?,?,?,?);";
+        String query = "insert into Motel (mname, motelimg, mdescription,maddress,dateupload,coordinates,accid, condition)\n"
+                + "  values (?,?,?,?,?,?,?,1);";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -984,7 +1032,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Bill> b = dao.getBillByMid(2);
+        Rooms b = dao.getRoomByid("4");
         System.out.println(b);
     }
 }

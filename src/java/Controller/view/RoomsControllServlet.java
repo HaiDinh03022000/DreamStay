@@ -23,12 +23,11 @@ public class RoomsControllServlet extends HttpServlet {
         request.setAttribute("listCate", listCate);
         if (ListMt != null) {
             request.setAttribute("listM", ListMt);
-            request.getRequestDispatcher("rooms.jsp").forward(request, response);
         } else {
             List<Motel> listM = dao.getAllMotels();
-            request.setAttribute("listM", listM);
-            request.getRequestDispatcher("rooms.jsp").forward(request, response);
+            request.setAttribute("listM", listM);          
         }
+        request.getRequestDispatcher("rooms.jsp").forward(request, response);
     }
 
     @Override

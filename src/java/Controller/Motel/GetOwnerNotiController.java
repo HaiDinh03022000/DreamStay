@@ -4,12 +4,16 @@
  */
 package Controller.Motel;
 
+import DAO.NotificationDAO;
+import Model.Account;
+import Model.Notification;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -25,7 +29,12 @@ public class GetOwnerNotiController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("acc");
+        NotificationDAO noti = new NotificationDAO();
+        List<Notification> listnoti = noti.getAdminNoti(acc.getAccId(), 4);
+        request.setAttribute("lnoti", listnoti);
+        request.getRequestDispatcher("on-Notification.jsp").forward(request, response);      
     }
 
     @Override
@@ -34,11 +43,6 @@ public class GetOwnerNotiController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
