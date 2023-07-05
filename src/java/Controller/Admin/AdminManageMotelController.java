@@ -61,11 +61,17 @@ public class AdminManageMotelController extends HttpServlet {
             }
         }
         if (link.equals("3")) {
-            response.sendRedirect("listadmin?type=3");
+            String r = request.getParameter("r");
+            if (r != null) {
+                response.sendRedirect("listadmin?type=3&mid=" + mid);
+            } else {
+                response.sendRedirect("listadmin?type=3");
+            }
         } else {
             response.sendRedirect("listadmin?type=2");
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

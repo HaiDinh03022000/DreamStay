@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Admin/AdminManageMotelController.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableNotification.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/DeleteMotelController.java</file>
             <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/ad-TableMotel.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/UpdateRoomController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Motel/DeleteRoomController.java</file>
         </group>
     </open-files>
 </project-private>

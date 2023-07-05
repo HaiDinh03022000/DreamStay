@@ -10,6 +10,7 @@ import DAO.NotificationDAO;
 import Model.Account;
 import Model.Motel;
 import Model.Notification;
+import Model.Rooms;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,6 +74,12 @@ public class ListAdminController extends HttpServlet {
             }
             request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);
         } else if(type == 3){
+            String id = request.getParameter("mid");
+            if(id != null){
+                int mid = Integer.parseInt(id);
+                List<Rooms> room = motel.getAllRoom(mid);
+                request.setAttribute("room", room);
+            }
             List<Motel> mt = motel.getListMotel();
             request.setAttribute("motel", mt);        
             request.getRequestDispatcher("ad-TableMotel.jsp").forward(request, response);

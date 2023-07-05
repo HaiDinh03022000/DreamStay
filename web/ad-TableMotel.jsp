@@ -30,14 +30,6 @@
             </c:if>         
         </section>
         <jsp:include page="adminheader.jsp"/>
-        <style>
-            .truncate-4 {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 50px;
-            }
-        </style>
         <div class="page-heading">
             <div class="page-title">
                 <div class="row">
@@ -50,6 +42,45 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${room != null}">
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            Room
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped" id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>Category Name</th>
+                                        <th>Price/M</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${room}" var="r">
+                                        <tr>
+                                            <td>${r.cateid}</td>
+                                            <td><fmt:formatNumber value="${r.price / 1000000}" var="money" type="number" pattern="0.0 'M'" />${money} VNÐ</td>
+                                            <td><span >${r.quantity}</span></td>
+                                            <td>                                               
+                                                <a href="roomdetail?mid=${r.mid}&roomid=${r.roomid}"><i class="bi bi-eye-fill"></i></a> -                                               
+                                                    <c:if test="${r.condition == 1}">
+                                                    <a href="admanagemotel?mid=${r.mid}&roomid=${r.roomid}&link=3&r=1"><i class="text-danger bi bi-building-fill-slash"></i></a>   
+                                                    </c:if>
+                                                    <c:if test="${r.condition == 0}">
+                                                    <a href="admanagemotel?mid=${r.mid}&roomid=${r.roomid}&link=3&r=1"><i class="text-success bi bi-building-fill-slash"></i></a>   
+                                                    </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section> 
+            </c:if>
             <section class="section">
                 <div class="card">
                     <div class="card-header">
@@ -73,6 +104,7 @@
                                         <td><span >${r.address}</span></td>
                                         <td>                                               
                                             <a href="roomdetail?mid=${r.mid}&check=1"><i class="bi bi-eye-fill"></i></a> - 
+                                            <a href="listadmin?type=3&mid=${r.mid}"><i class="bi bi-house-exclamation-fill"></i></a> - 
                                                 <c:if test="${r.condition == 1}">
                                                 <a href="admanagemotel?mid=${r.mid}&link=3"><i class="text-danger bi bi-building-fill-slash"></i></a>   
                                                 </c:if>
