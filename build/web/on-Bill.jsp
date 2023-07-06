@@ -76,7 +76,7 @@
 
                                 <c:if test="${i.astatus == 1 || i.astatus == 5}">
                                     <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
                                             pending
                                         </span>
                                     </td>
@@ -175,7 +175,7 @@
                                             </span>
                                         </c:if>
                                         <c:if test="${i.condition != 1}">
-                                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">
                                                 Expired
                                             </span>
                                         </c:if>
