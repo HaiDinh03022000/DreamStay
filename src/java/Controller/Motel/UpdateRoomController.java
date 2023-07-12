@@ -7,6 +7,7 @@ package Controller.Motel;
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
+import Model.Notification;
 import Model.Rooms;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -118,7 +119,17 @@ public class UpdateRoomController extends HttpServlet {
             }
             Rooms r = motel.getRoomByid(roomstring);
             if (r.getCondition() == 1) {
-                noti.insertAlertForAdmin("Has Update Room have roomid is:" + roomid + ": in motel:" + r.getMid(), acc.getAccId(), 7, 1);
+                boolean i = false;
+                List<Notification> listNoti = noti.GetNotiByidget(acc.getAccId());
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("Has Update Room have roomid is:" + roomid + ": in motel:" + r.getMid())) {
+                        noti.updateStatus(nt.getNftid(), 7);
+                        i = true;
+                    }
+                }
+                if (i == false) {
+                    noti.insertAlertForAdmin("Has Update Room have roomid is:" + roomid + ": in motel:" + r.getMid(), acc.getAccId(), 7, 1);
+                }
             }
             response.sendRedirect("managemotel");
         }

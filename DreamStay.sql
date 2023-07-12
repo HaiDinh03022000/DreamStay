@@ -126,7 +126,7 @@ condition bit
 
 insert into InforUser( fullname, uaddress, phonenumber, birthday,avatar,email)
 values 
-	(N'Trần Admin',N'Hà Nội','0356788241','1999','avaadmin.webp','admin@gmail.com'),
+	(N'Trần Admin',N'Hà Nội','0356788241','1999','admin.jpg','admin@gmail.com'),
 	(N'Hoàng Đức Hiền',N'Đà Nẵng','0523927504','2002','avahien.webp','hienhdde160299@fpt.edu.vn'),
 	(N'Hà Thanh Phúc',N'Quảng Bình','0905123789','2001','avaphuc.webp','phuchtde160466@fpt.edu.vn'),
 	(N'Huỳnh Thành Đạt',N'Đà Nẵng','0905667432','2000','avatdat.webp','dathtde160551@fpt.edu.vn'),

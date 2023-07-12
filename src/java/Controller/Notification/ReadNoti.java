@@ -39,12 +39,18 @@ public class ReadNoti extends HttpServlet {
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
-            List<Notification> notifications = (List<Notification>) session.getAttribute("listnt");
-            for (Notification notification : notifications) {
+            List<Notification> NotiN = (List<Notification>) session.getAttribute("listnt");
+            List<Notification> NotiAdmin = (List<Notification>) session.getAttribute("listntadmin");
+            for (Notification notification : NotiN) {
+                noti.updateSeen(notification.getNftid());
+            }
+            for (Notification notification : NotiAdmin) {
                 noti.updateSeen(notification.getNftid());
             }
             List<Notification> listnoti = noti.getTop4Notifications(acc.getAccId());
+            List<Notification> listnotiAD = noti.getTop4NotiAdmin(acc.getAccId());
             session.setAttribute("listnt", listnoti);
+            session.setAttribute("listntadmin", listnotiAD);
             
             
         }

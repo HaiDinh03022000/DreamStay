@@ -139,6 +139,17 @@ public class LoginDAO {
         }
         return null;
     }
+    
+    public void updateAccType(int accid) {
+        String query = "update Account set acctype = 1 where accid = ?";
+        try {
+            conn = new Connections().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, accid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public void insertAcc(String user, String pass, String usid) {
         LocalDate currentDate = LocalDate.now();

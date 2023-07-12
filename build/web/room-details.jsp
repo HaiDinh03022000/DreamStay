@@ -55,10 +55,10 @@
         <section class="room-details-section spad">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="room-details-item">
                             <div class="carousel-container">
-                                <img class="carousel-img" src="img/motelimg/${room.image1}" alt="">
+                                <img class="carousel-img    " src="img/motelimg/${room.image1}" alt="">
                                 <img class="carousel-img" src="img/motelimg/${room.image2}" alt="">
                                 <img class="carousel-img" src="img/motelimg/${room.image3}" alt="">
                                 <button class="carousel-button carousel-button-left" onclick="previousImage()"><i class="bi bi-arrow-left-short"></i></button>
@@ -168,7 +168,7 @@
                             </div>
                         </c:if>           
                     </div>
-                    <div class="col-lg-4">
+<!--                    <div class="col-lg-4">
                         <div class="room-booking">
                             <h3>Your Reservation</h3>
                             <form action="#">
@@ -199,7 +199,7 @@
                                 <button type="submit">Check Availability</button>
                             </form>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </section>

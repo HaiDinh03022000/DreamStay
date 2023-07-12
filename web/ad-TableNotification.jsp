@@ -54,13 +54,59 @@
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                        Waiting Pending
+                        Waiting Pending Account
                     </div>
                     <div class="card-body">
                         <table class="table table-striped" id="table1">
                             <thead>
                                 <tr>
-                                    <th>UserName</th>
+                                    <th>Sender</th>
+                                    <th>Comment</th>
+                                    <th>Status</th>
+                                    <th>Date Up</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${notipendingAcc}" var="r">
+                                    <tr>
+                                        <td><img  style="border-radius: 50px; width: 50px; height: 50px" src="img/Avatar/${r.avatar}" alt="">
+                                            ${r.username}
+                                        </td>
+                                        <td>${r.textarea}</td>
+                                        <td> 
+                                            <c:if test="${r.astatus == 7}">
+                                                <span class="badge bg-warning">pending</span>
+                                            </c:if>
+                                        </td>
+                                        <td>
+                                            <span id="durati-${r.nftid}">${r.dateup}</span>
+                                        </td>
+
+                                        <td>     
+                                            <a href="notiadmin?alid=${r.nftid}&action=1"><i class="bi bi-check2-square text-success"></i></a> 
+                                            <a href="notiadmin?alid=${r.nftid}&action=2"><i class="bi bi-x-square text-danger"></i></a> 
+                                        </td>
+                                    </tr>
+                                <script>
+                                    calculateDuration("${r.dateup}", "durati-${r.nftid}");
+                                </script>
+                            </c:forEach> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                        Waiting Pending Motel
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                                <tr>
+                                    <th>Sender</th>
                                     <th>Comment
                                         <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-caret-down-fill"></i></button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
@@ -75,7 +121,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${notipending}" var="r" begin="${(page-1)*psize}" end="${page*psize-1}">
+                                <c:forEach items="${notipendingMotel}" var="r" begin="${(page-1)*psize}" end="${page*psize-1}">
                                     <tr>
                                         <td><img  style="border-radius: 50px; width: 50px; height: 50px" src="img/Avatar/${r.avatar}" alt="">
                                             ${r.username}
@@ -90,17 +136,24 @@
                                             <span id="duratio-${r.nftid}">${r.dateup}</span>
                                         </td>
 
-                                        <td>     
-                                            <a href="notiadmin?alid=${r.nftid}"><i class="bi bi-check2-square text-success"></i></a> 
+                                        <td>   
                                             <c:set var="splitArray" value="${fn:split(r.textarea, ':')}" />
-                                            <c:if test="${fn:trim(splitArray[3]) == '' }">
-                                                <a href="roomdetail?mid=${fn:trim(splitArray[1])}&check=1"><i class="bi bi-eye-fill"></i></a>  
-                                                <a href="admanagemotel?mid=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&link=2"><i class="text-danger bi bi-building-fill-slash"></i></a>
+                                            <c:if test="${fn:contains(r.textarea,'Want')}">
+                                                <c:set var="colorr" value="text-success"/>
+                                                <a href="notiadmin?alid=${r.nftid}"><i class="bi bi-x-square text-danger"></i></a>
                                                 </c:if>
-                                            <c:if test="${fn:trim(splitArray[3]) != '' }">      
+                                                <c:if test="${!fn:contains(r.textarea,'Want')}">
+                                                    <c:set var="colorr" value="text-danger"/>
+                                                <a href="notiadmin?alid=${r.nftid}"><i class="bi bi-check2-square text-success"></i></a>
+                                                </c:if>                                            
+                                                <c:if test="${fn:trim(splitArray[3]) == '' }">
+                                                <a href="roomdetail?mid=${fn:trim(splitArray[1])}&check=1"><i class="bi bi-eye-fill"></i></a>  
+                                                <a href="admanagemotel?mid=${fn:trim(splitArray[1])}&aleartid=${r.nftid}&link=2"><i class="${colorr} bi bi-building-fill-slash"></i></a>
+                                                </c:if>
+                                                <c:if test="${fn:trim(splitArray[3]) != '' }">      
                                                 <a href="roomdetail?mid=${fn:trim(splitArray[3])}&roomid=${fn:trim(splitArray[1])}"><i class="bi bi-eye-fill"></i></a> 
-                                                <a href="admanagemotel?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&link=2"><i class="text-danger bi bi-building-fill-slash"></i></a>
-                                            </c:if>
+                                                <a href="admanagemotel?roomid=${fn:trim(splitArray[1])}&mid=${fn:trim(splitArray[3])}&aleartid=${r.nftid}&link=2"><i class="${colorr} bi bi-building-fill-slash"></i></a>
+                                                </c:if>
                                         </td>
                                     </tr>
                                 <script>
@@ -120,25 +173,24 @@
                                     <c:if test="${page != 1}">
                                         <a href="listadmin?type=2&page=<fmt:formatNumber value="${(page != 1)?(page -1):1}" type="number" />"><</a>           
                                     </c:if>
-                                    <c:if test="${notipending.size() != 0}">
+                                    <c:if test="${notipendingMotel.size() != 0}">
                                         <a class="active" href="listadmin?type=2&page=<fmt:formatNumber value="${page}" type="number" />">${page}</a>    
                                     </c:if>
                                     <c:set var="nextPage" value="${page + 1}" />
-                                    <c:if test="${nextPage > Math.ceil(notipending.size() / psize)}">
+                                    <c:if test="${nextPage > Math.ceil(notipendingMotel.size() / psize)}">
                                         <c:set var="nextPage" value="${page}" />
                                     </c:if>
-                                    <c:if test="${page < (notipending.size() / psize)}">
+                                    <c:if test="${page < (notipendingMotel.size() / psize)}">
                                         <a href="listadmin?type=2&page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                     </c:if>
-                                    <c:if test="${page < (Math.floor(notipending.size() / psize))}">
-                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="${(notipending.size() % psize == 0) ? (notipending.size() / psize) : (Math.floor(notipending.size() / psize) + 1)}" 
+                                    <c:if test="${page < (Math.floor(notipendingMotel.size() / psize))}">
+                                        <a href="listadmin?type=2&page=<fmt:formatNumber value="${(notipendingMotel.size() % psize == 0) ? (notipendingMotel.size() / psize) : (Math.floor(notipendingMotel.size() / psize) + 1)}" 
                                                           type="number" />"> >></a> </c:if>   
                                     </li>
                                 </ol>
                             </ul>
                         </nav>
                     </div>
-
                 </section>
                 <section class="section">
                     <div class="card">

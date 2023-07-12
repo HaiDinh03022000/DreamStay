@@ -61,6 +61,7 @@ public class IndexControllServlet extends HttpServlet {
         Account acc = (Account) session.getAttribute("acc");
         if (acc != null) {            
             List<Notification> listnoti = noti.getTop4Notifications(acc.getAccId());
+            List<Notification> listnotiadmin = noti.getTop4NotiAdmin(acc.getAccId());
             List<Notification> allnoti = noti.getPending(acc.getAccId());           
             for (Notification en : allnoti) {
                 LocalDateTime currentDate = LocalDateTime.now();
@@ -88,6 +89,7 @@ public class IndexControllServlet extends HttpServlet {
                 }
             }
             session.setAttribute("listnt", listnoti);
+            session.setAttribute("listntadmin", listnotiadmin);
         }     
         List<Motel> listM = motel.getTop4Motels();
         request.setAttribute("listTop4M", listM);
