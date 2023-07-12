@@ -174,14 +174,22 @@
                                     </c:if>
                                     <c:if test="${sessionScope.acc.payid != null}">
                                         <div class="form-group">
+                                            <c:if test="${pmess == null}">
+                                                <c:set var="hi" value="none"/>
+                                            </c:if>
+                                            <c:if test="${pmess != null}">
+                                                <c:set var="hi" value="block"/>
+                                            </c:if>
                                             <label class="switcher">
-                                                <span class="switcher-label">Apply to become Owner Motel:</span>
+                                                <span class="switcher-label">Apply to become Owner Motel,:</span>
                                                 <button id="toggleButton3" onclick="toggleCard('cardContainer3', 'toggleButton3')" style="padding-bottom: 9px" type="button" class="btn btn-default"><i class="bi bi-building-add"></i></button>
                                             </label>
-                                            <div id="cardContainer3" style="display: none">
-                                                <label style="color: ${color}" class="form-label"><strong>${pmess}</strong></label>
+                                            <div id="cardContainer3" style="display: ${hi}">
+                                                <label style="color: ${color}" class="form-label"><strong>${pmess}</strong></label><br>
+                                                <label class="form-label"><strong>Fee sent message is 10,000 VNÐ</strong></label>                    
                                                         <c:if test="${sessionScope.acc.accType == 1}">
                                                     <label class="form-label"><strong>You are already an Owner Motel!</strong></label>
+                                                    <label class="form-label">Monthly maintenance fee is 100,000 VNÐ</label>
                                                 </c:if>
                                                 <c:if test="${sessionScope.acc.accType != 1}">
 

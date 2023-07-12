@@ -49,16 +49,16 @@ public class NotificationDAO {
         return null;
     }
 
-    public Notification GetNotiByidget(int idget, int roomid) {
-        String query = "select * from Alert where idget = ? and roommid = ?";
+    public List<Notification> GetNotiByidget(int idsend) {
+        List<Notification> list = new ArrayList<>();
+        String query = "select * from Alert where idsend = ?";
         try {
-            con = new Connections().getConnection();//mo ket noi voi sql
+            con = new Connections().getConnection();
             ps = con.prepareStatement(query);
-            ps.setInt(1, idget);
-            ps.setInt(2, roomid);
+            ps.setInt(1, idsend);
             re = ps.executeQuery();
-            if (re.next()) {
-                return new Notification(re.getString(1),
+            while (re.next()) {
+                list.add(new Notification(re.getString(1),
                         re.getString(2),
                         re.getString(3),
                         re.getString(4),
@@ -67,11 +67,11 @@ public class NotificationDAO {
                         re.getInt(7),
                         re.getInt(8),
                         re.getInt(9),
-                        re.getInt(10));
+                        re.getInt(10)));
             }
         } catch (Exception e) {
         }
-        return null;
+        return list;
     }
 
     public List<Notification> getNotificationForOwner(int accid) {
@@ -191,6 +191,37 @@ public class NotificationDAO {
         return list;
     }
 
+    public List<Notification> getTop4NotiAdmin(int accid) {
+        List<Notification> list = new ArrayList<>();
+        String query = "SELECT top(4) a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
+                + "FROM Alert a\n"
+                + "JOIN Account ac ON ac.accid = a.idsend\n"
+                + "JOIN InforUser i ON i.usid = ac.usid\n"
+                + "WHERE a.idget = ? and a.staid = 4 and a.roommid is null order by a.alertid desc";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            re = ps.executeQuery();
+            while (re.next()) {
+                list.add(new Notification(re.getString(1),
+                        re.getString(2),
+                        re.getString(3),
+                        re.getString(4),
+                        re.getDouble(5),
+                        re.getInt(6),
+                        re.getInt(7),
+                        re.getInt(8),
+                        re.getInt(9),
+                        re.getString(10),
+                        re.getString(11),
+                        re.getInt(12)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public List<Notification> getPending(int accid) {
         List<Notification> list = new ArrayList<>();
         String query = "select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen\n"
@@ -277,16 +308,17 @@ public class NotificationDAO {
         return list;
     }
 
-    public List<Notification> getAdminNotiPending() {
+    public List<Notification> getAdminNotiPendingMotel(String text) {
         List<Notification> list = new ArrayList<>();
         String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.staid = 7 order by a.alertid desc";
+                + "WHERE a.idget = 1 and a.staid = 7 and a.textarea not like '%' + ? + '%' order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
+            ps.setString(1, text);
             re = ps.executeQuery();
             while (re.next()) {
                 list.add(new Notification(re.getString(1),
@@ -306,19 +338,51 @@ public class NotificationDAO {
         }
         return list;
     }
-    
-    public List<Notification> getAdminNoti(int accid, int type) {
+
+    public List<Notification> getAdminNotiPendingAcc(String text) {
         List<Notification> list = new ArrayList<>();
         String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null order by a.alertid desc";
+                + "WHERE a.idget = 1 and a.staid = 7 and a.textarea like '%' + ? + '%' order by a.alertid desc";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setString(1, text);
+            re = ps.executeQuery();
+            while (re.next()) {
+                list.add(new Notification(re.getString(1),
+                        re.getString(2),
+                        re.getString(3),
+                        re.getString(4),
+                        re.getDouble(5),
+                        re.getInt(6),
+                        re.getInt(7),
+                        re.getInt(8),
+                        re.getInt(9),
+                        re.getString(10),
+                        re.getString(11),
+                        re.getInt(12)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Notification> getAdminNoti(int accid, int type, String text) {
+        List<Notification> list = new ArrayList<>();
+        String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
+                + "FROM Alert a\n"
+                + "JOIN Account ac ON ac.accid = a.idsend\n"
+                + "JOIN InforUser i ON i.usid = ac.usid\n"
+                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null and a.textarea like '%' + ? + '%' order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, accid);
             ps.setInt(2, type);
+            ps.setString(3, text);
             re = ps.executeQuery();
             while (re.next()) {
                 list.add(new Notification(re.getString(1),
@@ -338,14 +402,14 @@ public class NotificationDAO {
         }
         return list;
     }
-    
+
     public List<Notification> getAdminNotiByType(String type) {
         List<Notification> list = new ArrayList<>();
         String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = 1 and a.textarea like '%' + ? + '%' order by a.alertid desc";
+                + "WHERE a.idget = 1 and a.staid = 7 and a.textarea like '%' + ? + '%' order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -413,18 +477,20 @@ public class NotificationDAO {
     }
 
     public void updateStatus(String nfcid, int status) {
-        String query = "update Alert set staid = ? where alertid = ?";
+        LocalDateTime currentDate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        String formattedDate = currentDate.format(formatter);
+        String query = "update Alert set dateup = ?, staid = ? where alertid = ?";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
-            ps.setInt(1, status);
-            ps.setString(2, nfcid);
+            ps.setString(1, formattedDate);
+            ps.setInt(2, status);
+            ps.setString(3, nfcid);         
             ps.executeUpdate();
         } catch (Exception e) {
         }
     }
-    
-    
 
     public void updateSeen(String nfcid) {
         String query = "update Alert set seen = 1 where alertid = ?";
@@ -448,6 +514,17 @@ public class NotificationDAO {
         }
     }
 
+    public void deleteNotiOfIDsend(int idsend) {
+        String query = "delete from Alert where idsend =? and staid = 7";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idsend);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public void delAll(int roomid) {
         String query = "delete from Alert where roommid = ? and staid = 1";
         try {
@@ -461,7 +538,12 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> list = noti.getAdminNoti(1,8);
-        System.out.println(list);
+        Notification nt = noti.GetNotiByid("3");
+        String[] part = nt.getTextarea().split(":");
+        if(part.length > 2){
+            System.out.println(part[1]);
+        }     
+//        List<Notification> list = noti.GetNotiByidget(2);
+//        System.out.println(list);
     }
 }

@@ -66,10 +66,12 @@ public class ListAdminController extends HttpServlet {
                     request.setAttribute("noti", n);
                 }
             } else {
-                List<Notification> pending = noti.getAdminNotiPending();
-                List<Notification> complete = noti.getAdminNoti(acc.getAccId(),8);
+                List<Notification> pendingMotel = noti.getAdminNotiPendingMotel("become");
+                List<Notification> pendingAcc = noti.getAdminNotiPendingAcc("become");
+                List<Notification> complete = noti.getAdminNoti(acc.getAccId(),8,"");
 
-                request.setAttribute("notipending", pending);
+                request.setAttribute("notipendingMotel", pendingMotel);
+                request.setAttribute("notipendingAcc", pendingAcc);
                 request.setAttribute("noticomplete", complete);
             }
             request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);

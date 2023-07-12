@@ -36,7 +36,6 @@ public class BecomeMotelOwnerController extends HttpServlet {
         NotificationDAO noti = new NotificationDAO();
         PayCarDAO card = new PayCarDAO();
         LoginDAO login = new LoginDAO();
-        InfoUserDAO info = new InfoUserDAO();
         if (acc == null) {
             response.sendRedirect("login.jsp");
         } else {
@@ -51,12 +50,10 @@ public class BecomeMotelOwnerController extends HttpServlet {
                 request.setAttribute("pmess", "Email not correct !");              
             }else{
                  request.setAttribute("color", "green");
-                 request.setAttribute("pmess", "Succes you has becom Motel Owner !");
-                 info.updateAccType(acc.getAccId());
-                 card.UpdateSubMoney(100000, acc.getPayid());
-                 card.UpdateaddCMoney(100000, "1");
-                 Account a = login.GetAccByid(acc.getAccId());
-                 session.setAttribute("acc", a);
+                 request.setAttribute("pmess", "Your message has been sent successfully!");
+                 noti.insertAlertForAdmin("Want to become Owner Motel", acc.getAccId(), 7, 1);
+                 card.UpdateSubMoney(10000, acc.getPayid());
+                 card.UpdateaddCMoney(10000, "1");
             }
             request.getRequestDispatcher("Loadinfo?type=4").forward(request, response);
         }

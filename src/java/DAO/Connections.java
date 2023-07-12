@@ -1,30 +1,36 @@
 package DAO;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Connections {
-    public Connection getConnection()
-            
-    {
-        Connection connection;
-        try {
-            //Change the username password and url to connect your own database
-            String username = "sa";
-            String password = "sa";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP;encrypt=true;trustServerCertificate=true;";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
-            return  connection;
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Connections.class.getName()).log(Level.SEVERE, null, ex);
+    ResultSet re;
+    Connection con = null;
+    PreparedStatement p1 = null;
+
+    private final String serverName = "DESKTOP-BAJDTAQ\\SQLEXPRESS";
+    private final String dbName = "Accommodation service";
+    private final String portNumber = "1433";
+    private final String instance = "";
+    private final String userID = "sa";
+    private final String password = "sa";
+
+    public Connection getConnection() throws Exception {
+        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + "\\" + instance + ";databaseName=" + dbName;
+        if (instance == null || instance.trim().isEmpty()) {
+            url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
         }
-        return null;
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        return DriverManager.getConnection(url, userID, password);
+    }
+
+    public static void main(String[] args) {
+        try {
+            System.out.println(new Connections().getConnection());
+        } catch (Exception e) {
+        }
     }
     
 }

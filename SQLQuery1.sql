@@ -215,3 +215,19 @@ GROUP BY m.mid, m.mname, m.maddress,m.condition;
 
 select r.roommid, r.mimage1, r.mimage2, r.mimage3, r.price, r.quantity, r.mid, c.catenme, r.codition
 from Motel m, Room r, Category c where m.mid = r.mid and c.cateid = r.cateid and m.mid = ?
+
+SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen
+FROM Alert a
+JOIN Account ac ON ac.accid = a.idsend
+JOIN InforUser i ON i.usid = ac.usid
+WHERE a.idget = 1 and a.textarea like '%' + ? + '%' order by a.alertid desc
+
+SELECT top(4) a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen
+FROM Alert a
+JOIN Account ac ON ac.accid = a.idsend
+JOIN InforUser i ON i.usid = ac.usid
+WHERE a.idget = 3 and a.staid = 4 and a.roommid is null order by a.alertid desc
+
+select * from Alert where idsend = 2
+
+update Alert set dateup = '2023-07-12T20:54:21.191', staid = 7 where alertid = 1

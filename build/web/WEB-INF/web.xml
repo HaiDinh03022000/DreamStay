@@ -23,6 +23,8 @@
         <url-pattern>/upmotel</url-pattern>
         <url-pattern>/delereview</url-pattern>
         <url-pattern>/getownernoti</url-pattern>
+        <url-pattern>/sentmessagead</url-pattern>
+        
     </filter-mapping>
     <filter-mapping>
         <filter-name>checkjsp</filter-name>
@@ -213,6 +215,10 @@
         <servlet-name>AdminManageMotelController</servlet-name>
         <servlet-class>Controller.Admin.AdminManageMotelController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SentMessageAdminController</servlet-name>
+        <servlet-class>Controller.Motel.SentMessageAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCotroller</servlet-name>
         <url-pattern>/LoginCotroller</url-pattern>
@@ -388,6 +394,10 @@
     <servlet-mapping>
         <servlet-name>AdminManageMotelController</servlet-name>
         <url-pattern>/admanagemotel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SentMessageAdminController</servlet-name>
+        <url-pattern>/sentmessagead</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

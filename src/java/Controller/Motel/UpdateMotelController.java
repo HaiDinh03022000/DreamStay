@@ -8,6 +8,7 @@ import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
 import Model.Motel;
+import Model.Notification;
 import Model.Rooms;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -86,9 +87,19 @@ public class UpdateMotelController extends HttpServlet {
         String coordinates = request.getParameter("coordinates");
         String description = request.getParameter("description");
         motel.updateMotel1(name, fileName, description, address, coordinates, mid);
-        if(mt.getCondition() == 1){
-            noti.insertAlertForAdmin("Has Updated Motel have mid is:" + mid, acc.getAccId(), 7, 1);
-        }     
+        if (mt.getCondition() == 1) {
+            boolean i = false;
+            List<Notification> listNoti = noti.GetNotiByidget(acc.getAccId());
+            for (Notification nt : listNoti) {
+                if (nt.getTextarea().contains("Has Updated Motel have mid is:" + mid)) {
+                    noti.updateStatus(nt.getNftid(), 7);
+                    i = true;
+                }
+            }
+            if (i == false) {
+                noti.insertAlertForAdmin("Has Updated Motel have mid is:" + mid, acc.getAccId(), 7, 1);
+            }
+        }
         response.sendRedirect("managemotel");
     }
 

@@ -7,12 +7,14 @@ package Controller.Admin;
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Motel;
+import Model.Notification;
 import Model.Rooms;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -38,9 +40,23 @@ public class AdminManageMotelController extends HttpServlet {
         if (rid == null) {
             if (mt.getCondition() == 0) {
                 motel.UpStatusMotel(mid, 1);
+                List<Notification> listNoti = noti.GetNotiByidget(1);
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("has lock your motel have id :" + mid)) {
+                        noti.deleteNoti(nt.getNftid());
+                        break;
+                    }
+                }
                 noti.insertAlertForAdmin("has unlock your motel have id :" + mid, 1, 4, mt.getAccid());
             } else {
                 motel.UpStatusMotel(mid, 0);
+                List<Notification> listNoti = noti.GetNotiByidget(1);
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("has unlock your motel have id :" + mid)) {
+                        noti.deleteNoti(nt.getNftid());
+                        break;
+                    }
+                }
                 noti.insertAlertForAdmin("has lock your motel have id :" + mid, 1, 4, mt.getAccid());
             }
             if (nftid != null) {
@@ -51,9 +67,23 @@ public class AdminManageMotelController extends HttpServlet {
             Rooms room = motel.getRoomByid(rid);
             if (room.getCondition() == 0) {
                 motel.UpStatusRoom(roomid, 1);
+                List<Notification> listNoti = noti.GetNotiByidget(1);
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("has Lock your roomid :" + rid + " :in motelid :" + mid)) {
+                        noti.deleteNoti(nt.getNftid());
+                        break;
+                    }
+                }
                 noti.insertAlertForAdmin("has unLock your roomid :" + rid + " :in motelid :" + mid, 1, 4, mt.getAccid());
             } else {
                 motel.UpStatusRoom(roomid, 0);
+                List<Notification> listNoti = noti.GetNotiByidget(1);
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("has unLock your roomid :" + rid + " :in motelid :" + mid)) {
+                        noti.deleteNoti(nt.getNftid());
+                        break;
+                    }
+                }
                 noti.insertAlertForAdmin("has Lock your roomid :" + rid + " :in motelid :" + mid, 1, 4, mt.getAccid());
             }
             if (nftid != null) {

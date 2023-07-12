@@ -42,17 +42,6 @@ public class InfoUserDAO {
         }
         return null;
     }
-    
-    public void updateAccType(int accid) {
-        String query = "update Account set acctype = 1 where accid = ?";
-        try {
-            conn = new Connections().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, accid);
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-    }
 
     public void updateInfo(int usid, String fullname, String uaddress, String phonenumber, String age) {
         String query = "update InforUser set fullname = ?, uaddress = ?, phonenumber = ?, birthday = ?\n"

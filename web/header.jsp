@@ -161,8 +161,18 @@
                                                             <span class="notifi">...</span>
                                                             <c:set var="flag" value="true" />
                                                         </c:if>                             
-                                                    </c:forEach></a>
+                                                    </c:forEach>
+                                                    <c:forEach items="${sessionScope.listntadmin}" var="i">
+                                                        <c:if test="${!flag && i.seen == 0}">
+                                                            <span class="notifi">...</span>
+                                                            <c:set var="flag" value="true" />
+                                                        </c:if>                             
+                                                    </c:forEach>
+                                                </a>
                                                 <ul class="dropdown">
+                                                    <c:if test="${!sessionScope.listnt.isEmpty()}">
+                                                        Notification Of Motel
+                                                    </c:if>
                                                     <c:forEach items="${sessionScope.listnt}" var="i">
                                                         <li >   
                                                             <img src="img/Avatar/${i.avatar}">
@@ -181,8 +191,28 @@
                                                             calculateDuration("${i.dateup}", "duration-${i.nftid}");
                                                         </script>
                                                     </c:forEach>
+                                                    <c:if test="${!sessionScope.listntadmin.isEmpty()}">
+                                                        Notification Of Admin
+                                                    </c:if>
+                                                    <c:forEach items="${sessionScope.listntadmin}" var="i">
+                                                        <li >   
+                                                            <img src="img/Avatar/${i.avatar}">
+                                                            <div>                                                               
+                                                                <strong>${i.username}</strong>
+                                                                <c:if test="${fn:contains(i.textarea, '%')}">
+                                                                    <c:set var="sub" value="${fn:substringBefore(i.textarea, '%')}" />${sub}<br>
+                                                                </c:if>
+                                                                <c:if test="${!fn:contains(i.textarea, '%')}">
+                                                                    ${i.textarea}
+                                                                </c:if>
+                                                                <p class="dateup"><span id="duratio-${i.nftid}">${i.dateup}</span></p>
+                                                            </div>
+                                                        </li>                                                      
+                                                        <script>
+                                                            calculateDuration("${i.dateup}", "duratio-${i.nftid}");
+                                                        </script>
+                                                    </c:forEach>
                                                 </ul>
-
                                             </li>                                           
                                         </c:if>
 
