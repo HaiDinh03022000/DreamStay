@@ -339,7 +339,7 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE m.maddress LIKE '%' + ? + '%'\n"
+                + "WHERE m.mname LIKE N'%'+?+'%'\n"
                 + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress";
         try {
             con = new Connections().getConnection();
@@ -1057,7 +1057,7 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Rooms> b = dao.getAllRoom(2);
+        List<Motel> b = dao.searchByName("shop");
         System.out.println(b);
     }
 }

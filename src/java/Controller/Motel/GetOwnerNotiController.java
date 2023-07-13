@@ -33,7 +33,7 @@ public class GetOwnerNotiController extends HttpServlet {
         Account acc = (Account) session.getAttribute("acc");
         NotificationDAO noti = new NotificationDAO();
         List<Notification> listnotiPd = noti.getAdminNoti(acc.getAccId(), 4,"has lock");
-        List<Notification> listnotiPr = noti.getAdminNoti(acc.getAccId(), 4,"unlock");
+        List<Notification> listnotiPr = noti.getAdminNotiDone(acc.getAccId(), 4,"has lock");
         request.setAttribute("lnotiPD", listnotiPd);
         request.setAttribute("lnotiPR", listnotiPr);
         request.getRequestDispatcher("on-Notification.jsp").forward(request, response);      

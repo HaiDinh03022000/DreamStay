@@ -24,9 +24,9 @@ public class ListDoneController extends HttpServlet {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> notifications = noti.getDoneNotification(acc.getAccId());
+//        List<Notification> notifications = noti.getDoneNotification(acc.getAccId());
         List<Notification> donenoti = noti.getDoneProcess(acc.getAccId());
-        request.setAttribute("noti", notifications);
+//        request.setAttribute("noti", notifications);
         request.setAttribute("done", donenoti);
         request.getRequestDispatcher("ownermotel.jsp").forward(request, response); 
     }

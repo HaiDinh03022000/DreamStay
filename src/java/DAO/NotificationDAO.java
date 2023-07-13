@@ -6,6 +6,7 @@ package DAO;
 
 import Model.Account;
 import Model.Notification;
+import Model.Rooms;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -132,15 +133,17 @@ public class NotificationDAO {
         return list;
     }
 
-    public List<Notification> getDoneNotification(int accid) {
+    public List<Notification> getDoneNotification(int accid, int mid) {
         List<Notification> list = new ArrayList<>();
         String query = "select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen\n"
                 + "from Motel m, Alert a, Account ac , InforUser i, Room r\n"
-                + "where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and m.accid = ? and ( a.staid = 2 or a.staid = 3)";
+                + "where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid \n"
+                + "and a.idget = ? and m.mid = ? and (a.staid = 2 or a.staid = 3 or a.staid = 4) order by a.dateup desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
             ps.setInt(1, accid);
+            ps.setInt(2, mid);
             re = ps.executeQuery();
             while (re.next()) {
                 list.add(new Notification(re.getString(1),
@@ -376,7 +379,40 @@ public class NotificationDAO {
                 + "FROM Alert a\n"
                 + "JOIN Account ac ON ac.accid = a.idsend\n"
                 + "JOIN InforUser i ON i.usid = ac.usid\n"
-                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null and a.textarea like '%' + ? + '%' order by a.alertid desc";
+                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null and a.textarea like '%' + ? + '%' order by a.dateup desc";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            ps.setInt(2, type);
+            ps.setString(3, text);
+            re = ps.executeQuery();
+            while (re.next()) {
+                list.add(new Notification(re.getString(1),
+                        re.getString(2),
+                        re.getString(3),
+                        re.getString(4),
+                        re.getDouble(5),
+                        re.getInt(6),
+                        re.getInt(7),
+                        re.getInt(8),
+                        re.getInt(9),
+                        re.getString(10),
+                        re.getString(11),
+                        re.getInt(12)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Notification> getAdminNotiDone(int accid, int type, String text) {
+        List<Notification> list = new ArrayList<>();
+        String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
+                + "FROM Alert a\n"
+                + "JOIN Account ac ON ac.accid = a.idsend\n"
+                + "JOIN InforUser i ON i.usid = ac.usid\n"
+                + "WHERE a.idget = ? and a.staid = ? and a.roommid is null and a.textarea not like '%' + ? + '%' order by a.alertid desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -486,7 +522,7 @@ public class NotificationDAO {
             ps = con.prepareStatement(query);
             ps.setString(1, formattedDate);
             ps.setInt(2, status);
-            ps.setString(3, nfcid);         
+            ps.setString(3, nfcid);
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -538,12 +574,7 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        Notification nt = noti.GetNotiByid("3");
-        String[] part = nt.getTextarea().split(":");
-        if(part.length > 2){
-            System.out.println(part[1]);
-        }     
-//        List<Notification> list = noti.GetNotiByidget(2);
-//        System.out.println(list);
+        List<Notification> list = noti.getDoneNotification(2,2);
+        System.out.println(list);
     }
 }

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import Model.Motel;
-
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -31,13 +31,15 @@ public class SearchControllServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String txtSearch = request.getParameter("text");
-       MotelDAO dao = new MotelDAO();
-       List<Motel> listM = dao.searchByName(txtSearch);
-       request.setAttribute("listM", listM);
-       request.setAttribute("textS", txtSearch);
-       request.getRequestDispatcher("rooms").forward(request, response);
+        HttpSession session = request.getSession();
+        String txtSearch = request.getParameter("text");
+        MotelDAO dao = new MotelDAO();
+        List<Motel> listM = dao.searchByName(txtSearch);
+        session.setAttribute("listM", listM);
+        request.setAttribute("textS", txtSearch);
+        request.getRequestDispatcher("rooms").forward(request, response);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -140,7 +140,7 @@
                                             <c:set var="splitArray" value="${fn:split(r.textarea, ':')}" />
                                             <c:if test="${fn:contains(r.textarea,'Want')}">
                                                 <c:set var="colorr" value="text-success"/>
-                                                <a href="notiadmin?alid=${r.nftid}"><i class="bi bi-x-square text-danger"></i></a>
+                                                <a href="notiadmin?alid=${r.nftid}&action=3"><i class="bi bi-x-square text-danger"></i></a>
                                                 </c:if>
                                                 <c:if test="${!fn:contains(r.textarea,'Want')}">
                                                     <c:set var="colorr" value="text-danger"/>
