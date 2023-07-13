@@ -44,9 +44,16 @@ public class NotiAdminController extends HttpServlet {
                 login.updateAccType(nt.getIdsend());
                 noti.deleteNotiOfIDsend(nt.getIdsend());
                 noti.insertAlertForAdmin("has accepted your request to become an Owner Motel", nt.getIdget(), 4, nt.getIdsend());
-            } else {
+            } else if (action.equals("2")) {
                 noti.deleteNotiOfIDsend(nt.getIdsend());
                 noti.insertAlertForAdmin("has deny your request to become an Owner Motel", nt.getIdget(), 4, nt.getIdsend());
+            } else {
+                String[] part = nt.getTextarea().split(":");
+                if (part.length > 2) {
+                    noti.insertAlertForAdmin("has deny your request to unlock roomid:" + part[1] + " :in motel:" + part[3], nt.getIdget(), 4, nt.getIdsend());
+                } else {
+                    noti.insertAlertForAdmin("has deny your request to unlock motelid:" + part[1], nt.getIdget(), 4, nt.getIdsend());
+                }
             }
         }
         response.sendRedirect("listadmin?type=2");

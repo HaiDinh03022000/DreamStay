@@ -146,7 +146,7 @@
                 <option value="owner?mid=${guest.mid}">${shortString}...</option>              
             </c:forEach>
         </select>
-        <c:if test="${bill != null}">   
+        <c:if test="${bill != null && !bill.isEmpty()}">   
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 mt-4">
                 Bill-Motel
             </h4>            
@@ -235,7 +235,7 @@
                     </div>
                 </div>
         </c:if>      
-        <c:if test="${review != null}">      
+        <c:if test="${review != null && !review.isEmpty()}">      
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 mt-4">
                 Review-Motel
             </h4>
@@ -328,6 +328,80 @@
                         </span>
                     </div>
                 </div>
+        </c:if> 
+        <c:if test="${notidone != null && !notidone.isEmpty()}">      
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 mt-4">
+                Review-Motel
+            </h4>
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">User</th>
+                                <th class="px-4 py-3">Comment</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <c:forEach items="${notidone}" var="i">
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                <tr class="text-gray-700 dark:text-gray-400">
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+                                            <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                <img class="object-cover w-full h-full rounded-full"src="img/Avatar/${i.avatar}"alt=""loading="lazy"/>
+                                                <div class="absolute inset-0 rounded-full shadow-inner"aria-hidden="true"></div>
+                                            </div>
+                                            <div><p class="font-semibold">${i.username}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <c:if test="${fn:contains(i.textarea,'%')}">
+                                            <c:set var="sub" value="${fn:substringBefore(i.textarea, '%')}" />${sub}
+                                        </c:if>   
+                                        <c:if test="${!fn:contains(i.textarea,'%')}">
+                                            ${i.textarea}
+                                        </c:if>   
+                                    </td>
+                                    <td class="px-4 py-3 text-xs">
+                                        <c:if test="${i.astatus == 2}">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                Approve
+                                            </span>
+                                        </c:if>
+                                        <c:if test="${i.astatus == 3}">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                                NotApprove
+                                            </span>                                   
+                                        </c:if>
+                                        <c:if test="${i.astatus == 4}">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                                Complete
+                                            </span>                                  
+                                        </c:if>  
+                                    </td>                                    
+                                    <td class="px-4 py-3 text-sm">
+                                        <span id="durat-${i.nftid}">${i.dateup}</span>
+                                    </td>  
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
+                                               aria-label="Edit" href="#"><i class="bi bi-trash"></i></a>                                   
+                                        </div>      
+                                    </td>
+                                </tr>
+                            <script>
+                                calculateDuration("${i.dateup}", "durat-${i.nftid}");
+                            </script>
+                            </tbody>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
         </c:if> 
     </body>
 </html>

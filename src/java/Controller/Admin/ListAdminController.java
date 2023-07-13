@@ -40,51 +40,54 @@ public class ListAdminController extends HttpServlet {
         MotelDAO motel = new MotelDAO();
         Account acc = (Account) session.getAttribute("acc");
         int type = Integer.parseInt(request.getParameter("type"));
-        if (type == 1) {
-            String acctype = request.getParameter("acctype");
-            if (acctype != null) {
-                if (acctype.equalsIgnoreCase("0")) {
-                    List<Account> account = admin.getAccountByType(acctype);
-                    request.setAttribute("acc", account);
+        switch (type) {
+            case 1:
+                String acctype = request.getParameter("acctype");
+                if (acctype != null) {
+                    if (acctype.equalsIgnoreCase("0")) {
+                        List<Account> account = admin.getAccountByType(acctype);
+                        request.setAttribute("acc", account);
+                    } else {
+                        List<Account> account = admin.getAccountByType(acctype);
+                        request.setAttribute("acc", account);
+                    }
                 } else {
-                    List<Account> account = admin.getAccountByType(acctype);
+                    List<Account> account = admin.getAllAccount();
                     request.setAttribute("acc", account);
-                }
-            } else {
-                List<Account> account = admin.getAllAccount();
-                request.setAttribute("acc", account);
-            }
-            request.getRequestDispatcher("ad-TableAccount.jsp").forward(request, response);
-        } else if (type == 2) {
-            String ctype = request.getParameter("ctype");
-            if (ctype != null) {
-                if (ctype.equalsIgnoreCase("1")) {
-                    List<Notification> n = noti.getAdminNotiByType("update");
-                    request.setAttribute("noti", n);
+                }   request.getRequestDispatcher("ad-TableAccount.jsp").forward(request, response);
+                break;
+            case 2:
+                String ctype = request.getParameter("ctype");
+                if (ctype != null) {
+                    if (ctype.equalsIgnoreCase("1")) {
+                        List<Notification> n = noti.getAdminNotiByType("update");
+                        request.setAttribute("noti", n);
+                    } else {
+                        List<Notification> n = noti.getAdminNotiByType("create");
+                        request.setAttribute("noti", n);
+                    }
                 } else {
-                    List<Notification> n = noti.getAdminNotiByType("create");
-                    request.setAttribute("noti", n);
-                }
-            } else {
-                List<Notification> pendingMotel = noti.getAdminNotiPendingMotel("become");
-                List<Notification> pendingAcc = noti.getAdminNotiPendingAcc("become");
-                List<Notification> complete = noti.getAdminNoti(acc.getAccId(),8,"");
-
-                request.setAttribute("notipendingMotel", pendingMotel);
-                request.setAttribute("notipendingAcc", pendingAcc);
-                request.setAttribute("noticomplete", complete);
-            }
-            request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);
-        } else if(type == 3){
-            String id = request.getParameter("mid");
-            if(id != null){
-                int mid = Integer.parseInt(id);
-                List<Rooms> room = motel.getAllRoom(mid);
-                request.setAttribute("room", room);
-            }
-            List<Motel> mt = motel.getListMotel();
-            request.setAttribute("motel", mt);        
-            request.getRequestDispatcher("ad-TableMotel.jsp").forward(request, response);
+                    List<Notification> pendingMotel = noti.getAdminNotiPendingMotel("become");
+                    List<Notification> pendingAcc = noti.getAdminNotiPendingAcc("become");
+                    List<Notification> complete = noti.getAdminNoti(acc.getAccId(),8,"");
+                    
+                    request.setAttribute("notipendingMotel", pendingMotel);
+                    request.setAttribute("notipendingAcc", pendingAcc);
+                    request.setAttribute("noticomplete", complete);
+                }   request.getRequestDispatcher("ad-TableNotification.jsp").forward(request, response);
+                break;
+            case 3:
+                String id = request.getParameter("mid");
+                if(id != null){
+                    int mid = Integer.parseInt(id);
+                    List<Rooms> room = motel.getAllRoom(mid);
+                    request.setAttribute("room", room);
+                }   List<Motel> mt = motel.getListMotel();
+                request.setAttribute("motel", mt);
+                request.getRequestDispatcher("ad-TableMotel.jsp").forward(request, response);
+                break;
+            default:
+                break;
         }    
     }
 

@@ -45,10 +45,12 @@ public class OwnerBillController extends HttpServlet {
                 int mid = Integer.parseInt(id);
                 List<Bill> bll = motel.getBillByMid(mid);
                 List<Review> rv = motel.listReview(mid);
+                List<Notification> donenoti = noti.getDoneNotification(acc.getAccId(),mid);
                 request.setAttribute("bill", bll);
                 request.setAttribute("review", rv);
+                request.setAttribute("notidone", donenoti);
             }
-            List<Notification> notifications = noti.getNotificationForOwner(acc.getAccId());
+            List<Notification> notifications = noti.getNotificationForOwner(acc.getAccId());          
             List<Motel> m = motel.getAllOwnerMotel(acc.getAccId());
             request.setAttribute("noti", notifications);           
             request.setAttribute("ownerlist", m);

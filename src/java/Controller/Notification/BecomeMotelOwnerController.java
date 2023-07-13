@@ -9,6 +9,7 @@ import DAO.LoginDAO;
 import DAO.NotificationDAO;
 import DAO.PayCarDAO;
 import Model.Account;
+import Model.Notification;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -47,13 +49,23 @@ public class BecomeMotelOwnerController extends HttpServlet {
             } else if (!pass.equals(acc.getPass())) {
                 request.setAttribute("pmess", "Current password not correct !");
             } else if (login.checkMatchEmail(email) == null) {
-                request.setAttribute("pmess", "Email not correct !");              
-            }else{
-                 request.setAttribute("color", "green");
-                 request.setAttribute("pmess", "Your message has been sent successfully!");
-                 noti.insertAlertForAdmin("Want to become Owner Motel", acc.getAccId(), 7, 1);
-                 card.UpdateSubMoney(10000, acc.getPayid());
-                 card.UpdateaddCMoney(10000, "1");
+                request.setAttribute("pmess", "Email not correct !");
+            } else {
+                request.setAttribute("color", "green");
+                request.setAttribute("pmess", "Your message has been sent successfully!");
+                boolean i = false;
+                List<Notification> listNoti = noti.GetNotiByidget(acc.getAccId());
+                for (Notification nt : listNoti) {
+                    if (nt.getTextarea().contains("Want to become Owner Motel") && nt.getIdsend() == acc.getAccId()) {
+                        noti.updateStatus(nt.getNftid(), 7);
+                        i = true;
+                    }
+                }
+                if (i == false) {
+                    noti.insertAlertForAdmin("Want to become Owner Motel", acc.getAccId(), 7, 1);
+                }
+                card.UpdateSubMoney(10000, acc.getPayid());
+                card.UpdateaddCMoney(10000, "1");
             }
             request.getRequestDispatcher("Loadinfo?type=4").forward(request, response);
         }

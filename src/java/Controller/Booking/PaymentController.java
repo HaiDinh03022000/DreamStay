@@ -99,8 +99,6 @@ public class PaymentController extends HttpServlet {
                             LocalDateTime datedue = dateTime.plusMonths(months);
                             String formattedDate = datedue.format(formatter);
                             motel.updateDatedueBill(bid, formattedDate);
-                            noti.insertAlert("check1", acc.getAccId(), room.getRoomid(), 2, total, mt.getAccid());
-
                         } else {
                             LocalDateTime datedue = currentDate.plusMonths(months);
                             String formattedDate = datedue.format(formatter);
@@ -108,6 +106,7 @@ public class PaymentController extends HttpServlet {
                             motel.updateTrueBill(bid);
                             motel.updateSubQuantity(room.getRoomid());
                         }
+                        noti.insertAlert("Extended booking room with id:"+room.getRoomid(), acc.getAccId(), room.getRoomid(), 4, total, mt.getAccid());
                         card.UpdateSubMoney(total, acc.getPayid());
                         card.UpdateaddCMoney(total * 5 / 100, "1");
                         String mtaccid = String.valueOf(mt.getAccid());
