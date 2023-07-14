@@ -4,9 +4,11 @@
  */
 package Controller.Notification;
 
+import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
 import Model.Notification;
+import com.sun.javafx.geom.AreaOp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,10 +26,13 @@ public class ListDoneController extends HttpServlet {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
         NotificationDAO noti = new NotificationDAO();
+        MotelDAO motel = new MotelDAO();
+        int[] data = motel.getDataOwner(acc.getAccId());
 //        List<Notification> notifications = noti.getDoneNotification(acc.getAccId());
         List<Notification> donenoti = noti.getDoneProcess(acc.getAccId());
 //        request.setAttribute("noti", notifications);
         request.setAttribute("done", donenoti);
+        request.setAttribute("data", data);
         request.getRequestDispatcher("ownermotel.jsp").forward(request, response); 
     }
 

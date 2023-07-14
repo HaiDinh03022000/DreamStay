@@ -228,10 +228,8 @@ JOIN Account ac ON ac.accid = a.idsend
 JOIN InforUser i ON i.usid = ac.usid
 WHERE a.idget = 3 and a.staid = 4 and a.roommid is null order by a.alertid desc
 
-select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen
-from Motel m, Alert a, Account ac , InforUser i, Room r
-where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid 
-and a.idget = 2 and m.mid = 2 and (a.staid = 2 or a.staid = 3 or a.staid = 4) order by a.dateup desc
+select Sum(a.pmoney) from Motel m, Alert a, Room r
+where m.mid = r.mid and r.roommid = a.roommid and m.accid = ? and a.staid = 2
 
 SELECT m.mid, m.mname, m.motelimg, AVG(rm.price) AS avgprice, m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
 FROM Motel m
@@ -239,3 +237,6 @@ LEFT JOIN Room rm ON m.mid = rm.mid
 LEFT JOIN Review r ON m.mid = r.mid
 WHERE m.mname LIKE '%'+N'Phòng trọ cao cấp giá rẻ'+'%'
 GROUP BY m.mid, m.mname, m.motelimg, m.maddress
+
+select COUNT(b.bid) from Motel m, Room r, Bill b
+where m.mid = r.mid and r.roommid = b.roommid and m.accid = ? and b.condition =1
