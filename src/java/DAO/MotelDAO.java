@@ -134,6 +134,28 @@ public class MotelDAO {
         return list;
     }
 
+    public Motel getTop1Motel(int accid) {
+        String query = "SELECT top(1) m.mid, m.mname, m.motelimg, avg(r.price) as avgprice ,m.maddress, COALESCE(AVG(rm.rscore), 0) AS avgsc\n"
+                + "FROM Motel m LEFT JOIN Room r ON m.mid = r.mid LEFT JOIN Bill b ON r.roommid = b.roommid LEFT JOIN Review rm ON m.mid = rm.mid\n"
+                + "WHERE m.accid = ? GROUP BY m.mid, m.mname, m.motelimg,m.maddress order by COUNT(b.bid) desc";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Motel(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getDouble(6));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     public List<Motel> ListRanMotel(int mid, int accid) {
         List<Motel> list = new ArrayList<>();
         String query = "select top 3 * from Motel where mid != ? and accid = ? order by newid();";
@@ -943,6 +965,31 @@ public class MotelDAO {
         return list;
     }
 
+    public List<Bill> getTop2BillOfOwner(int accid) {
+        List<Bill> list = new ArrayList<>();
+        String query = "select top(2) b.* from Motel m, Room r, Bill b\n"
+                + "where m.mid = r.mid and r.roommid = b.roommid and m.accid = ? and b.condition =1\n"
+                + "order by b.datebill desc";
+        try {
+            con = new Connections().getConnection();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Bill(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getInt(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
     public List<Bill> ListOwnerBill(int accid) {
         List<Bill> list = new ArrayList<>();
         String query = "select * from Bill where accid = ? order by bid desc";
@@ -1090,7 +1137,7 @@ public class MotelDAO {
         }
         return 0;
     }
-    
+
     public int getTotalBill(int accid) {
         String query = "select COUNT(b.bid) from Motel m, Room r, Bill b\n"
                 + "where m.mid = r.mid and r.roommid = b.roommid and m.accid = ?";
@@ -1124,8 +1171,8 @@ public class MotelDAO {
         }
         return 0;
     }
-    
-    public int[] getDataOwner(int  accid){
+
+    public int[] getDataOwner(int accid) {
         int[] data = new int[4];
         data[0] = getTotalBillActive(accid);
         data[1] = getTotalMoney(accid);
@@ -1136,12 +1183,9 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-//        List<Motel> b = dao.searchByName("shop");
-        int[] b = dao.getDataOwner(2);
-        System.out.println(b[0]);
-        System.out.println(b[1]);
-        System.out.println(b[2]);
-        System.out.println(b[3]);
+//        List<Bill> b = dao.getTop2BillOfOwner(2);
+        Motel b = dao.getTop1Motel(2);
+        System.out.println(b);
     }
 
 }

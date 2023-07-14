@@ -7,15 +7,14 @@ package Controller.Notification;
 import DAO.MotelDAO;
 import DAO.NotificationDAO;
 import Model.Account;
-import Model.Notification;
-import com.sun.javafx.geom.AreaOp;
+import Model.Bill;
+import Model.Motel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 public class ListDoneController extends HttpServlet {
@@ -28,11 +27,11 @@ public class ListDoneController extends HttpServlet {
         NotificationDAO noti = new NotificationDAO();
         MotelDAO motel = new MotelDAO();
         int[] data = motel.getDataOwner(acc.getAccId());
-//        List<Notification> notifications = noti.getDoneNotification(acc.getAccId());
-        List<Notification> donenoti = noti.getDoneProcess(acc.getAccId());
-//        request.setAttribute("noti", notifications);
-        request.setAttribute("done", donenoti);
+        List<Bill> bill = motel.getTop2BillOfOwner(acc.getAccId());
+        Motel mt = motel.getTop1Motel(acc.getAccId());
+        request.setAttribute("bill", bill);
         request.setAttribute("data", data);
+        request.setAttribute("motel", mt);
         request.getRequestDispatcher("ownermotel.jsp").forward(request, response); 
     }
 

@@ -240,3 +240,28 @@ GROUP BY m.mid, m.mname, m.motelimg, m.maddress
 
 select COUNT(b.bid) from Motel m, Room r, Bill b
 where m.mid = r.mid and r.roommid = b.roommid and m.accid = ? and b.condition =1
+
+select top(2) b.* from Motel m, Room r, Bill b
+where m.mid = r.mid and r.roommid = b.roommid and m.accid = 2 and b.condition =1
+order by b.datebill desc
+
+SELECT m.mid, m.mname, m.motelimg, avg(r.price) as avgprice ,m.maddress
+FROM Motel m
+JOIN Room r ON m.mid = r.mid
+JOIN Bill b ON r.roommid = b.roommid
+where m.accid = 2
+GROUP BY m.mid, m.mname, m.motelimg,m.maddress
+HAVING COUNT(b.bid) = (
+    SELECT MAX(bill_count)
+    FROM (
+        SELECT COUNT(b.bid) as bill_count
+        FROM Motel m
+        JOIN Room r ON m.mid = r.mid
+        JOIN Bill b ON r.roommid = b.roommid
+        GROUP BY m.mid
+    ) AS counts
+);
+
+SELECT top(1) m.mid, m.mname, m.motelimg, avg(r.price) as avgprice ,m.maddress, COALESCE(AVG(rm.rscore), 0) AS avgsc
+FROM Motel m LEFT JOIN Room r ON m.mid = r.mid LEFT JOIN Bill b ON r.roommid = b.roommid LEFT JOIN Review rm ON m.mid = rm.mid
+WHERE m.accid = 2 GROUP BY m.mid, m.mname, m.motelimg,m.maddress order by COUNT(b.bid) desc

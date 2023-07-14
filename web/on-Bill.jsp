@@ -181,7 +181,8 @@
                                         </c:if>
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        ${i.price} VNÐ
+                                        <fmt:formatNumber value="${i.price/1000000}" pattern="#.##'M'" var="formattedIncome" />
+                                        ${formattedIncome} VNÐ
                                     </td>               
                                     <td class="px-4 py-3 text-sm">
                                         <span id="duration-${i.billid}">${i.datedue}</span>
@@ -217,18 +218,18 @@
                                     <c:if test="${page1 != 1}">
                                         <a href="owner&page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
                                     </c:if>
-                                    <c:if test="${noticomplete.size() != 0}">
+                                    <c:if test="${bill.size() != 0}">
                                         <a class="active" href="lowner&page1=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
                                     </c:if>
                                     <c:set var="nextPage" value="${page1 + 1}" />
-                                    <c:if test="${nextPage1 > Math.ceil(noticomplete.size() / psize)}">
+                                    <c:if test="${nextPage1 > Math.ceil(bill.size() / psize)}">
                                         <c:set var="nextPage" value="${page1}" />
                                     </c:if>
-                                    <c:if test="${page1 < (noticomplete.size() / psize)}">
+                                    <c:if test="${page1 < (bill.size() / psize)}">
                                         <a href="owner&page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                     </c:if>
-                                    <c:if test="${page1 < (Math.floor(noticomplete.size() / psize))}">
-                                        <a href="owner&page1=<fmt:formatNumber value="${(noticomplete.size() % psize == 0) ? (noticomplete.size() / psize) : (Math.floor(noticomplete.size() / psize) + 1)}" 
+                                    <c:if test="${page1 < (Math.floor(bill.size() / psize))}">
+                                        <a href="owner&page1=<fmt:formatNumber value="${(bill.size() % psize == 0) ? (bill.size() / psize) : (Math.floor(bill.size() / psize) + 1)}" 
                                                           type="number" />"> >></a> </c:if>   
                                     </li>
                                 </ul>
@@ -311,18 +312,18 @@
                                     <c:if test="${page1 != 1}">
                                         <a href="owner&page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</a>           
                                     </c:if>
-                                    <c:if test="${noticomplete.size() != 0}">
+                                    <c:if test="${review.size() != 0}">
                                         <a class="active" href="lowner&page1=<fmt:formatNumber value="${page1}" type="number" />">${page1}</a>    
                                     </c:if>
                                     <c:set var="nextPage" value="${page1 + 1}" />
-                                    <c:if test="${nextPage1 > Math.ceil(noticomplete.size() / psize)}">
+                                    <c:if test="${nextPage1 > Math.ceil(review.size() / psize)}">
                                         <c:set var="nextPage" value="${page1}" />
                                     </c:if>
-                                    <c:if test="${page1 < (noticomplete.size() / psize)}">
+                                    <c:if test="${page1 < (review.size() / psize)}">
                                         <a href="owner&page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
                                     </c:if>
-                                    <c:if test="${page1 < (Math.floor(noticomplete.size() / psize))}">
-                                        <a href="owner&page1=<fmt:formatNumber value="${(noticomplete.size() % psize == 0) ? (noticomplete.size() / psize) : (Math.floor(noticomplete.size() / psize) + 1)}" 
+                                    <c:if test="${page1 < (Math.floor(review.size() / psize))}">
+                                        <a href="owner&page1=<fmt:formatNumber value="${(review.size() % psize == 0) ? (review.size() / psize) : (Math.floor(review.size() / psize) + 1)}" 
                                                           type="number" />"> >></a> </c:if>   
                                     </li>
                                 </ul>
