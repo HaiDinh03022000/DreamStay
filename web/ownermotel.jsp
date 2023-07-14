@@ -59,10 +59,10 @@
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Total clients
+                        Total Customer
                     </p>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        6389
+                        ${data[0]}
                     </p>
                 </div>
             </div>
@@ -77,9 +77,10 @@
                         ></path>
                     </svg>
                 </div>
-                <div> <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Account balance</p>
+                <div> <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Incomes</p>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        $ 46,760.89
+                        <fmt:formatNumber value="${data[1]/1000000}" pattern="#.##'M'" var="formattedIncome" />
+                        ${formattedIncome} VNÐ
                     </p>
                 </div>
             </div>
@@ -92,8 +93,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">New sales</p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">376</p>
+                    <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total Bills</p>
+                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">${data[2]}</p>
                 </div>
             </div>
             <!-- Card -->
@@ -108,7 +109,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Pending contacts</p>
-                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">35</p>
+                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">${data[3]}</p>
                 </div>
             </div>
         </div>

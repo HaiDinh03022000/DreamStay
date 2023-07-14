@@ -10,6 +10,7 @@ import java.util.List;
 import Model.Motel;
 import Model.Review;
 import Model.Rooms;
+import java.io.DataOutput;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -1055,9 +1056,92 @@ public class MotelDAO {
         return 0;
     }
 
+    public int gettotalOrder(int accid) {
+        String query = "select COUNT(a.alertid) from Motel m, Alert a, Room r\n"
+                + "where m.mid = r.mid and r.roommid = a.roommid and m.accid = ?\n"
+                + "and (a.staid = 2 or a.staid = 3)";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return total;
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getTotalBillActive(int accid) {
+        String query = "select COUNT(b.bid) from Motel m, Room r, Bill b\n"
+                + "where m.mid = r.mid and r.roommid = b.roommid and m.accid = ? and b.condition =1";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return total;
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
+    public int getTotalBill(int accid) {
+        String query = "select COUNT(b.bid) from Motel m, Room r, Bill b\n"
+                + "where m.mid = r.mid and r.roommid = b.roommid and m.accid = ?";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return total;
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getTotalMoney(int accid) {
+        String query = "select Sum(a.pmoney) from Motel m, Alert a, Room r\n"
+                + "where m.mid = r.mid and r.roommid = a.roommid and m.accid = ? and a.staid = 2";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, accid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int total = rs.getInt(1);
+                return total;
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
+    public int[] getDataOwner(int  accid){
+        int[] data = new int[4];
+        data[0] = getTotalBillActive(accid);
+        data[1] = getTotalMoney(accid);
+        data[2] = getTotalBill(accid);
+        data[3] = gettotalOrder(accid);
+        return data;
+    }
+
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Motel> b = dao.searchByName("shop");
-        System.out.println(b);
+//        List<Motel> b = dao.searchByName("shop");
+        int[] b = dao.getDataOwner(2);
+        System.out.println(b[0]);
+        System.out.println(b[1]);
+        System.out.println(b[2]);
+        System.out.println(b[3]);
     }
+
 }

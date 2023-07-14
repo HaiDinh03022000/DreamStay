@@ -188,8 +188,10 @@
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="flex items-center space-x-4 text-sm">
-                                            <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                               aria-label="Edit" href="#"><i class="bi bi-trash"></i></a>                                   
+                                            <c:if test="${i.condition == 1}">
+                                                <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
+                                                   aria-label="Edit" href="#"><i class="bi bi-trash"></i></a>  
+                                                </c:if>
                                         </div>      
                                     </td>
                                 </tr>
@@ -331,7 +333,7 @@
         </c:if> 
         <c:if test="${notidone != null && !notidone.isEmpty()}">      
             <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 mt-4">
-                Review-Motel
+                History Notifications
             </h4>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
