@@ -85,11 +85,11 @@ LEFT JOIN (
 WHERE m.maddress LIKE '%Hải Châu%';
 
 
-SELECT m.mid, m.mname, m.motelimg, m.mdescription, m.maddress, m.dateupload, m.coordinates, m.accid, COALESCE(AVG(r.rscore), 0) AS avgsc
+SELECT top(4) m.mid, m.mname, m.motelimg, m.mdescription, m.maddress, m.dateupload, m.coordinates, m.accid, COALESCE(AVG(r.rscore), 0) AS avgsc
 FROM Motel m
 LEFT JOIN Review r ON m.mid = r.mid
-WHERE m.accid = 2
-GROUP BY m.mid, m.mname, m.motelimg, m.mdescription, m.maddress, m.dateupload, m.coordinates, m.accid;
+GROUP BY m.mid, m.mname, m.motelimg, m.mdescription, m.maddress, m.dateupload, m.coordinates, m.accid
+order by m.mid desc
 
 SELECT m.mid, m.mname, m.motelimg, avg(rm.price) as avgprice ,m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
                 FROM Motel m
@@ -262,6 +262,18 @@ HAVING COUNT(b.bid) = (
     ) AS counts
 );
 
+select top(4) m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid, avg(r.rscore) as 'Total Score'
+from Motel m, Review r where m.mid = r.mid and m.condition != 0
+group by m.mid, m.mname, m.motelimg,m.mdescription,  m.maddress,m.dateupload,m.coordinates,m.accid ORDER BY m.mid DESC;
+
 SELECT top(1) m.mid, m.mname, m.motelimg, avg(r.price) as avgprice ,m.maddress, COALESCE(AVG(rm.rscore), 0) AS avgsc
 FROM Motel m LEFT JOIN Room r ON m.mid = r.mid LEFT JOIN Bill b ON r.roommid = b.roommid LEFT JOIN Review rm ON m.mid = rm.mid
 WHERE m.accid = 2 GROUP BY m.mid, m.mname, m.motelimg,m.maddress order by COUNT(b.bid) desc
+
+SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen
+FROM Alert a JOIN Account ac ON ac.accid = a.idsend JOIN InforUser i ON i.usid = ac.usid
+WHERE a.idget = ? and a.textarea not like '%'+'lock'+'%' and (a.staid = 4 or a.staid = 6 or a.staid = 4) order by a.dateup desc
+
+SELECT top(4) m.mid, m.mname, m.motelimg, avg(rm.price) as avgprice ,m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
+FROM Motel m LEFT JOIN Room rm ON m.mid = rm.mid LEFT JOIN Review r ON m.mid = r.mid WHERE m.condition != 0
+GROUP BY m.mid, m.mname, m.motelimg, m.maddress ORDER BY avgsc desc
