@@ -41,7 +41,7 @@ public class NotiAdminController extends HttpServlet {
                 Account acc = login.GetAccByid(nt.getIdsend());
                 card.UpdateSubMoney(10000, acc.getPayid());
                 card.UpdateaddCMoney(100000, "1");
-                login.updateAccType(nt.getIdsend());
+                login.updateAccType(nt.getIdsend(),1);
                 noti.deleteNotiOfIDsend(nt.getIdsend());
                 noti.insertAlertForAdmin("has accepted your request to become an Owner Motel", nt.getIdget(), 4, nt.getIdsend());
             } else if (action.equals("2")) {

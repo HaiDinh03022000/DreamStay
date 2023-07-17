@@ -116,277 +116,172 @@
 
         <!-- New Table -->
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-            Orders Processed
+            Top1 Motel
         </h4>
+        <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        <th class="px-4 py-3">Motel</th>
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Address</th>
+                        <th class="px-4 py-3">Rating</th>
+                        <th class="px-4 py-3">Price/M</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tr class="text-gray-700 dark:text-gray-400">
+                        <td class="px-4 py-3">
+                            <div class="flex items-center text-sm">
+                                <!-- Avatar with inset shadow -->
+                                <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                    <img class="object-cover w-full h-full rounded-full"src="img/motelimg/${motel.image1}"alt=""loading="lazy"/>
+                                    <div class="absolute inset-0 rounded-full shadow-inner"aria-hidden="true"></div>
+                                </div>
+                                <div><p class="font-semibold"></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            ${motel.name}
+                        </td>   
+                        <td class="px-4 py-3 text-sm">
+                            ${motel.address}
+                        </td> 
+                        <td class="px-4 py-3 text-xs">
+                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                <c:forEach begin="1" end="${motel.rscore}">
+                                    <i class="bi bi-star-fill"></i>
+                                </c:forEach>
+                            </span>
+                        </td> 
+                        <td class="px-4 py-3 text-sm">
+                            <fmt:formatNumber value="${motel.price/1000000}" pattern="#.##'M'" var="formattedIncome" />
+                            ${formattedIncome} VNÐ
+                        </td>                         
+                    </tr>            
+                </tbody>
+            </table>
+        </div>
+        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            Latest Bill
+        </h4>              
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                            >
-                            <th class="px-4 py-3">Client</th>
-                            <th class="px-4 py-3">Comment</th>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Roomid</th>
                             <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3">Date</th>
-                            <th class="px-4 py-3">Action</th>
+                            <th class="px-4 py-3">Price/M</th>
+                            <th class="px-4 py-3">DateDue</th>
+                            <th class="px-4 py-3">Dateup</th>
                         </tr>
                     </thead>
-                    <c:forEach items="${noti}" var="i" begin="${(page-1)*psize}" end="${page*psize-1}">
+                    <c:forEach items="${bill}" var="i">
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center text-sm">
-                                        <!-- Avatar with inset shadow -->
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full" src="img/Avatar/${i.avatar}" alt="" loading="lazy"/>
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
-                                        <div><p class="font-semibold">${i.username}</p>
-                                        </div>
-                                    </div>
+                                <td class="px-4 py-3 text-sm">
+                                    ${i.roomid}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <c:set var="sub" value="${fn:substringBefore(i.textarea, '%')}" />${sub}
-                                </td>                    
-                                <c:if test="${i.astatus == 2}">
-                                    <td class="px-4 py-3 text-xs">
+                                    <c:if test="${i.condition == 1}">
                                         <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                            Approve
+                                            Shelf
                                         </span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${i.astatus == 3}">
-                                    <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
-                                            NotApprove
+                                    </c:if>
+                                    <c:if test="${i.condition != 1}">
+                                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">
+                                            Expired
                                         </span>
-                                    </td>
-                                </c:if>  
-                                <td class="px-4 py-3 text-sm">
-                                    <span id="duration-${i.nftid}">${i.dateup}</span>
+                                    </c:if>
                                 </td>
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                           aria-label="Edit" href="dele?id=${i.nftid}"><i class="bi bi-trash-fill"></i></a>
-                                    </div>
-
+                                <td class="px-4 py-3 text-sm">
+                                    <fmt:formatNumber value="${i.price/1000000}" pattern="#.##'M'" var="formattedIncome" />
+                                    ${formattedIncome} VNÐ
+                                </td>               
+                                <td class="px-4 py-3 text-sm">
+                                    <span id="duration-${i.billid}">${i.datedue}</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span id="duratio-${i.billid}">${i.dateup}</span>
                                 </td>
                             </tr>
                         <script>
-                            calculateDuration("${i.dateup}", "duration-${i.nftid}");
+                            calculateFuture("${i.datedue}", "duration-${i.billid}");
+                            calculateDuration("${i.dateup}", "duratio-${i.billid}");
                         </script>
                         </tbody>
                     </c:forEach>
                 </table>
-            </div>
-            <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-                >
-                <span class="flex items-center col-span-3">
-
-                </span>
-                <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                    <nav aria-label="Table navigation">
-                        <ul class="inline-flex items-center">
-                            <li>
-                                <c:if test="${page > 2}">
-                                    <a href="listdone?page=<fmt:formatNumber value="1"/>"><<</a>
-                                </c:if>
-                                <c:if test="${page != 1}">
-                                    <a href="listdone?page=<fmt:formatNumber value="${(page != 1)?(page -1):1}" type="number" />"><</i></a>           
-                                </c:if>
-                                <c:if test="${noti.size() != 0}">
-                                    <a class="active" href="listdone?page=<fmt:formatNumber value="${page}" type="number" />">${page}</a>    
-                                </c:if>
-                                <c:set var="nextPage" value="${page + 1}" />
-                                <c:if test="${nextPage > Math.ceil(noti.size() / psize)}">
-                                    <c:set var="nextPage" value="${page}" />
-                                </c:if>
-                                <c:if test="${page < (noti.size() / psize)}">
-                                    <a href="listdone?page=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
-                                </c:if>
-                                <c:if test="${page < (Math.floor( noti.size() / psize))}">
-                                    <a href="listdone?page=<fmt:formatNumber value="${(noti.size() % psize == 0) ? (noti.size() / psize) : (Math.floor( noti.size() / psize) + 1)}" 
-                                                      type="number" />"> >></a> </c:if>   
-                                </li>
-                            </ul>
-                        </nav>
-                    </span>
-                </div>
-            </div>
-            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                latest Notification Get
-            </h4>              
-            <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                <div class="w-full overflow-x-auto">
-                    <table class="w-full whitespace-no-wrap">
-                        <thead>
-                            <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                                >
-                                <th class="px-4 py-3">Client</th>
-                                <th class="px-4 py-3">Comment</th>
-                                <th class="px-4 py-3">Status</th>
-                                <th class="px-4 py-3">Date</th>
-                                <th class="px-4 py-3">Action</th>
-                            </tr>
-                        </thead>
-                    <c:forEach items="${done}" var="i" begin="${(page1-1)*psize}" end="${page1*psize-1}">
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center text-sm">
-                                        <!-- Avatar with inset shadow -->
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full" src="img/Avatar/${i.avatar}" alt="" loading="lazy"/>
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
-                                        <div><p class="font-semibold">${i.username}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    ${i.textarea}
-                                </td>                    
-                                <c:if test="${i.astatus == 4}">
-                                    <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                            Complete
-                                        </span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${i.astatus == 6}">
-                                    <td class="px-4 py-3 text-xs">
-                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                            Cancel
-                                        </span>
-                                    </td>
-                                </c:if>  
-                                <td class="px-4 py-3 text-sm">
-                                    <span id="duratio-${i.nftid}">${i.dateup}</span>
-                                </td>
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <a class="flex items-center justify-between text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400"
-                                           aria-label="Edit" href="dele?id=${i.nftid}"><i class="bi bi-trash-fill"></i></a>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        <script>
-                            calculateDuration("${i.dateup}", "duratio-${i.nftid}");
-                        </script>
-                        </tbody>
-                    </c:forEach>
-                </table>
-            </div>
-            <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-                >
-                <span class="flex items-center col-span-3">
-
-                </span>
-                <span class="col-span-2"></span>
-                <!-- Pagination -->
-                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                    <nav aria-label="Table navigation">
-                        <ul class="inline-flex items-center">
-                            <li>
-                                <c:if test="${page1 > 2}">
-                                    <a href="listdone?page1=<fmt:formatNumber value="1"/>"><<</a>
-                                </c:if>
-                                <c:if test="${page1 != 1}">
-                                    <a href="listdone?page1=<fmt:formatNumber value="${(page1 != 1)?(page1 -1):1}" type="number" />"><</i></a>           
-                                </c:if>
-                                <c:if test="${done.size() != 0}">
-                                    <a class="active" href="listdone?page1=<fmt:formatNumber value="${page1}" type="number" />">${page}</a>    
-                                </c:if>
-                                <c:set var="nextPage" value="${page1 + 1}" />
-                                <c:if test="${nextPage > Math.ceil(done.size() / psize)}">
-                                    <c:set var="nextPage" value="${page1}" />
-                                </c:if>
-                                <c:if test="${page1 < (done.size() / psize)}">
-                                    <a href="listdone?page1=<fmt:formatNumber value="${nextPage}" type="number"/>">></a>
-                                </c:if>
-                                <c:if test="${page1 < (Math.floor( done.size() / psize))}">
-                                    <a href="listdone?page1=<fmt:formatNumber value="${(done.size() % psize == 0) ? (done.size() / psize) : (Math.floor( done.size() / psize) + 1)}" 
-                                                      type="number" />"> >></a> </c:if>   
-                            </li>
-                        </ul>
-                    </nav>
-                </span>
             </div>
         </div>
-<!--        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Charts
-        </h2>
-        <div class="grid gap-6 mb-8 md:grid-cols-2">
-            <div
-                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-                >
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Revenue
-                </h4>
-                <canvas id="pie"></canvas>
-                <div
-                    class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
-                    >
-                     Chart legend 
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"
-                            ></span>
-                        <span>Shirts</span>
+                <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                    Charts
+                </h2>
+                <div class="grid gap-6 mb-8 md:grid-cols-2">
+                    <div
+                        class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                        >
+                        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                            Revenue
+                        </h4>
+                        <canvas id="pie"></canvas>
+                        <div
+                            class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
+                            >
+                             Chart legend 
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"
+                                    ></span>
+                                <span>Shirts</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+                                    ></span>
+                                <span>Shoes</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+                                    ></span>
+                                <span>Bags</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
-                            ></span>
-                        <span>Shoes</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
-                            ></span>
-                        <span>Bags</span>
+                    <div
+                        class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                        >
+                        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                            Traffic
+                        </h4>
+                        <canvas id="line"></canvas>
+                        <div
+                            class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
+                            >
+                             Chart legend 
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+                                    ></span>
+                                <span>Organic</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+                                    ></span>
+                                <span>Paid</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span
+                                    class="inline-block w-3 h-3 mr-1 bg-blue-600 rounded-full"
+                                    ></span>
+                                <span>Paid</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div
-                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-                >
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                    Traffic
-                </h4>
-                <canvas id="line"></canvas>
-                <div
-                    class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
-                    >
-                     Chart legend 
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
-                            ></span>
-                        <span>Organic</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
-                            ></span>
-                        <span>Paid</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span
-                            class="inline-block w-3 h-3 mr-1 bg-blue-600 rounded-full"
-                            ></span>
-                        <span>Paid</span>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </body>
 </html>

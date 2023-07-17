@@ -28,22 +28,21 @@ public class RoomsDetailServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("mid"));
         String check = request.getParameter("check");
         String roomid = request.getParameter("roomid");
-
-        if (check != null && roomid == null) {
-            roomid = motel.getFroom(id);
-        }
-        if (acc != null) {
-            int nfc = motel.GetOwnerBill(acc.getAccId(), id);
-            if (nfc == acc.getAccId()) {
-                request.setAttribute("checkrv", nfc);
-            }
-        }
-
-        Rooms room = motel.getRoomByid(roomid);
         Motel m = motel.getMotelByID(id);
-        if (m == null) {
+        if (motel.getMidblock(id) != 0 || m == null) {
             response.sendRedirect("404notfound.jsp");
         } else {
+            if (check != null && roomid == null) {
+                roomid = motel.getFroom(id);
+            }
+            if (acc != null) {
+                int nfc = motel.GetOwnerBill(acc.getAccId(), id);
+                if (nfc == acc.getAccId()) {
+                    request.setAttribute("checkrv", nfc);
+                }
+            }
+
+            Rooms room = motel.getRoomByid(roomid);
             List<Review> r = motel.listReview(id);
             List<Rooms> ls = motel.getAllRoomType(id);
 

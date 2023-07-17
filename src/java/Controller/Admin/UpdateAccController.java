@@ -6,13 +6,16 @@ package Controller.Admin;
 
 import DAO.AdminDAO;
 import DAO.LoginDAO;
+import DAO.MotelDAO;
+import DAO.NotificationDAO;
 import Model.Account;
+import Model.Motel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -29,12 +32,24 @@ public class UpdateAccController extends HttpServlet {
             throws ServletException, IOException {
         AdminDAO admin = new AdminDAO();
         LoginDAO login = new LoginDAO();
+        MotelDAO motel = new MotelDAO();
+        NotificationDAO noti = new NotificationDAO();
         int accid = Integer.parseInt(request.getParameter("accid"));
+        String action = request.getParameter("action");
         Account acc = login.GetAccByid(accid);
-        if(acc.getAccstatus() == 0){
-            admin.updateAccStatus(accid, 1);
+        if (action.equals("1")) {
+            if (acc.getAccstatus() == 0) {
+                admin.updateAccStatus(accid, 1);
+            } else {
+                admin.updateAccStatus(accid, 0);
+            }
         }else{
-            admin.updateAccStatus(accid, 0);
+            login.updateAccType(accid, 0);
+            List<Motel> listMotel = motel.getAllOwnerMotel(accid);
+            for (Motel mt : listMotel) {
+                motel.UpStatusMotel(mt.getMid(), 0);
+            }
+            noti.insertAlertForAdmin("Your Motel Owner permission has been revoked by your admin", 1, 4, accid);
         }
         response.sendRedirect("listadmin?type=1");
     }

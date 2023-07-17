@@ -91,8 +91,14 @@ public class IndexControllServlet extends HttpServlet {
             session.setAttribute("listnt", listnoti);
             session.setAttribute("listntadmin", listnotiadmin);
         }     
-        List<Motel> listM = motel.getTop4Motels();
+        String type = request.getParameter("type");
+        if(type != null){
+            List<Motel> listNM = motel.getTop4NewMotels();
+            request.setAttribute("listTop4NM", listNM);
+        }else{
+            List<Motel> listM = motel.getTop4Motels();     
         request.setAttribute("listTop4M", listM);
+        }      
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

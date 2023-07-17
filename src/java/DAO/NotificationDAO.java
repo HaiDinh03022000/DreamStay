@@ -284,9 +284,9 @@ public class NotificationDAO {
 
     public List<Notification> getDoneProcess(int accid) {
         List<Notification> list = new ArrayList<>();
-        String query = "select a.alertid, a.imagecheck, a.textarea, a.dateup,a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar,a.seen\n"
-                + "from Motel m, Alert a, Account ac , InforUser i, Room r\n"
-                + "where m.mid = r.mid and ac.accid = a.idsend and i.usid = ac.usid and r.roommid = a.roommid and idget = ? and (staid = 4 or staid = 6) order by a.alertid desc";
+        String query = "SELECT a.alertid, a.imagecheck, a.textarea, a.dateup, a.pmoney, a.staid, a.idsend, a.roommid, a.idget, ac.username, i.avatar, a.seen\n"
+                + "FROM Alert a JOIN Account ac ON ac.accid = a.idsend JOIN InforUser i ON i.usid = ac.usid\n"
+                + "WHERE a.idget = ? and a.textarea not like '%'+'lock'+'%' and (a.staid = 4 or a.staid = 6 or a.staid = 4) order by a.dateup desc";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -574,7 +574,7 @@ public class NotificationDAO {
 
     public static void main(String[] args) {
         NotificationDAO noti = new NotificationDAO();
-        List<Notification> list = noti.getDoneNotification(2,2);
+        List<Notification> list = noti.getDoneProcess(6);
         System.out.println(list);
     }
 }

@@ -90,43 +90,90 @@
         <section class="hp-room-section">
             <div class="container-fluid">
                 <div class="hp-room-items">
+                    <c:if test="${listTop4M != null && !listTop4M.isEmpty()}">
+                        <c:set var="href" value="index?type=1"/>
+                        <c:set var="post" value="Most popular Motel"/>
+                    </c:if>
+                    <c:if test="${listTop4NM != null && !listTop4NM.isEmpty()}">
+                        <c:set var="href" value="index"/>
+                        <c:set var="post" value="New Motel"/>
+                    </c:if>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section-title">
-                                <span style="font-size: 150%">Top 4</span>
-                                <h2>Most popular Motel</h2>
+                                <span style="font-size: 150%">
+                                    <a style="color: #dfa974" href="${href}"><i class="bi bi-caret-left-fill"></i></a>                                    
+                                    Top 4 
+                                    <a style="color: #dfa974" href="${href}"><i class="bi bi-caret-right-fill"></i></a>  
+                                </span>
+                                <h2>${post}</h2>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <c:forEach items="${listTop4M}" var="i">
-                            <div class="col-lg-3 col-md-6">
-                                <div class="hp-room-item set-bg" data-setbg="img/motelimg/${i.image1}">
-                                    <div class="hr-text">
-                                        <h3>${i.name}</h3>
-<!--                                        <h2 class="number"><span>/Room</span></h2>-->
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="r-o">Review Score:</td>
-                                                    <td><c:forEach begin="1" end="${i.rscore}">
-                                                            <i class="icon_star text-warning"></i>
-                                                        </c:forEach> (${i.rscore})</td>
-                                                </tr>                                             
-                                                <tr>
-                                                    <td class="r-o">Address:</td>
-                                                    <td>${i.address}</td>
-                                                </tr>                                               
-                                            </tbody>
-                                        </table>
-                                        <a href="roomdetail?mid=${i.mid}&check=1" class="primary-btn">More Details</a>
+                        <c:if test="${listTop4M != null && !listTop4M.isEmpty()}">
+                            <c:forEach items="${listTop4M}" var="i">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="hp-room-item set-bg" data-setbg="img/motelimg/${i.image1}">
+                                        <div class="hr-text">
+                                            <h3>${i.name}</h3>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="r-o">Review Score:</td>
+                                                        <td><c:forEach begin="1" end="${i.rscore}">
+                                                                <i class="icon_star text-warning"></i>
+                                                            </c:forEach> (${i.rscore})
+                                                        </td>
+                                                    </tr>                                             
+                                                    <tr>
+                                                        <td class="r-o">Address:</td>
+                                                        <td>${i.address}</td>
+                                                    </tr>                                               
+                                                </tbody>
+                                            </table>
+                                            <a href="roomdetail?mid=${i.mid}&check=1" class="primary-btn">More Details</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
-
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${listTop4NM != null && !listTop4NM.isEmpty()}">
+                            <c:forEach items="${listTop4NM}" var="i">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="hp-room-item set-bg" data-setbg="img/motelimg/${i.image1}">
+                                        <div class="hr-text">
+                                            <h3>${i.name}</h3>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="r-o">Review Score:</td>
+                                                        <td>
+                                                            <c:if test="${i.rscore != 0}">
+                                                                <c:forEach begin="1" end="${i.rscore}">
+                                                                    <i class="icon_star text-warning"></i>
+                                                                </c:forEach> (${i.rscore})
+                                                            </c:if>
+                                                            <c:if test="${i.rscore == 0}">
+                                                                <c:forEach begin="1" end="5">
+                                                                    <i class="icon_star text-warning"></i>
+                                                                </c:forEach> (${i.rscore})
+                                                            </c:if>
+                                                        </td>
+                                                    </tr>                                             
+                                                    <tr>
+                                                        <td class="r-o">Address:</td>
+                                                        <td>${i.address}</td>
+                                                    </tr>                                               
+                                                </tbody>
+                                            </table>
+                                            <a href="roomdetail?mid=${i.mid}&check=1" class="primary-btn">More Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>                       
                     </div>
-
                 </div>
             </div>
         </section>

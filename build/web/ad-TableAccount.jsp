@@ -81,14 +81,17 @@
                                             </c:if>
                                         </td>
                                         <td>${r.createDate}</td>
-                                        <td>
+                                        <td>                                          
                                             <c:if test="${r.accstatus == 1}">
-                                                <a style="color: red" href="updateacc?accid=${r.accId}"><i class="bi bi-hammer"></i></a> - 
+                                                <a href="updateacc?accid=${r.accId}&action=1"><i class="bi bi-hammer text-danger"></i></a> - 
                                                 </c:if>
                                                 <c:if test="${r.accstatus == 0}">
-                                                <a style="color: #33cc00" href="updateacc?accid=${r.accId}"><i class="bi bi-hammer"></i></a> - 
+                                                <a href="updateacc?accid=${r.accId}&action=1"><i class="bi bi-hammer text-success"></i></a> - 
                                                 </c:if>
-                                            <a style="color: gray" href="deleteacc?accid=${r.accId}&acctype=${r.accType}"><i class="bi bi-trash-fill"></i></a>
+                                            <a href="deleteacc?accid=${r.accId}&acctype=${r.accType}"><i class="bi bi-trash-fill text-gray-500"></i></a>
+                                                <c:if test="${r.accType == 1}">
+                                                 - <a class="text-danger" href="updateacc?accid=${r.accId}&action=2">Evict</a>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach> 

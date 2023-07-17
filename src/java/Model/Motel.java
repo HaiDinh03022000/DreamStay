@@ -22,6 +22,15 @@ public class Motel {
         this.rscore = rscore;
     }
 
+    public Motel(int mid, String name, String image1, double price, String address) {
+        this.mid = mid;
+        this.name = name;
+        this.image1 = image1;
+        this.price = price;
+        this.address = address;
+    }
+
+
     public Motel(int mid, String name, double price, String address, int condition) {
         this.mid = mid;
         this.name = name;

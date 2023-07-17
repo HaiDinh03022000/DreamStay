@@ -140,12 +140,13 @@ public class LoginDAO {
         return null;
     }
     
-    public void updateAccType(int accid) {
-        String query = "update Account set acctype = 1 where accid = ?";
+    public void updateAccType(int accid , int type) {
+        String query = "update Account set acctype = ? where accid = ?";
         try {
             conn = new Connections().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setInt(1, accid);
+            ps.setInt(1, type);
+            ps.setInt(2, accid);
             ps.executeUpdate();
         } catch (Exception e) {
         }

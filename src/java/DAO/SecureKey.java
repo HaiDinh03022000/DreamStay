@@ -12,7 +12,7 @@ public class SecureKey{
         SecretKey secretKey = key.generateSecureKey();
 
         // Chuỗi cần mã hóa
-        String plaintext = "734343";
+        String plaintext = "1";
 
         // Mã hóa chuỗi
         String encryptedText = key.Encode(plaintext, secretKey);

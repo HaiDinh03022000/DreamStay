@@ -33,7 +33,7 @@ public class checkjsp implements Filter {
 
         return requestURI.contains("login") || requestURI.contains("about-us")
                 || requestURI.contains("contact") || requestURI.contains("createMotel")
-                || requestURI.contains("forgetpass");
+                || requestURI.contains("forgetpass") || requestURI.contains("404notfound");
     }
 
     private FilterConfig filterConfig = null;
