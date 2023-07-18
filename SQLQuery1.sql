@@ -277,3 +277,9 @@ WHERE a.idget = ? and a.textarea not like '%'+'lock'+'%' and (a.staid = 4 or a.s
 SELECT top(4) m.mid, m.mname, m.motelimg, avg(rm.price) as avgprice ,m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
 FROM Motel m LEFT JOIN Room rm ON m.mid = rm.mid LEFT JOIN Review r ON m.mid = r.mid WHERE m.condition != 0
 GROUP BY m.mid, m.mname, m.motelimg, m.maddress ORDER BY avgsc desc
+
+SELECT m.mid, m.mname, m.motelimg, avg(rm.price) as avgprice ,m.maddress, COALESCE(AVG(r.rscore), 0) AS avgsc
+FROM Motel m LEFT JOIN Room rm ON m.mid = rm.mid LEFT JOIN Review r ON m.mid = r.mid WHERE m.condition != 0 
+GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 
+
+select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = 14 order by c.cateid

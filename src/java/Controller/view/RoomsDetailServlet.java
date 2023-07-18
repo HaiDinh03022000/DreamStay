@@ -14,6 +14,7 @@ import Model.Notification;
 import Model.Review;
 import Model.Rooms;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsDetailServlet extends HttpServlet {
@@ -29,22 +30,27 @@ public class RoomsDetailServlet extends HttpServlet {
         String check = request.getParameter("check");
         String roomid = request.getParameter("roomid");
         Motel m = motel.getMotelByID(id);
-        if (motel.getMidblock(id) != 0 || m == null) {
+        if ((motel.getMidblock(id) != 0 || m == null) && acc.getAccId() != 1) {
             response.sendRedirect("404notfound.jsp");
         } else {
+            List<Rooms>  ls = motel.getAllRoomType(id);
             if (check != null && roomid == null) {
-                roomid = motel.getFroom(id);
+                roomid = motel.getFroom(id);          
             }
             if (acc != null) {
                 int nfc = motel.GetOwnerBill(acc.getAccId(), id);
                 if (nfc == acc.getAccId()) {
                     request.setAttribute("checkrv", nfc);
                 }
+                if(acc.getAccId() == 1){
+                    if(roomid == null){
+                        roomid = motel.getFroomAdmin(id);
+                    }                 
+                    ls = motel.getAllRoomTypeAdmin(id);
+                }
             }
-
             Rooms room = motel.getRoomByid(roomid);
-            List<Review> r = motel.listReview(id);
-            List<Rooms> ls = motel.getAllRoomType(id);
+            List<Review> r = motel.listReview(id);       
 
             request.setAttribute("review", r);
             request.setAttribute("detail", m);

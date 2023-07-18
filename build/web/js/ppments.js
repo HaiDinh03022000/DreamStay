@@ -3,11 +3,7 @@ function calculateTotal(month) {
     var newPrice = price * month;
     // Cập nhật giá trị mới vào phần tử span
     document.getElementById('serviceFeeSpan').textContent = newPrice;   
-    // Tính toán và cập nhật giá trị VAT
-    var vat = newPrice * 0.05;
-    document.getElementById('vatSpan').textContent = vat;
-    // Cập nhật giá trị tổng
-    var total = newPrice + vat;
+    var total = newPrice;
     document.getElementById('totalSpan').textContent = total;
     // Cập nhật giá trị hidden input
     document.querySelector('input[name="amount"]').value = total;

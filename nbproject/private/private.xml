@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/DAO/MotelDAO.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Admin/NotiAdminController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/InfoUser.jsp</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/Booking/BookingController.java</file>
             <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/on-Bill.jsp</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/index.jsp</file>
             <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/view/IndexControllServlet.java</file>
-            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/InfoUser/UpLoadinfoController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/VNpay/ReturnVnPayController.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/web/booking.jsp</file>
             <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/view/RoomsControllServlet.java</file>
+            <file>file:/E:/NetBean/NetBeansProjects/Git/DrStay/DreamStay/src/java/Controller/view/RoomsDetailServlet.java</file>
         </group>
     </open-files>
 </project-private>
