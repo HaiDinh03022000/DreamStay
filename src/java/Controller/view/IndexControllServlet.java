@@ -59,7 +59,7 @@ public class IndexControllServlet extends HttpServlet {
             session.setMaxInactiveInterval(36000);
         }
         Account acc = (Account) session.getAttribute("acc");
-        if (acc != null) {            
+        if (acc != null) {
             List<Notification> listnoti = noti.getTop4Notifications(acc.getAccId());
             List<Notification> listnotiadmin = noti.getTop4NotiAdmin(acc.getAccId());
             List<Notification> allnoti = noti.getPending(acc.getAccId());           

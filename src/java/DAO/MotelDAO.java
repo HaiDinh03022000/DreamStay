@@ -43,7 +43,7 @@ public class MotelDAO {
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
                 + "WHERE m.condition != 0\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress;";
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ;";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -181,7 +181,23 @@ public class MotelDAO {
     }
 
     public String getFroom(int mid) {
-        String query = "select top 1 r.roommid from Motel m, Room r where m.mid = r.mid and m.mid =?";
+        String query = "select top 1 r.roommid from Motel m, Room r where m.mid = r.mid and m.mid = ? and r.codition != 0 and r.quantity > 0";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, mid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String em = rs.getString(1);
+                return em;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public String getFroomAdmin(int mid) {
+        String query = "select top 1 r.roommid from Motel m, Room r where m.mid = r.mid and m.mid = ?";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -215,6 +231,22 @@ public class MotelDAO {
     public List<Rooms> getAllRoomType(int mid) {
         List<Rooms> list = new ArrayList<>();
         String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ? and r.quantity > 0 and r.codition =1";
+        try {
+            con = new Connections().getConnection();//mo ket noi voi sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, mid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Rooms(rs.getInt(1), rs.getString(2)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Rooms> getAllRoomTypeAdmin(int mid) {
+        List<Rooms> list = new ArrayList<>();
+        String query = "select r.roommid, c.catenme from Motel m, Room r, Category c where m.mid = r.mid and r.cateid = c.cateid and m.mid = ?";
         try {
             con = new Connections().getConnection();//mo ket noi voi sql
             ps = con.prepareStatement(query);
@@ -356,8 +388,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE m.mname LIKE N'%'+?+'%'\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress";
+                + "WHERE m.mname LIKE N'%'+?+'%' and m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -415,8 +447,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE m.maddress like '%'+?+'%'  and rm.cateid = ? AND (rm.price BETWEEN ? AND ?)\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress\n";
+                + "WHERE m.maddress like '%'+?+'%'  and rm.cateid = ? AND (rm.price BETWEEN ? AND ?) AND m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 \n";
         int minprice = 0;
         if (maxprice > 1000000) {
             minprice = maxprice - 1000000;
@@ -449,8 +481,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
                 + "INNER JOIN Room rm ON m.mid = rm.mid\n"
-                + "WHERE m.maddress LIKE '%'+ ? +'%' AND (rm.price BETWEEN ? AND ?)\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress;";
+                + "WHERE m.maddress LIKE '%'+ ? +'%' AND (rm.price BETWEEN ? AND ?)AND m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ;";
 
         int minprice = 0;
         if (maxprice > 1000000) {
@@ -482,8 +514,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE m.maddress like '%'+?+'%'  and rm.cateid = ?\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress";
+                + "WHERE m.maddress like '%'+?+'%'  and rm.cateid = ? AND m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -509,8 +541,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE rm.cateid = ? AND (rm.price BETWEEN ? AND ?) \n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress;";
+                + "WHERE rm.cateid = ? AND (rm.price BETWEEN ? AND ?) AND m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ;";
 
         int minprice = 0;
         if (maxprice > 1000000) {
@@ -542,8 +574,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Room rm ON m.mid = rm.mid\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
-                + "WHERE m.maddress LIKE '%' + ? + '%'\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress";
+                + "WHERE m.maddress LIKE '%' + ? + '%' and m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -570,8 +602,8 @@ public class MotelDAO {
                 + "FROM Motel m\n"
                 + "LEFT JOIN Review r ON m.mid = r.mid\n"
                 + "INNER JOIN Room rm ON m.mid = rm.mid\n"
-                + "WHERE rm.price BETWEEN ? AND ?\n"
-                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress;";
+                + "WHERE rm.price BETWEEN ? AND ? AND m.condition != 0\n"
+                + "GROUP BY m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ;";
         int minprice = 0;
         if (maxprice > 1000000) {
             minprice = maxprice - 1000000;
@@ -602,8 +634,8 @@ public class MotelDAO {
                 + "from Motel m \n"
                 + "LEFT JOIN Room rm on m.mid = rm.mid\n"
                 + "left join Review r on m.mid = r.mid \n"
-                + "where cateid = ?\n"
-                + "group by m.mid, m.mname, m.motelimg, m.maddress";
+                + "where cateid = ? AND m.condition != 0\n"
+                + "group by m.mid, m.mname, m.motelimg, m.maddress HAVING SUM(rm.quantity) > 0 ";
         try {
             con = new Connections().getConnection();
             ps = con.prepareStatement(query);
@@ -1193,8 +1225,10 @@ public class MotelDAO {
 
     public static void main(String[] args) {
         MotelDAO dao = new MotelDAO();
-        List<Motel> b = dao.getTop4NewMotels();
+//        List<Motel> b = dao.getTop4NewMotels();
+        String b = dao.getFroom(2);
         System.out.println(b);
+        dao.updateTrueBill("1");
     }
 
 }

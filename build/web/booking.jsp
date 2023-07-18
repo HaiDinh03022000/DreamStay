@@ -116,10 +116,6 @@
                                     <p><span id="serviceFeeSpan" class="number"></span> VND</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <p>VAT</p>
-                                    <p><span id="vatSpan" class="number"></span> VND</p>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mb-2">
                                     <p class="fw-bold">Total</p>
                                     <p class="fw-bold"><span id="totalSpan" class="number"></span> VND</p>                                   
                                 </div>
@@ -160,6 +156,11 @@
                                 <a href="Loadinfo?type=5&show=1"style="active {
                                        background-color: yellow;
                                    }" class="btn btn-primary mt-2">View Your Order</a>
+                            </c:if>
+                            <c:if test="${mess != null && cbook != null}">
+                                <a href="rooms"style="active {
+                                       background-color: yellow;
+                                   }" class="btn btn-primary mt-2">Booking another Room</a>
                             </c:if>
                         </div>
                     </div>
@@ -224,7 +225,7 @@
         <script>
                                         var detailPrice = ${detail.price};
         </script>
-        <script src="js/pment.js" type="text/javascript"></script>
+        <script src="js/ppments.js" type="text/javascript"></script>
         <script src="js/vnpay.js" type="text/javascript"></script>
         <script src="js/HideShow.js" type="text/javascript"></script>
     </body>

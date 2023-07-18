@@ -70,18 +70,19 @@ public class PaymentController extends HttpServlet {
             request.setAttribute("roomid", roomid);
             request.setAttribute("color", "red");
             PayCard ca = card.getPayCardbyID(acc.getPayid());
-            if(tt.equals("")){
+            if (tt.equals("")) {
                 request.setAttribute("messs", "Please choose how much months you want to book!");
-            }else if (pin.equals("")) {
+            } else if (pin.equals("")) {
                 request.setAttribute("mess", "Please Enter Your Card Pincode!");
             } else if (!pin.equals(ca.getPincode())) {
                 request.setAttribute("mess", "Wrong Card Pincode!");
-            } else {
+            } else {           
                 double total = Double.parseDouble(tt);
                 double now = Double.parseDouble(ca.getCmoney());
                 if (now < total) {
                     request.setAttribute("mess", "Not Enough money!");
                 } else {
+                    int send = 0;
                     Rooms room = motel.getRoomByid(roomid);
                     Motel mt = motel.getMotelByID(room.getMid());
 
@@ -100,13 +101,18 @@ public class PaymentController extends HttpServlet {
                             String formattedDate = datedue.format(formatter);
                             motel.updateDatedueBill(bid, formattedDate);
                         } else {
-                            LocalDateTime datedue = currentDate.plusMonths(months);
-                            String formattedDate = datedue.format(formatter);
-                            motel.updateDatedueBill(bid, formattedDate);
-                            motel.updateTrueBill(bid);
-                            motel.updateSubQuantity(room.getRoomid());
+                            if (room.getQuantity() <= 0) {
+                                send = 1;
+                                request.setAttribute("mess", "There are not enough rooms for you to extend!");
+                            } else {
+                                LocalDateTime datedue = currentDate.plusMonths(months);
+                                String formattedDate = datedue.format(formatter);
+                                motel.updateDatedueBill(bid, formattedDate);
+                                motel.updateTrueBill(bid);
+                                motel.updateSubQuantity(room.getRoomid());
+                            }
                         }
-                        noti.insertAlert("Extended booking room with id:"+room.getRoomid(), acc.getAccId(), room.getRoomid(), 4, total, mt.getAccid());
+                        noti.insertAlert("Extended booking room with id:" + room.getRoomid(), acc.getAccId(), room.getRoomid(), 4, total, mt.getAccid());
                         card.UpdateSubMoney(total, acc.getPayid());
                         card.UpdateaddCMoney(total * 5 / 100, "1");
                         String mtaccid = String.valueOf(mt.getAccid());
@@ -116,14 +122,19 @@ public class PaymentController extends HttpServlet {
                         card.UpdateaddCMoney(total, "1");
                         noti.insertAlert(text, acc.getAccId(), room.getRoomid(), 1, total, mt.getAccid());
                     }
-                    request.setAttribute("mess", "<i class=\"bi bi-check-circle-fill\"></i> Your order has been record!");
-                    request.setAttribute("color", "green");
+                    if(send == 0){
+                        request.setAttribute("mess", "<i class=\"bi bi-check-circle-fill\"></i> Your order has been record!");
+                        request.setAttribute("color", "green");
+                    } else {
+                        request.setAttribute("mess", "<i class=\"bi bi-x-circle-fill\"></i> There are not enough rooms for you to extend!");
+                        request.setAttribute("cbook", "bb");
+                    }                                                    
                     request.setAttribute("pincode", pin);
                     request.setAttribute("lock", "readonly");
-                    request.setAttribute("hide", "hide");                    
+                    request.setAttribute("hide", "hide");
                 }
             }
-           request.getRequestDispatcher("booking").forward(request, response); 
+            request.getRequestDispatcher("booking").forward(request, response);
         }
     }
 

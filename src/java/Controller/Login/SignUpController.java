@@ -68,6 +68,9 @@ public class SignUpController extends HttpServlet {
         } else if (info != null) {
             request.setAttribute("check", "Email already exits!");
             request.setAttribute("back", "right-panel-active");
+        } else if (!email.contains("@gmail.com") || !email.contains("@fpt.edu.vn")) {
+            request.setAttribute("check", "Your email is not in the correct format!");
+            request.setAttribute("back", "right-panel-active");
         } else if (y < 18) {
             request.setAttribute("check", "You are not old enough!(18+)");
             request.setAttribute("back", "right-panel-active");
@@ -77,7 +80,7 @@ public class SignUpController extends HttpServlet {
             if (check == null) {
                 SendEmail send = new SendEmail();
                 String otp = send.getRanom();
-                send.sendEmail(email, otp , "OTP code: ", "OTP Code to User SignUp Account");
+                send.sendEmail(email, otp, "OTP code: ", "OTP Code to User SignUp Account");
                 session.setAttribute("otp", dao.Encode(otp));
                 request.setAttribute("back", "right-panel-active");
             } else if (!otpcheck.equals(dao.Decode(check))) {
